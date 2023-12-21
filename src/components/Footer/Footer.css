@@ -1,0 +1,25 @@
+.footer{
+    background-color:#28328c;;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-evenly;
+    padding:20px;
+    height:300px;
+    min-height:270px;
+}
+.section{
+    padding:5px;
+    height:250px;
+}
+.section >*{
+    font-size:14px;
+   
+}
+.section > h4{
+    font-weight:600;
+    font-size:15px;
+}
+.section >p{
+    line-height:1rem;
+}
