@@ -1,0 +1,12 @@
+.login > * {
+    text-decoration:none;
+    color:white;
+    
+}
+.login{
+    margin:0 10px;
+}
+.register >*{
+    text-decoration:none;
+    color:white;
+}

@@ -1,0 +1,13 @@
+
+.login-headertext{
+   font-size:28px;
+}
+.outer-box{
+    max-width:600px;
+    margin:40px auto;
+    
+}
+.btn{
+    background-color:#28328c;
+    color:white;
+}
