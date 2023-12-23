@@ -52,7 +52,7 @@ const Register = () => {
     "Urologist"
   ];
   
-  const [credentials , setCredentials] = useState({userType:"" , name : "" , email:"" , username :"" , password :"" , type:""});
+  const [credentials , setCredentials] = useState({userType:"" , name : "" , email:"" , username :"" , password :"" , specialization:""});
   const navigate = useNavigate();
   const handleChange=(e)=>{
     const value = e.target.value;
@@ -85,7 +85,7 @@ const Register = () => {
                 <MenuItem value='doctor'>Doctor</MenuItem>
             </TextField>
                {credentials.userType==='doctor'?<form onSubmit={handleSubmit}>
-                    <TextField  sx={{marginBottom:"1rem"}} select value={credentials.type} onChange={handleChange} name='type' size='small' label='Type' color='secondary'  fullWidth required>
+                    <TextField  sx={{marginBottom:"1rem"}} select value={credentials.specialization} onChange={handleChange} name='specialization' size='small' label='Specialization' color='secondary'  fullWidth required>
                     {doctorTypes.map((value, idx) => (
                       <MenuItem value={value} key={idx}>
                         {value}
