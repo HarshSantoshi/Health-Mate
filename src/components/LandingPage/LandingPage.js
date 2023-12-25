@@ -1,7 +1,6 @@
 import React from 'react'
 import ServicesCard from '../ServicesCard/ServicesCard'
 import CircleCard from '../CircleCard/CircleCard'
-import Footer from '../Footer/Footer'
 import './LandingPage.css'
 const LandingPage = () => {
   return (

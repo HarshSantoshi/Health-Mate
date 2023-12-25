@@ -23,9 +23,26 @@ const patientSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    age:{
-        type :Number
+    dateofBirth:{
+        type :Date
     }
-})
-const Patient = mongoose.model("patient",patientSchema);
+    ,
+    phoneNo :{
+        type : Number
+    },
+    gender : {
+        type:String ,
+        enum : ["M" , "F" , "O"]
+    }
+    ,
+    //will be stored in cloud
+    patientImage:{
+        type : String
+    }
+    ,
+    bloodGroup:{
+        type:String ,
+    }
+} , {timestamps:true});
+const Patient = mongoose.model("Patient",patientSchema);
 module.exports = Patient;

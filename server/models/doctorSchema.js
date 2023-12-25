@@ -1,4 +1,4 @@
-const { Phone } = require('@mui/icons-material');
+
 const mongoose= require('mongoose');
 const doctorSchema = new mongoose.Schema({
     // ask specialization at the time of registration
@@ -40,7 +40,15 @@ const doctorSchema = new mongoose.Schema({
     phoneNo :{
         type : Number
     }
-
-})
-const Doctor = mongoose.model("doctor",doctorSchema);
+    ,
+    doctorImage :{
+        type : String
+    } ,
+    fees:{
+        type :Number ,
+        required : true , 
+        default : 200
+    }
+},{timestamps:true})
+const Doctor = mongoose.model("Doctor",doctorSchema);
 module.exports = Doctor;
