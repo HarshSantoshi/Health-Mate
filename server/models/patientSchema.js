@@ -1,5 +1,6 @@
-import { Schema, model } from 'mongoose';
-import mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2';
+import  { Schema, model } from 'mongoose';
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 const patientSchema = new Schema({
    
     // unique email to be asked for at time of registration
@@ -43,9 +44,48 @@ const patientSchema = new Schema({
     ,
     bloodGroup:{
         type:String ,
+    },
+    refreshToken:{
+        type:String
     }
 } , {timestamps:true});
 
-patientSchema.plugin(mongooseAggregatePaginate);
+//Taking help of Mongoose Hook (pre) to encrypt the password just before saving it into database using bcrpt
+
+//Not used arrow function(middleware) so as to use 'this'
+
+patientSchema.pre('save' , async function( next ){
+    if(!this.isModified("password"))return next();
+    this.password = bcrypt.hash(this.password , 10);
+    next();
+})
+patientSchema.methods.isPasswordCorrect = async function(password){
+    return await bcrypt.compare(password , this.password)
+}
+patientSchema.methods.generateAccessToken  = function generateAccessToken() {
+    return jwt.sign(
+        {
+            _id : this._id,
+            email : this.email ,
+            username : this.username ,
+            patientName : this.patientName
+        },
+        process.env.ACCESS_TOKEN_SECRET, 
+        { 
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY 
+        }
+    );
+}
+patientSchema.methods.generateRefreshToken = function generateAccessToken() {
+    return jwt.sign(
+        {
+            _id : this._id, 
+        },
+        process.env.ACCESS_REFRESH_SECRET, 
+        { 
+            expiresIn: process.env.ACCESS_REFRESH_EXPIRY 
+        }
+    );
+}
 const Patient = model("Patient",patientSchema);
 export default Patient;

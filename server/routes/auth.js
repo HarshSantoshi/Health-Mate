@@ -1,9 +1,9 @@
-const express = require('express');
-const Doctor = require('../models/doctorSchema');
-const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import { Router } from 'express';
+import Doctor from '../models/doctorSchema';
+const router = Router();
+import { body, validationResult } from 'express-validator';
+import { genSaltSync, hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 require("dotenv").config();
 
 // ROUTE:1 CREATE a Doctor using : POST "/api/auth/createdoctor" No login required
@@ -33,8 +33,8 @@ router.post('/createdoctor',[
             return res.status(400).json({success, error: "account with this username exists!"});
         }
         // 10 rounds of hashing
-        const salt =  bcrypt.genSaltSync(10);
-        const secPass = await bcrypt.hash(req.body.password,salt);
+        const salt =  genSaltSync(10);
+        const secPass = await hash(req.body.password,salt);
         doctor = await Doctor.create({
             specialization: req.body.specialization,
             email:req.body.email,
@@ -47,7 +47,7 @@ router.post('/createdoctor',[
                 id: doctor.id
             }
         }
-        const authToken = jwt.sign(data,process.env.REACT_APP_JWTSECRET);
+        const authToken = sign(data,process.env.REACT_APP_JWTSECRET);
         success= true;
         res.json({success, authToken});
     } catch (error){
@@ -56,4 +56,4 @@ router.post('/createdoctor',[
 });
 
 
-module.exports = router;
+export default router;
