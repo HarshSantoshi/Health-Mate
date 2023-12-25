@@ -1,16 +1,17 @@
-const express  = require('express');
-const app= express();
-var cors = require('cors')
-app.use(cors())
-const connectToMongoDB = require("./db.js");
-app.use(express.json());
-connectToMongoDB();
+import {} from 'dotenv/config'
+import connectToMongoDB from "./db/index.js";
+import express from "express";
 
-app.get('/',(req,res)=>{
-    res.send("Hello World");
+const app = express();
+connectToMongoDB().then(()=>{
+    app.listen(process.env.PORT||5000,()=>{
+        console.log(`Server is running`)
+    })
 })
-app.use("/api/auth",require("./routes/auth.js"));
+.catch((error) => {
+    console.log("MONGO DB CONNECTION FAILED " , error);
+})
 
-app.listen(process.env.PORT||5000,()=>{
-    
+app.on("error" , (error) =>{
+    console.log(`Error while setting up the app : ${error}`)
 })

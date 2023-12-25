@@ -1,5 +1,6 @@
-const mongoose= require('mongoose');
-const patientSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+import mongooseAggregatePaginate from 'mongoose-aggregate-paginate-v2';
+const patientSchema = new Schema({
    
     // unique email to be asked for at time of registration
     email: {
@@ -44,5 +45,7 @@ const patientSchema = new mongoose.Schema({
         type:String ,
     }
 } , {timestamps:true});
-const Patient = mongoose.model("Patient",patientSchema);
-module.exports = Patient;
+
+patientSchema.plugin(mongooseAggregatePaginate);
+const Patient = model("Patient",patientSchema);
+export default Patient;
