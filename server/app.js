@@ -5,14 +5,15 @@ const app = express()
 
 app.use(cors());
 
-app.use(json());
-app.use(urlencoded())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"))
 app.use(cookieParser());
 
-app.get('/',(req,res)=>{
-    res.send("Hello World");
-})
-app.use("/api/auth",require("./routes/auth.js"));
+//Routes
+import { docRouter } from './routes/doctor.routes.js';
 
-export const module =  app;
+//routes declarations
+app.use("/api/v1/doctors"  , docRouter);
+
+export {app};

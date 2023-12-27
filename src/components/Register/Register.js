@@ -84,7 +84,8 @@ const Register = () => {
                 <MenuItem value='patient'>Patient</MenuItem>
                 <MenuItem value='doctor'>Doctor</MenuItem>
             </TextField>
-               {credentials.userType==='doctor'?<form onSubmit={handleSubmit}>
+               {credentials.userType==='doctor'?
+               <form onSubmit={handleSubmit} action='/createdoctor' method='POST'>
                     <TextField  sx={{marginBottom:"1rem"}} select value={credentials.specialization} onChange={handleChange} name='specialization' size='small' label='Specialization' color='secondary'  fullWidth required>
                     {doctorTypes.map((value, idx) => (
                       <MenuItem value={value} key={idx}>
@@ -98,7 +99,7 @@ const Register = () => {
                     <TextField sx={{marginBottom:"1rem"}} value={credentials.password} onChange={handleChange} name='password' size='small' type = 'password' helperText='Minimum 5 characters' label='Password' color='secondary' fullWidth required/>
                     <button type='submit' className='btn'>SignUp</button>
                </form>:
-               <form onSubmit={handleSubmit}>
+               <form action='/createpatient' method='POST' onSubmit={handleSubmit}>
                     <TextField value={credentials.name}  sx={{marginBottom:"1rem"}} name='name' onChange={handleChange} size='small' label='Your Name' helperText='Enter your full name' color='secondary' fullWidth required/>
                     <TextField value={credentials.username}  sx={{marginBottom:"1rem"}} name='username' onChange={handleChange} size='small' label='Username' helperText='Username must be unique' color='secondary' fullWidth required/>
                     <TextField  value={credentials.email} sx={{marginBottom:"1rem"}} name='email' onChange={handleChange} size='small' type='email' label='Email-ID' color='secondary' fullWidth required/>

@@ -1,6 +1,6 @@
 import React from 'react'
-import ServicesCard from '../ServicesCard/ServicesCard'
-import CircleCard from '../CircleCard/CircleCard'
+import ServicesCard from '../ServicesCard/ServicesCard.js'
+import CircleCard from '../CircleCard/CircleCard.js'
 import './LandingPage.css'
 const LandingPage = () => {
   return (

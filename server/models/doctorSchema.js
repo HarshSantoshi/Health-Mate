@@ -17,14 +17,6 @@ const doctorSchema = new Schema({
         unique: true
     }
     ,
-    // unique username to be aksed for at the time of registration 
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        minLength: 5
-    }
-    ,
     doctorName:{
         type:String,
         required: true,
@@ -65,7 +57,7 @@ const doctorSchema = new Schema({
 doctorSchema.plugin(mongooseAggregatePaginate);
 doctorSchema.pre('save' , async function( next ){
     if(!this.isModified("password"))return next();
-    this.password = bcrypt.hash(this.password , 10);
+    this.password = await bcrypt.hash(this.password , 10);
     next();
 })
 doctorSchema.methods.isPasswordCorrect = async function(password){

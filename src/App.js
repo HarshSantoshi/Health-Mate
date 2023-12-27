@@ -1,12 +1,12 @@
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import LandingPage from './components/LandingPage/LandingPage';
-import Login from './components/Login/Login';
+import Navbar from './components/Navbar/Navbar.js';
+import LandingPage from './components/LandingPage/LandingPage.js';
+import Login from './components/Login/Login.js';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Footer from './components/Footer/Footer';
-import Register from './components/Register/Register';
-import DoctorPage from './components/Doctor/DoctorPage';
-import PatientPage from './components/Patient/PatientPage';
+import Footer from './components/Footer/Footer.js';
+import Register from './components/Register/Register.js';
+import DoctorPage from './components/Doctor/DoctorPage.js';
+import PatientPage from './components/Patient/PatientPage.js';
 function App() {
   return (
     <div className="App">
