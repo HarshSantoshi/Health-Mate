@@ -7,9 +7,23 @@ import Footer from './components/Footer/Footer.js';
 import Register from './components/Register/Register.js';
 import DoctorPage from './components/Doctor/DoctorPage.js';
 import PatientPage from './components/Patient/PatientPage.js';
+import { Toaster } from 'react-hot-toast';
 function App() {
   return (
     <div className="App">
+      <Toaster position="top-center"
+        toastOptions={{
+          success:{
+            theme:{
+              primary: "green"
+            }
+          },
+          error :{
+            theme :{
+              primary : "red"
+            }
+          }
+        }}/>
       <Router>
         <Navbar />
         <Routes>

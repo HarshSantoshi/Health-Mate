@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import {TextField,MenuItem, Paper} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
-// import  toast  from 'react-hot-toast';
+import  {toast}  from 'react-hot-toast';
 import './Register.css'
 
 const Register = () => {
@@ -52,7 +52,7 @@ const Register = () => {
     "Urologist"
   ];
   
-  const [credentials , setCredentials] = useState({userType:"" , name : "" , email:"" , username :"" , password :"" , specialization:""});
+  const [credentials , setCredentials] = useState({userType:"" , name : "" , email:"", password :"" , specialization:"" , doctorName : ""});
   const navigate = useNavigate();
   const handleChange=(e)=>{
     const value = e.target.value;
@@ -66,12 +66,57 @@ const Register = () => {
     })
   
   }
-  const handleSubmit = ()=>{
-    if(credentials.userType ==='doctor'){
-      navigate('/doctorPage');
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    if(credentials.userType === 'doctor'){
+      const response = await fetch("http://localhost:8000/api/v1/auth/createdoctor", {
+        method :"POST",
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body:JSON.stringify({
+            specialization: credentials.specialization,
+            email:credentials.email,
+            password: credentials.password,
+            doctorName: credentials.doctorName
+        })
+      })
+      const json = await response.json();
+      if(json.success){
+        localStorage.setItem('token', json.authToken); 
+        localStorage.setItem('role','doctor');
+        navigate("/doctorpage");
+        toast.success("Doctor account created successfully!");
+      }
+      else{  
+        toast.error("Invalid Credentials");
+      }
     }
     else if(credentials.userType === 'patient'){
-      navigate('/patientpage');
+      const response = await fetch("http://localhost:8000/api/v1/auth/createpatient", {
+        method :"POST",
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body:JSON.stringify({
+            email:credentials.email,
+            password: credentials.password,
+            name: credentials.name
+        })
+      })
+      const json = await response.json();
+      if(json.success){
+        localStorage.setItem('token', json.authToken); 
+        localStorage.setItem('role','patient');
+        navigate("/patientpage");
+        toast.success("Patient account created successfully!");
+      }
+      else{
+        toast.error("Invalid Credentials");
+      }
+    }
+    else{
+      toast.error("Select a user type");
     }
     
   }
@@ -85,7 +130,7 @@ const Register = () => {
                 <MenuItem value='doctor'>Doctor</MenuItem>
             </TextField>
                {credentials.userType==='doctor'?
-               <form onSubmit={handleSubmit} action='/createdoctor' method='POST'>
+               <form onSubmit={(e) => handleSubmit(e)} action='/createdoctor' method='POST'>
                     <TextField  sx={{marginBottom:"1rem"}} select value={credentials.specialization} onChange={handleChange} name='specialization' size='small' label='Specialization' color='secondary'  fullWidth required>
                     {doctorTypes.map((value, idx) => (
                       <MenuItem value={value} key={idx}>
@@ -93,15 +138,13 @@ const Register = () => {
                       </MenuItem>
                     ))}
                     </TextField>
-                    <TextField  sx={{marginBottom:"1rem"}} value={credentials.name} onChange={handleChange} name='name' size='small' label='Doctor name' helperText='Enter your full name' color='secondary' fullWidth required/>
-                    <TextField  sx={{marginBottom:"1rem"}} value={credentials.username} onChange={handleChange} name='username' size='small' label='Username' helperText='Username must be unique' color='secondary' fullWidth required/>
+                    <TextField  sx={{marginBottom:"1rem"}} value={credentials.doctorName} onChange={handleChange} name='doctorName' size='small' label='Doctor name' helperText='Enter your full name' color='secondary' fullWidth required/>
                     <TextField  sx={{marginBottom:"1rem"}} value={credentials.email} onChange={handleChange} name='email' size='small' type='email' label='Email-ID' color='secondary' fullWidth required/>
                     <TextField sx={{marginBottom:"1rem"}} value={credentials.password} onChange={handleChange} name='password' size='small' type = 'password' helperText='Minimum 5 characters' label='Password' color='secondary' fullWidth required/>
-                    <button type='submit' className='btn'>SignUp</button>
+                    <button type='submit' className='btn'>Register</button>
                </form>:
-               <form action='/createpatient' method='POST' onSubmit={handleSubmit}>
+               <form onSubmit={(e) => handleSubmit(e)} action='/createpatient' method='POST' >
                     <TextField value={credentials.name}  sx={{marginBottom:"1rem"}} name='name' onChange={handleChange} size='small' label='Your Name' helperText='Enter your full name' color='secondary' fullWidth required/>
-                    <TextField value={credentials.username}  sx={{marginBottom:"1rem"}} name='username' onChange={handleChange} size='small' label='Username' helperText='Username must be unique' color='secondary' fullWidth required/>
                     <TextField  value={credentials.email} sx={{marginBottom:"1rem"}} name='email' onChange={handleChange} size='small' type='email' label='Email-ID' color='secondary' fullWidth required/>
                     <TextField value={credentials.password} sx={{marginBottom:"1rem"}} name='password' onChange={handleChange} size='small' type = 'password' helperText='Minimum 5 characters' label='Password' color='secondary' fullWidth required/>
                     <button type='submit' className='btn'>Register</button>

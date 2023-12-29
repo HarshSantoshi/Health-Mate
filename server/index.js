@@ -1,8 +1,5 @@
 import {} from 'dotenv/config'
 import connectToMongoDB from "./db/index.js";
-// import express from "express";
-
-// const app = express();
 import { app } from './app.js';
 connectToMongoDB().then(()=>{
     app.listen(process.env.PORT||8000,()=>{

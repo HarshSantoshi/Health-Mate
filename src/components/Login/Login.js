@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import {TextField,MenuItem, Paper} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 const Login = () => {
   const [credentials , setCredentials] = useState({userType:"" , email:"", password :""});
   const navigate = useNavigate();
@@ -16,12 +17,54 @@ const Login = () => {
     })
   
   }
-  const handleSubmit = ()=>{
-    if(credentials.userType ==='doctor'){
-      navigate('/doctorPage');
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    if(credentials.userType === 'doctor'){
+      const response = await fetch("http://localhost:8000/api/v1/auth/logindoctor", {
+        method :"POST",
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body:JSON.stringify({
+            email:credentials.email,
+            password: credentials.password,
+        })
+      })
+      const json = await response.json();
+      if(json.success){
+        localStorage.setItem('token', json.authToken); 
+        localStorage.setItem('role','doctor');
+        navigate("/doctorpage");
+        toast.success("Logged In successfully!");
+      }
+      else{  
+        toast.error("Invalid Credentials");
+      }
     }
     else if(credentials.userType === 'patient'){
-      navigate('/patientpage');
+      const response = await fetch("http://localhost:8000/api/v1/auth/loginpatient", {
+        method :"POST",
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body:JSON.stringify({
+            email:credentials.email,
+            password: credentials.password
+        })
+      })
+      const json = await response.json();
+      if(json.success){
+        localStorage.setItem('token', json.authToken); 
+        localStorage.setItem('role','patient');
+        navigate("/patientpage");
+        toast.success("Patient Logged In successfully!");
+      }
+      else{
+        toast.error("Invalid Credentials");
+      }
+    }
+    else{
+      toast.error("Select a user type");
     }
     
   }

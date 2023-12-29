@@ -9,13 +9,7 @@ const patientSchema = new Schema({
         required: true,
         unique: true
     },
-    // unique username to be aksed for at the time of registration 
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        minLength: 5
-    },
+   
     patientName:{
         type:String,
         required: true,
@@ -44,9 +38,6 @@ const patientSchema = new Schema({
     ,
     bloodGroup:{
         type:String ,
-    },
-    refreshToken:{
-        type:String
     }
 } , {timestamps:true});
 

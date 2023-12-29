@@ -1,8 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './navbar.css'
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = ()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    toast.success("Logout Successfully");
+    navigate('/login');
+  }
   return (
     <>
      <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -17,15 +25,15 @@ const Navbar = () => {
           <Link className="nav-link active" to="/">Home</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">About Us</a>
+          <Link className="nav-link" to="/">About Us</Link>
         </li>
         <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Features
-          </a>
+          </Link>
           <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Feature 1</a></li>
-            <li><a className="dropdown-item" href="#">Feature 2</a></li>
+            {/* <li><a className="dropdown-item" href="#">Feature 1</a></li>
+            <li><a className="dropdown-item" href="#">Feature 2</a></li> */}
             
             </ul>
         </li>
@@ -36,12 +44,39 @@ const Navbar = () => {
         <button className="btn btn-outline-success" type="submit">Search</button>
       </form>
      <div style={{marginLeft: 10}}>
-     <button type="button" className="btn btn-primary login">
+      {
+        !localStorage.getItem('token')?
+        <>
+        <button type="button" className="btn btn-primary login">
      <Link to ="/login">Login</Link>
      </button>
      <button type="button" className="btn btn-info register">
      <Link to ="/register">Register</Link>
      </button>
+        </> :
+        <>
+        {
+          localStorage.getItem('role') === 'doctor' ?
+          <div>
+<button type="button" className="btn btn-primary login">
+     <Link to ="/doctorprofilepage">Profile </Link>
+     </button>
+     <button onClick={handleLogout} type="button" className="btn btn-info register">
+     Logout
+     </button>
+          </div>:
+          <div>
+<button type="button" className="btn btn-primary login">
+     <Link to ="/patientprofilepage">Profile</Link>
+     </button>
+     <button onClick={handleLogout} type="button" className="btn btn-info register">
+     Logout
+     </button>
+          </div>
+        }
+        </>
+
+      }
      </div>
     </div>
   </div>
