@@ -59,7 +59,7 @@ const Navbar = () => {
           localStorage.getItem('role') === 'doctor' ?
           <div>
 <button type="button" className="btn btn-primary login">
-     <Link to ="/doctorprofilepage">Profile </Link>
+     <Link to ="/doctorprofile">Profile </Link>
      </button>
      <button onClick={handleLogout} type="button" className="btn btn-info register">
      Logout
@@ -67,7 +67,7 @@ const Navbar = () => {
           </div>:
           <div>
 <button type="button" className="btn btn-primary login">
-     <Link to ="/patientprofilepage">Profile</Link>
+     <Link to ="/patientprofile">Profile</Link>
      </button>
      <button onClick={handleLogout} type="button" className="btn btn-info register">
      Logout

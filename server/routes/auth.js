@@ -5,6 +5,7 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 
 import jwt from 'jsonwebtoken';
+import { fetchPatient } from '../middleware/fetchPatient.js';
 
 const Authrouter = Router();
 // ROUTE:1 CREATE a Doctor using : POST "/api/auth/createdoctor" No login required
@@ -161,5 +162,14 @@ Authrouter.post('/loginpatient' ,[
         res.status(500).send("internal server error");
     }
 })
-
+Authrouter.get('/patientdetail', fetchPatient , async(req , res) => {
+    try {
+        const patientId = req.patient.id;
+        const patient = await Patient.findById(patientId);
+        // console.log(patient);
+        res.send(patient);
+    } catch (error) {
+        res.status(500).send("Internal Server Error");
+    }
+})
 export default Authrouter;

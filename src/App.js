@@ -8,6 +8,8 @@ import Register from './components/Register/Register.js';
 import DoctorPage from './components/Doctor/DoctorPage.js';
 import PatientPage from './components/Patient/PatientPage.js';
 import { Toaster } from 'react-hot-toast';
+import PatientProfile from './components/Patient/PatientProfile.js';
+import DoctorProfile from './components/Doctor/DoctorProfile.js';
 function App() {
   return (
     <div className="App">
@@ -32,6 +34,8 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/doctorpage" element={<DoctorPage/>} />
           <Route exact path="/patientpage" element={<PatientPage/>} />
+          <Route exact path="/patientprofile" element={<PatientProfile/>} />
+          <Route exact path="/doctorprofile" element={<DoctorProfile/>} />
         </Routes>
         <Footer/>
       </Router>

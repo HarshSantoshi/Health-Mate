@@ -38,6 +38,9 @@ const patientSchema = new Schema({
     ,
     bloodGroup:{
         type:String ,
+    }, 
+    disease:{
+        type : String ,
     }
 } , {timestamps:true});
 

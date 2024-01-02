@@ -1,0 +1,41 @@
+.profilecontainer{
+    height:auto;
+    margin:20px auto;
+    width:700px;
+    background-color:white;
+    border:3px solid black;
+
+}
+.profileImage{
+    margin:10px auto;
+    height:200px;
+    width:200px;
+    background-color:black;
+    border-radius:50%;
+}
+.profileImage img{
+    height:100%;
+}
+.detail-heading{
+    font-size: 24px;
+    font-weight:bold;
+    margin-top:40px;
+}
+.profileForm{
+    border:1px solid red;
+}
+.profileForm >*{
+    margin : 10px;
+}
+.profileForm label{
+    color:red;
+    padding : 3px;
+    display:inline;
+}
+.profileForm input{
+    border-bottom:2px solid black;
+    padding : 3px ;
+    width:auto;
+    margin: 10px 30px;
+    /* display:block; */
+}
