@@ -60,7 +60,7 @@ const PatientProfile = () => {
             <input type='text' id = "bloodGroup" name ="bloodGroup" value=""/>
             <br/>
             
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Edit Profile" />
           </div>
         )}
       </div>

@@ -51,7 +51,7 @@ Authrouter.post('/createdoctor',[
         success= true;
         res.json({success, authToken});
     } catch (error){
-        res.status(500).send("Some error occured");
+        res.status(500).send({err: "Some error occured"});
     }
 });
 Authrouter.post('/createpatient',[
