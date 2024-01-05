@@ -36,6 +36,7 @@ function App() {
           <Route exact path="/patientpage" element={<PatientPage/>} />
           <Route exact path="/patientprofile" element={<PatientProfile/>} />
           <Route exact path="/doctorprofile" element={<DoctorProfile/>} />
+          <Route exact path="/alldoctorspage" element={<DoctorPage/>} />
         </Routes>
         <Footer/>
       </Router>
