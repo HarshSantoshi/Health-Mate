@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import Authrouter from './routes/auth.js';
+import DoctorRouter from './routes/doctors.js';
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/v1/auth', Authrouter);
+app.use('/api/v1/doctors', DoctorRouter);
 
 export { app };

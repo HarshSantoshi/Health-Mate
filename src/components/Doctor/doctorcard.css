@@ -1,0 +1,10 @@
+.doc-card-container{
+    border:1px solid black;
+    height:400px;
+    width:300px;
+}
+.doc-card >*{
+    height:150px;
+    width:300px;
+    border:1px solid black;
+}

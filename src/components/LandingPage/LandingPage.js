@@ -2,6 +2,7 @@ import React from 'react'
 import ServicesCard from '../ServicesCard/ServicesCard.js'
 import CircleCard from '../CircleCard/CircleCard.js'
 import './LandingPage.css'
+import { Link } from 'react-router-dom'
 const LandingPage = () => {
   return (
     <>
@@ -26,7 +27,9 @@ const LandingPage = () => {
       </div>
       <div className='cards'>
         <ServicesCard feature="Video Call" text="Connect within 60 seconds" img="videocall-img.png" />
-        <ServicesCard feature="Find Doctors " text="Confirmed appointments with doctors" img="finddoctor-img1.jpg" />
+        <Link to='/alldoctorspage'>
+        <ServicesCard feature="Find Doctors " text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  />
+        </Link>
         <ServicesCard feature="Medicines" text="Essentials at your doorstep" img="medicines-img.jpg" />
         <ServicesCard feature="Lab Test" text="Sample pickup at your home" img="labtest-img.jpeg" />
         <ServicesCard feature="Surgeries" text="Safe and trusted surgery centers" img="surjeries-img.jpg" />
