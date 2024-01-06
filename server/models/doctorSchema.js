@@ -48,6 +48,14 @@ const doctorSchema = new Schema({
         required : true , 
         default : 200
     }
+    ,
+    avgRating : {
+        type :Number
+    },
+    totalRatings :{
+        type : Number
+    }
+
     
 },{timestamps:true})
 
