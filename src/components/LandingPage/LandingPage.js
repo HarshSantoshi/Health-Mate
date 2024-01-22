@@ -26,10 +26,11 @@ const LandingPage = () => {
         Our Services
       </div>
       <div className='cards'>
-        <ServicesCard feature="Video Call" text="Connect within 60 seconds" img="videocall-img.png" />
         <Link to='/alldoctorspage'>
-        <ServicesCard feature="Find Doctors " text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  />
+          <ServicesCard feature="Video Call" text="Connect within 60 seconds" img="videocall-img.png" />
         </Link>
+        <ServicesCard feature="Find Doctors " text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  />
+        
         <ServicesCard feature="Medicines" text="Essentials at your doorstep" img="medicines-img.jpg" />
         <ServicesCard feature="Lab Test" text="Sample pickup at your home" img="labtest-img.jpeg" />
         <ServicesCard feature="Surgeries" text="Safe and trusted surgery centers" img="surjeries-img.jpg" />

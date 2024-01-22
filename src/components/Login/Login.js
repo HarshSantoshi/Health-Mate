@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {TextField,MenuItem, Paper} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
 const Login = () => {
   const [credentials , setCredentials] = useState({userType:"" , email:"", password :""});
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const Login = () => {
       if(json.success){
         localStorage.setItem('token', json.authToken); 
         localStorage.setItem('role','doctor');
+        
         navigate("/doctorpage");
         toast.success("Logged In successfully!");
       }

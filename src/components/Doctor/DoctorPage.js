@@ -9,7 +9,7 @@ const DoctorPage = () => {
       try {
         const response = await fetch("http://localhost:8000/api/v1/doctors/getalldoctors");
         const data = await response.json();
-        setAllDoctors(data.doctors || []);  
+        setAllDoctors(data.doctors || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -19,15 +19,15 @@ const DoctorPage = () => {
   }, []);
 
   return (
-    <div>
+    <div >
       <h1>Doctor Page</h1>
-      <div style={{height:"400px" , display:"flex", flex :"wrap"}}>
-      {allDoctors.map((doctor, index) => (
-          
-            <DoctorCard key={index} props={{ name: doctor.doctorName , specialization:doctor.specialization , fees : doctor.fees }}  />
-         
-      ))}
-       </div>
+      <div style={{ height: "auto", display: "flex" , flexWrap: 'wrap', justifyContent:'space-evenly' }}>
+        {allDoctors.map((doctor, index) => (
+
+          <DoctorCard key={index} props={{ name: doctor.doctorName, specialization: doctor.specialization, fees: doctor.fees, id: doctor._id, rating: "4.6", totalRatings :'10' }} />
+
+        ))}
+      </div>
     </div>
   );
 };
