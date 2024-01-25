@@ -11,6 +11,9 @@ import { Toaster } from 'react-hot-toast';
 import PatientProfile from './components/Patient/PatientProfile.js';
 import DoctorProfile from './components/Doctor/DoctorProfile.js';
 import ChatSection from './components/Chat/ChatSection.js';
+import MedicineMain from './components/Medicine/MedicineMain.js';
+import Productmain from './components/Medicine/Product/Productmain.js';
+import Cart from './components/Medicine/Cart/Cart.js';
 function App() {
 
   return (
@@ -40,6 +43,9 @@ function App() {
           <Route exact path="/doctorprofile" element={<DoctorProfile/>} />
           <Route exact path="/alldoctorspage" element={<DoctorPage/>} />
           <Route exact path="/chat/:id" element={<ChatSection/>} />
+          <Route exact path="/allmedicinepage" element={<MedicineMain/>} />
+          <Route exact path="/product/:id" element={<Productmain/>} />
+          <Route exact path="/cart" element={<Cart/>} />
         </Routes>
         <Footer/>
       </Router>
