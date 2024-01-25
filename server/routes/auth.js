@@ -141,7 +141,7 @@ Authrouter.post('/loginpatient' ,[
     }
     const {email ,password} = req.body;
     try {
-        const patient = await Doctor.findOne({email});
+        const patient = await Patient.findOne({email});
         if(!patient){
             return res.status(400).json({success, error : "Incorrect Credentials"})
         }

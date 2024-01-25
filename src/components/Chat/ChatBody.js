@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@mui/material';
-
+import InputEmoji from "react-input-emoji"
 const Body = styled('div')`
   height: 100%;
   border: 1px solid black;
@@ -42,9 +42,10 @@ const Received = styled('div')`
   background: green;
   max-width: 55%;
   color: white;
-  padding: 5px;
   width: fit-content;
   display: flex;
+  align-items: center;
+  padding: 2px 5px;
   border-radius: 8px;
   margin-top: 10px;
   word-break: break-word;
@@ -67,8 +68,10 @@ const Time = styled(Typography)`
 const Header = styled('div')`
   height: 10%;
   width: 100%;
-  background-color: grey;
-  color:white;
+  background-color: #e0e0e0;
+  display : flex;
+  align-items:center;
+  justify-content : center;
 `;
 const InputContainer = styled('div')`
   height: 10%;
@@ -79,31 +82,77 @@ const InputContainer = styled('div')`
   justify-content: center;
 `;
 
-const TypeField = styled('input')`
-  color: #d1d7db;
-  width: 80%;
-  height: 90%;
-  margin: auto 20px;
-  font-size: 16px;
-  padding: 0 10px;
-  color: black;
-  overflow-x: scroll;
-`;
-
+const ProfileImg = styled('img')`
+height:40px;
+border-radius : 50%;
+margin: 0 10px;
+`
+const Name = styled('div')`
+font-weight : bold;
+`
 const Button = styled('button')`
-  height: 90%;
-  background-color: #2a3942;
+  height: 80%;
+  margin:0 20px;
+  background-color: blue;
   color: white;
-  border-radius: 5px;
+  border-radius: 10px;
 `;
-const ChatBody = ({ name }) => {
-  const [message, setMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState([]);
+const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiveMessage}) => {
+  const [userData , setUserData] = useState(null);
+  const [message, setMessages] = useState([]);
+  const [newMessage, setnewMessage] = useState("");
   const chatContainerRef = useRef();
+  
+  //setting header of the chat
+  useEffect(()=>{
+    const userId = chat?.members?.find((id)=>id!==currentUserId);
+    
+    const getUserData = async()=>{
+      try {
+          let response;
+          if(currUserRole === "doctor"){
+           
+              response = await fetch(`http://localhost:8000/api/v1/patient/getpatient/${userId}`);
+              const data = await response.json();
+              setUserData(data.patient);
+          }
+          else if(currUserRole === 'patient'){
+              response = await fetch(`http://localhost:8000/api/v1/doctors/getdoctor/${userId}`);
+              const data = await response.json();
+              setUserData(data.doctor);
+          }
+      } catch (error) {
+          console.log(error);
+      }
+      
+  }
+  if(chat!==null){
+    getUserData();
+  }
+  } , [chat , currentUserId])
+
+  //fetch messages
+  useEffect(()=>{
+    const fetchMessages = async()=>{
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/message/${chat?._id}`);
+        const data = await response.json();
+        console.log(data);
+        setMessages(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if(chat !== null){
+      fetchMessages();
+    }
+
+  },[chat])
+  
 
   useEffect(() => {
     scrollToBottom();
-  }, [chatMessages]);
+  }, [message]);
 
   
 const scrollToBottom = () => {
@@ -113,12 +162,10 @@ const scrollToBottom = () => {
 };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey && message !== '') {
+    if (e.key === 'Enter' && !e.shiftKey && newMessage !== '') {
       e.preventDefault();
-      console.log(message);
       handleSend();
     }
-    
   };
 
   const formatDate = (date) => {
@@ -126,43 +173,94 @@ const scrollToBottom = () => {
     const min = new Date(date).getMinutes();
     return `${hours < 10 ? '0' + hours : hours}:${min < 10 ? '0' + min : min}`;
   };
-
-  const handleSend = () => {
-
-    const newMessage = {
-      content: message,
-      createdAt: new Date(),
-    };
-    setChatMessages([...chatMessages, newMessage]);
-    setMessage('');
+  const handleChange = (text) => {
+    setnewMessage(text);
   };
-
+  
+  const handleSend = async () => {
+    const msg = {
+      senderId: currentUserId,
+      chatId: chat._id,
+      text: newMessage
+    };
+  
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/message/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(msg),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to send message: ${response.status}`);
+      }
+  
+      const sentMessage = await response.json();
+  
+      setMessages([...message, sentMessage]);
+      setnewMessage("");
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  
+    const receiverId = chat?.members?.find((id) => id !== currentUserId);
+  
+    if (receiverId) {
+      setSendMessage({ ...msg, receiverId: receiverId });
+    }
+  };
+  useEffect(()=>{
+    if(receiveMessage !==null && receiveMessage.chatId === chat._id){
+      console.log("receivedd messg ",receiveMessage);
+      setMessages([...message , receiveMessage])
+    }
+  },[receiveMessage])
+  
   return (
     <>
       <Body>
-      {name === "" ? (
-          <Typography>Select a Patient</Typography>
+      {chat === null ? (
+          <Typography>Select a user </Typography>
         ) : (
           <>
-            <Header>Patient Name: {name}</Header>
+           <Header>
+            <ProfileImg src="../profile.png" alt='banner' />
+            {currUserRole === 'doctor' ? (
+              <Name>
+                Patient Name: {userData?.patientName}
+              </Name>
+            ) : (
+              <Name>
+                Doctor Name: {userData?.doctorName}
+              </Name>
+            )}
+          </Header>
             <ChatContainer ref={chatContainerRef}>
-              {chatMessages.map((msg, index) => (
+              {message.map((msg, index) => (
+                <>
+                {msg.senderId === currentUserId ? 
                 <Sent key={index}>
-                  <Chat>{msg.content}</Chat>
-                  <Time>{formatDate(msg.createdAt)}</Time>
-                </Sent>
+                <Chat>{msg.text}</Chat>
+                <Time>{formatDate(msg.createdAt) || msg.date}</Time>
+              </Sent>
+              :
+              <Received key={index}>
+                <Chat>{msg.text}</Chat>
+                <Time>{formatDate(msg.createdAt) || msg.createdAt}</Time>
+              </Received>
+                }
+                </>
               ))}
             </ChatContainer>
             <InputContainer>
-              <TypeField
-                type="text"
-                placeholder="Type a message"
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                onKeyUp={handleKeyPress}
-              />
-              <Button onClick={ handleSend}>Send</Button>
-              
+            <InputEmoji 
+            onChange={handleChange}
+            value = {newMessage}
+            onKeyDown={handleKeyPress}
+            />
+            <Button onClick={ handleSend}>Send</Button>
             </InputContainer>
           </>
         )}

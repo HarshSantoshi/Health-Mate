@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {styled} from '@mui/system';
 
+
 const Content = styled('div')({
   marginTop: '2',
   display: 'flex',
@@ -31,8 +32,29 @@ const Button = styled('button')({
 
 export default function DoctorCard({props}) {
   const navigate = useNavigate();
-  const handleClick = (id) =>{
-    navigate(`/chat/${id}`);
+  const {patientId} = props;
+  const handleClick = async(id) =>{
+    //chat create
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/chat/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          senderId: patientId,
+          receiverId: id,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to create chat: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+    //redirect to patient chat page
+    navigate(`/chat/${patientId}`);
   }
   return (
     <div style={{padding:"5px", height:'auto' , marginBottom:'10px', margin:'20px 0px'}}>

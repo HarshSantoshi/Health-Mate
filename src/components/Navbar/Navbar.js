@@ -19,7 +19,6 @@ const Navbar = () => {
       if(role == "doctor"){
         const doctorIdFromToken = decodedToken.doctor.id;
 
-
         setDoctorId(doctorIdFromToken);
         // console.log(doctorId);
       }
@@ -64,9 +63,11 @@ const Navbar = () => {
 
               {localStorage.getItem('role') === 'doctor' ?
                 <li className="nav-item">
-                  <Link className="nav-link" to={`/allchats/${doctorId}`}>Your chats {doctorId}</Link>
+                  <Link className="nav-link" to={`/chat/${doctorId}`}>Your chats</Link>
                 </li>
-                : ""
+                : <li className="nav-item">
+                <Link className="nav-link" to={`/chat/${patientId}`}>Your chats</Link>
+              </li>
               }
 
             </ul>
