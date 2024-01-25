@@ -1,7 +1,4 @@
 import  { Schema, model } from 'mongoose';
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 const doctorSchema = new Schema({
     // ask specialization at the time of registration
     specialization: {
@@ -56,7 +53,7 @@ const doctorSchema = new Schema({
         type : Number
     }
 
-    
+
 },{timestamps:true})
 
 const Doctor = model("Doctor",doctorSchema);

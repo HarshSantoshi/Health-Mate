@@ -10,7 +10,9 @@ import PatientPage from './components/Patient/PatientPage.js';
 import { Toaster } from 'react-hot-toast';
 import PatientProfile from './components/Patient/PatientProfile.js';
 import DoctorProfile from './components/Doctor/DoctorProfile.js';
+import ChatSection from './components/Chat/ChatSection.js';
 function App() {
+
   return (
     <div className="App">
       <Toaster position="top-center"
@@ -37,6 +39,7 @@ function App() {
           <Route exact path="/patientprofile" element={<PatientProfile/>} />
           <Route exact path="/doctorprofile" element={<DoctorProfile/>} />
           <Route exact path="/alldoctorspage" element={<DoctorPage/>} />
+          <Route exact path="/chat/:id" element={<ChatSection/>} />
         </Routes>
         <Footer/>
       </Router>
