@@ -1,0 +1,134 @@
+.totalamt{
+    display: inline-block;
+    background: #fff;
+    padding: 16px 8px 0;
+    width: 100%;
+    border-radius: 8px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+.totalamt .title{
+    font-family: LatoBold;
+    font-size: 16px;
+    color: rgba(21,27,57,.6);
+    padding: 0 0 20px 16px;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.totalamt .total{
+    width: 100%;
+}
+.totalamt .total .subtotal{
+    padding: 0 16px;
+    display: inline-block;
+    width: 100%;
+}
+.totalamt label{
+    background: 0 0;
+    font-family: LatoSemibold;
+    font-size: 15px;
+    color: #484d52;
+    line-height: 24px;
+    margin: 0;
+    float: left;
+    text-align: left;
+}
+.totalamt span{
+    font-family: LatoSemibold;
+    font-size: 15px;
+    color: #151b39;
+    line-height: 24px;
+    float: right;
+}
+.total-payable{
+    margin: 16px 0 0;
+}
+.total-payable label{
+    color: #24aeb1;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: LatoBold;
+}
+.total-payable span{
+    color: #24aeb1;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: LatoBold;
+}
+.totalamt .save-amount{
+    margin: 10px 0;
+    border-radius: 8px;
+    background: #ecf5e4;
+    letter-spacing: 1px;
+    padding: 8px;
+}
+.save-amount span{
+    font-family: LatoBold;
+    font-size: 17px;
+    font-weight: 500;
+    color: #49930a;
+    line-height: 16px;
+}
+.save-amount label{
+    font-family: LatoBold;
+    font-size: 17px;
+    font-weight: 500;
+    color: #49930a;
+    line-height: 16px;
+}
+.totalamt .process-col{
+    background: #fff;
+    padding: 16px 8px;
+    display: inline-block;
+    width: 100%;
+    border-radius: 0 0 8px 8px;
+    z-index: 2;
+}
+.process-col .totalamount{
+    float: left;
+    width: 45%;
+    padding-left: 16px;
+}
+.process-col .totalamount .text {
+    font-family: LatoBold;
+    font-size: 14px;
+    color: rgba(21,27,57,.6);
+    padding: 0 0 3px;
+    display: block;
+    letter-spacing: .83px;
+    margin-left: 2px;
+}
+.process-col .totalamount .save-price {
+    font-family: LatoBold;
+    font-size: 18px;
+    font-weight: 500;
+    color: #151b39;
+    display: block;
+}
+.process-col .process-checkout{
+    float: right;
+    width: 50%;
+}
+.process-col .process-checkout .btn_to_checkout {
+    background: #24aeb1;
+    font-family: LatoBold;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 6px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+}
+.process-col .process-checkout .btn_to_checkout:hover {
+    background-color: #fff;
+    color: #24aeb1;
+}

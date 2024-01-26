@@ -1,0 +1,108 @@
+.product{
+    display: flex;
+    margin: 30px 10px;
+    background-color: #fff;
+    flex-wrap: wrap;
+}
+.product .left{
+    width: 46%;
+    max-width: 100%;
+    float: left;
+    display: block;
+    padding-left: 15px;
+    margin: 10px;
+    /* border: 2px solid red; */
+}
+
+.product .right{
+    width: 52%;
+    float: right;
+    display: block;
+    padding-left: 15px;
+    /* border: 2px solid yellow; */
+}
+.product .right .title{
+    /* width: calc(100% - 340px); */
+    height: auto;
+    text-align: left;
+    color: black;
+    font-family: Lato;
+}
+.badge{
+    background: #effafa;
+    height: 29px;
+    line-height: 18px;
+    display: inline-block;
+    border-radius: 35px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-family: LatoSemiBold;
+    color: #83878a;
+    max-width: 78%;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 5px;
+}
+.ellipsis {
+    text-overflow: ellipsis;
+}
+.product .right .price{
+    font-size: 14px;
+    font-family: LatoSemiBold;
+    color: rgba(0,0,0,.5);
+}
+.product .right .price .final-price{
+    font-size: 16px;
+    color: #000;
+}
+.product .right .price .price-dis{
+    padding: 0 0 0 6px;
+}
+
+.product .right .price .price-dis .disc-price {
+    color: #dd4679;
+    padding: 0 0 0 6px;
+}
+.product .right .price .txtContent {
+    display: block;
+    margin: 0 0 6px;
+}
+.product .right .price .return_prods {
+    color: #c4c4c4;
+    margin-bottom: 4px;
+    display: block;
+}
+.product .right .price .box-tocart {
+    display: inline-flex;
+    margin: 12px 0 0;
+    text-align: right;
+}
+.product .right .price .toCart {
+    background: #ef4281;
+    border-radius: 5px;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-family: LatoBold!important;
+    font-size: 16px;
+    padding: 16px 15px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 155px;
+}
+.product .right .Availaibility{
+    color: #83878a;
+    font-size: 18px;
+    font-family: LatoSemiBold;
+    margin-bottom: 0;
+}
+.product .right .Delivery {
+    color: #02b7c2;
+    font-weight: 400;
+    font-family: LatoSemiBold;
+    font-size: 18px;
+    margin-top: 3px;
+    padding-right: 5px;
+    margin-right: 40px;
+}

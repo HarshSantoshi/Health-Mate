@@ -1,0 +1,35 @@
+.cards{
+    display : flex;
+    align-items:center;
+    justify-content : space-evenly;   
+    margin:20px 0 ;
+    flex-wrap:wrap;
+}
+.cards >*{
+    width : 170px;
+    border-radius : 30px;
+    margin:5px 2px;
+}
+.deals {
+    background: #f3f7fb;
+    padding: 0 0 24px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.back{
+    background: url(https://www.netmeds.com/images/cms/section/images/1704906533_Broadcast.png) no-repeat left bottom / 240px, linear-gradient(to bottom, rgb(255 255 255 / -2%), rgba(255, 255, 255, .4) 78%), linear-gradient(180deg, #5ECDDE, #5ECDDE);
+}
+
+.title {
+    margin: 0 0 0;
+    color: #fff;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: bold;
+    font-family: LatoBold;
+    letter-spacing: 0.25px;
+    display: block;
+    padding: 4px 0px;
+}

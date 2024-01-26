@@ -22,7 +22,7 @@ const Navbar = () => {
         setDoctorId(doctorIdFromToken);
         // console.log(doctorId);
       }
-      else{
+      else if(role == "patient"){
         const patientIdFromToken = decodedToken.patient.id;
         setPatientId(patientIdFromToken);
       }

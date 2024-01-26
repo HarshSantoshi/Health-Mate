@@ -12,15 +12,15 @@ io.on("connection" , (socket)=>{
                 socketId : socket.id
             })
         }
-        console.log("connected user" , activeUsers)
+        // console.log("connected user" , activeUsers)
         io.emit('get-users' , activeUsers)
     })
     //send message
     socket.on("send-message" ,  (data)=>{
         const {receiverId} = data;
         const user = activeUsers.find((user)=>user.userId === receiverId)
-        console.log("Sending from socket to : " , receiverId)
-        console.log("Data" , data)
+        // console.log("Sending from socket to : " , receiverId)
+        // console.log("Data" , data)
         
         if(user){
             io.to(user.socketId).emit("receive-message" , data);
@@ -29,7 +29,7 @@ io.on("connection" , (socket)=>{
 
     socket.on("disconnect" , ()=>{
         activeUsers = activeUsers.filter((user)=> user.socketId !== socket.id);
-        console.log("User Disconnected" , activeUsers);
+        // console.log("User Disconnected" , activeUsers);
         io.emit('get-users' , activeUsers)
     })
 })
