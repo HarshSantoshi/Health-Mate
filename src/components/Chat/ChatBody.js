@@ -137,7 +137,7 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
       try {
         const response = await fetch(`http://localhost:8000/api/v1/message/${chat?._id}`);
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setMessages(data);
       } catch (error) {
         console.log(error);
@@ -183,6 +183,7 @@ const scrollToBottom = () => {
       chatId: chat._id,
       text: newMessage
     };
+    let  sentMessage;
   
     try {
       const response = await fetch('http://localhost:8000/api/v1/message/', {
@@ -197,7 +198,8 @@ const scrollToBottom = () => {
         throw new Error(`Failed to send message: ${response.status}`);
       }
   
-      const sentMessage = await response.json();
+      sentMessage = await response.json();
+      // console.log("sent message ",sentMessage);
   
       setMessages([...message, sentMessage]);
       setnewMessage("");
@@ -208,12 +210,12 @@ const scrollToBottom = () => {
     const receiverId = chat?.members?.find((id) => id !== currentUserId);
   
     if (receiverId) {
-      setSendMessage({ ...msg, receiverId: receiverId });
+      setSendMessage({ ...sentMessage, receiverId: receiverId });
     }
   };
   useEffect(()=>{
     if(receiveMessage !==null && receiveMessage.chatId === chat._id){
-      console.log("receivedd messg ",receiveMessage);
+      // console.log("receivedd messg ",receiveMessage);
       setMessages([...message , receiveMessage])
     }
   },[receiveMessage])
