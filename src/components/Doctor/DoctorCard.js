@@ -58,8 +58,8 @@ export default function DoctorCard({props}) {
   }
   return (
     <div style={{padding:"5px", height:'auto' , marginBottom:'10px', margin:'20px 0px'}}>
-      <div>
-        <img src="https://www.summit-urgentcare.com/wp-content/uploads/2014/12/Dollarphotoclub_69741928.jpg" alt='doctor' style={{width:"300px"}}/>
+      <div style={{borderRadius:'10px'}}  >
+        <img src="https://www.summit-urgentcare.com/wp-content/uploads/2014/12/Dollarphotoclub_69741928.jpg" alt='doctor' style={{width:"300px" , borderRadius:'10px'}}/>
       </div>
       <h2 style={{fontSize : "18px" , fontWeight:"700"}}>
         {props.name}
