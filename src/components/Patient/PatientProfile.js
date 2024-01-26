@@ -23,44 +23,74 @@ const PatientProfile = () => {
 
     fetchData();
   }, []); 
+  const handleEditProfile = () => {
+    setEdit(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    setEdit(false);
+  };
   return (
     <div className='profilecontainer'>
       <div className='profileImage'>
-        <img src='avatar-img.png' alt='This is profile' />
+        <img src='avatar-img.png' alt='Profile' />
         <button>Change Profile image</button>
       </div>
       <div className='detail-heading'>Your Profile</div>
       <div className='details'>
         {profileData && (
           <div className='profileForm'>
-            <label for="patientName">Name : </label>
-            <input type='text' id = "patientName" name = "patientName" value={profileData.patientName}/>
-            <br/>
-            <label for="email">Email : </label>
-            <input type='email' id = "email" value={profileData.email} name = "email"/>
-            <br/>
-            <label for="Gender">Gender : </label>
-            <label for="M">Male</label>
-            <input type='radio' id = "M" name='gender' value="M"/>
-            <label for="F">Female</label>
-            <input type='radio' id = "F" name='gender' value="F"/>
-            <label for="O">Other</label>
-            <input type='radio' id = "O" name='gender' value="O"/>
-            <br/>
-            <label for="dateofBirth">Date of Birth :</label>
-            <input type='date' id = "dateofBirth" value="" name = "dateofBirth"/>
-            <br/>
-            <label for="disease">Disease : </label>
-            <input type='text' id = "disease" name ="disease" value=""/>
-            <br/>
-            <label for="phoneNo">Contact Number : </label>
-            <input type='number' id = "phoneNo" value="" name = "phoneNo"/>
-            <br/>
-            <label for="bloodGroup">Blood Group : </label>
-            <input type='text' id = "bloodGroup" name ="bloodGroup" value=""/>
-            <br/>
-            
-            <input type="submit" value="Edit Profile" />
+            <form onSubmit={handleSubmit}>
+            <label htmlFor="patientName">Name: </label>
+              <input
+                type='text'
+                id="patientName"
+                name="patientName"
+                value={profileData.patientName}
+                readOnly={!edit}
+                onChange={(e) => setProfileData({ ...profileData, patientName: e.target.value })}
+              />
+              <br />
+              <label htmlFor="email">Email: </label>
+              <input type='email' id="email" value={profileData.email} name="email" readOnly = {!edit}
+              />
+              <br />
+              <label htmlFor="gender">Gender: </label>
+              <label htmlFor="M">Male</label>
+              <input type='radio' id="M" name='gender' value="M" readOnly={!edit} />
+              <label htmlFor="F">Female</label>
+              <input type='radio' id="F" name='gender' value="F" readOnly={!edit} />
+              <label htmlFor="O">Other</label>
+              <input type='radio' id="O" name='gender' value="O" readOnly={!edit} />
+              <br />
+              <label htmlFor="dateofBirth">Date of Birth:</label>
+              <input type='date' id="dateofBirth" value={profileData.dateOfBirth} name="dateofBirth" readOnly={!edit} />
+              <br />
+              <label htmlFor="disease">Disease: </label>
+              <input type='text' id="disease" name="disease" value={profileData.disease} readOnly={!edit} />
+              <br />
+              <label htmlFor="phoneNo">Contact Number: </label>
+              <input type='number' id="phoneNo" value={profileData.contactNumber} name="phoneNo" readOnly={!edit} 
+              onChange={(e) => setProfileData({ ...profileData, phoneNo: e.target.value })}
+              />
+              <br />
+              <label htmlFor="bloodGroup">Blood Group: </label>
+              <input type='text' id="bloodGroup" name="bloodGroup" value={profileData.bloodGroup} readOnly={!edit} 
+              onChange={(e) => setProfileData({ ...profileData, bloodGroup: e.target.value })}
+              />
+              <br />
+
+              {!edit ? (
+                <button type="button" onClick={handleEditProfile}>Edit Profile</button>
+              ) : (
+                <div>
+                  <button type="submit">Save Changes</button>
+                  <button type="button" onClick={() => setEdit(false)}>Cancel</button>
+                </div>
+              )}
+            </form>
           </div>
         )}
       </div>
