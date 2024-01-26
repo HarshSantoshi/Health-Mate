@@ -25,7 +25,7 @@ const Navbar = () => {
         const doctorIdFromToken = decodedToken.doctor.id;
 
         setDoctorId(doctorIdFromToken);
-        // console.log(doctorId);
+        console.log(doctorId);
       }
       else if(role == "patient"){
         const patientIdFromToken = decodedToken.patient.id;
