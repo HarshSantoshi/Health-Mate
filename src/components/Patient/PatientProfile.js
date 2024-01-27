@@ -3,76 +3,121 @@ import './patientprofile.css';
 
 const PatientProfile = () => {
   const [profileData, setProfileData] = useState();
-  const [edit , setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/auth/patientdetail", {
+        method: "GET",
+        headers: {
+          "token": localStorage.getItem('token')
+        }
+      });
+      const json = await response.json();
+      setProfileData(json);
+    } catch (error) {
+      console.error('Error fetching patient details:', error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/v1/auth/patientdetail", {
-          method: "GET",
-          headers: {
-            "token": localStorage.getItem('token')
-          }
-        });
-        const json = await response.json();
-        setProfileData(json);
-      } catch (error) {
-        console.error('Error fetching patient details:', error);
-      }
-    };
-
     fetchData();
-  }, []); 
+  }, []);
+  const updatepatient = async (phoneNo, gender, bloodGroup, disease, dateofBirth) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/patient/updatepatient`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "token": localStorage.getItem('token')
+        },
+        body: JSON.stringify({ phoneNo, gender, bloodGroup, disease, dateofBirth }),
+      });
+      fetchData();
+    } catch (error) {
+      console.error('Error Updating patient details:', error);
+    }
+  }
   const handleEditProfile = () => {
     setEdit(true);
   };
-
+  // const updatedate = (date)=>{
+  //   const dateOfBirth = new Date(date);
+  //   let formattedDateOfBirth = dateOfBirth.toLocaleDateString('en-CA');
+  //   formattedDateOfBirth = new Date(Date.parse(formattedDateOfBirth))
+  //   return formattedDateOfBirth;
+  // }
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    // const newdate = updatedate(profileData.dateofBirth);
+    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, profileData.dateofBirth);
     setEdit(false);
   };
+  const onchange = (e) => {
+    setProfileData({ ...profileData, [e.target.name]: e.target.value })
+  }
   return (
     <div className='profilecontainer'>
-      <div className='profileImage'>
-        <img src='avatar-img.png' alt='Profile' />
-        <button>Change Profile image</button>
-      </div>
-      <div className='detail-heading'>Your Profile</div>
-      <div className='details'>
-        {profileData && (
-          <div className='profileForm'>
-            <label for="patientName">Name : </label>
-            <input type='text' id = "patientName" name = "patientName" value={profileData.patientName}/>
-            <br/>
-            <label for="email">Email : </label>
-            <input type='email' id = "email" value={profileData.email} name = "email"/>
-            <br/>
-            <label for="Gender">Gender : </label>
-            <label for="M">Male</label>
-            <input type='radio' id = "M" name='gender' value="M"/>
-            <label for="F">Female</label>
-            <input type='radio' id = "F" name='gender' value="F"/>
-            <label for="O">Other</label>
-            <input type='radio' id = "O" name='gender' value="O"/>
-            <br/>
-            <label for="dateofBirth">Date of Birth :</label>
-            <input type='date' id = "dateofBirth" value="" name = "dateofBirth"/>
-            <br/>
-            <label for="disease">Disease : </label>
-            <input type='text' id = "disease" name ="disease" value=""/>
-            <br/>
-            <label for="phoneNo">Contact Number : </label>
-            <input type='number' id = "phoneNo" value="" name = "phoneNo"/>
-            <br/>
-            <label for="bloodGroup">Blood Group : </label>
-            <input type='text' id = "bloodGroup" name ="bloodGroup" value=""/>
-            <br/>
-            
-            <input type="submit" value="Edit Profile" />
+      <div className='row'>
+        <div className='col-md-4'>
+          <div className='profileImage'>
+            <img src='profile.png' alt='Profile' />
+            <button className="btn btn-primary mt-3">Change Profile image</button>
           </div>
-        )}
+        </div>
+        <div className='col-md-8'>
+          <div className='detail-heading'>Your Profile</div>
+          <div className='details'>
+            {profileData &&
+              <form className="row g-3" onSubmit={handleSubmit}>
+                <div className="col-md-6">
+                  <label htmlFor="patientName" className="form-label">Name</label>
+                  <input type="text" className="form-control" id="patientName" name="patientName" value={profileData.patientName} readOnly={!edit} />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="email" className="form-label">Email</label>
+                  <input className="form-control" type='email' id="email" value={profileData.email} name="email" readOnly={!edit} />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="dateofBirth" className="form-label">Date of Birth</label>
+                  <input className="form-control" type='date' id="dateofBirth" value={profileData.dateofBirth} name="dateofBirth" readOnly={!edit} onChange={onchange} />
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="gender" className="form-label">Gender</label>
+                  <select id="gender" className="form-select" value={profileData.gender} name="gender" onChange={onchange}>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Others</option>
+                  </select>
+                </div>
+                <div className="col-md-2">
+                  <label htmlFor="bloodGroup" className="form-label">Blood Group</label>
+                  <input className="form-control" type='text' id="bloodGroup" name="bloodGroup" value={profileData.bloodGroup} readOnly={!edit} onChange={onchange} />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="phoneNo" className="form-label">Contact Number</label>
+                  <input className="form-control" type='Number' id="phoneNo" value={profileData.phoneNo} name="phoneNo" readOnly={!edit} onChange={onchange} />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="disease" className="form-label">Disease</label>
+                  <input className="form-control" type='text' id="disease" name="disease" value={profileData.disease} readOnly={!edit} onChange={onchange} />
+                </div>
+                <div >
+                  {!edit ? (
+                    <button type="button" className="btn btn-primary" onClick={handleEditProfile}>Edit Profile</button>
+                  ) : (
+                    <div className="text-center">
+                      <button type="submit" className="btn btn-success me-2">Save Changes</button>
+                      <button type="button" className="btn btn-primary" onClick={() => setEdit(false)}>Cancel</button>
+                    </div>
+                  )}
+                </div>
+              </form>
+            }
+          </div>
+        </div>
       </div>
+
+
     </div>
   );
 };
