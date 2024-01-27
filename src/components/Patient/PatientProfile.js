@@ -14,6 +14,7 @@ const PatientProfile = () => {
         }
       });
       const json = await response.json();
+      json.dateofBirth = updatedate(json.dateofBirth);
       setProfileData(json);
     } catch (error) {
       console.error('Error fetching patient details:', error);
@@ -40,25 +41,38 @@ const PatientProfile = () => {
   const handleEditProfile = () => {
     setEdit(true);
   };
-  // const updatedate = (date)=>{
-  //   const dateOfBirth = new Date(date);
-  //   let formattedDateOfBirth = dateOfBirth.toLocaleDateString('en-CA');
-  //   formattedDateOfBirth = new Date(Date.parse(formattedDateOfBirth))
-  //   return formattedDateOfBirth;
-  // }
+  function formatDate(date) {
+    
+  }
+  
+  const updatedate = (dateString)=>{
+    
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const newdate = updatedate(profileData.dateofBirth);
-    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, profileData.dateofBirth);
+    const newdate = updatedate(profileData.dateofBirth);
+    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate);
     setEdit(false);
   };
+  const handleCancel = (e)=>{
+    e.preventDefault();
+    fetchData();
+    setEdit(false);
+
+  }
   const onchange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value })
   }
   return (
     <div className='profilecontainer'>
       <div className='row'>
-        <div className='col-md-4'>
+        <div className='col-md-4 d-flex align-items-center justify-content-center image-container'>
           <div className='profileImage'>
             <img src='profile.png' alt='Profile' />
             <button className="btn btn-primary mt-3">Change Profile image</button>
@@ -101,13 +115,13 @@ const PatientProfile = () => {
                   <label htmlFor="disease" className="form-label">Disease</label>
                   <input className="form-control" type='text' id="disease" name="disease" value={profileData.disease} readOnly={!edit} onChange={onchange} />
                 </div>
-                <div >
+                <div className='col-12 text-center'>
                   {!edit ? (
                     <button type="button" className="btn btn-primary" onClick={handleEditProfile}>Edit Profile</button>
                   ) : (
                     <div className="text-center">
                       <button type="submit" className="btn btn-success me-2">Save Changes</button>
-                      <button type="button" className="btn btn-primary" onClick={() => setEdit(false)}>Cancel</button>
+                      <button type="button" className="btn btn-primary" onClick={handleCancel}>Cancel</button>
                     </div>
                   )}
                 </div>
