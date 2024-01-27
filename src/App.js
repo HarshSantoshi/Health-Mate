@@ -14,6 +14,7 @@ import ChatSection from './components/Chat/ChatSection.js';
 import MedicineMain from './components/Medicine/MedicineMain.js';
 import Productmain from './components/Medicine/Product/Productmain.js';
 import Cart from './components/Medicine/Cart/Cart.js';
+import Meet from './components/Meeting/Meet.js';
 function App() {
 
   return (
@@ -46,8 +47,9 @@ function App() {
           <Route exact path="/allmedicinepage" element={<MedicineMain/>} />
           <Route exact path="/product/:id" element={<Productmain/>} />
           <Route exact path="/cart" element={<Cart/>} />
+          <Route exact path="/meet/:meetId" element={<Meet/>} />
         </Routes>
-        <Footer/>
+        {/* <Footer/> */}
       </Router>
     </div>
   );
