@@ -40,8 +40,69 @@ const patientSchema = new Schema({
     }, 
     disease:{
         type : String ,
-    }
+    },
+    carts: [
+        {
+            itemId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Medicine'
+            },
+            name:{
+                type:String
+            },
+            fullname:{
+                type:String
+            },
+            price:{
+                type:String
+            },
+            discount:{
+                type:String
+            },
+            urltoimage:{
+                type:String
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            }
+        }
+    ]
 } , {timestamps:true});
+
+
+patientSchema.methods.addtocart = async function(cart) {
+    try {
+        this.carts = this.carts.concat(cart);
+        await this.save();
+        return this.carts;
+    } catch (error) {
+        console.log(error);
+    }
+};
+patientSchema.methods.removeFromCart = async function(itemToRemove) {
+    try {
+        this.carts = this.carts.filter(item => item._id.toString() !== itemToRemove);
+        await this.save();
+        return this.carts;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+patientSchema.methods.updateCartItemQuantity = async function(itemId, newQuantity) {
+    try {
+        this.carts.forEach(item => {
+            if (item._id.toString() === itemId) {
+                item.quantity = newQuantity;
+            }
+        });
+        await this.save();
+        return this.carts;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const Patient = model("Patient",patientSchema);
 export default Patient;

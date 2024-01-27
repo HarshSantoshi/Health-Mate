@@ -2,31 +2,32 @@ import React from 'react';
 import "./Cartitem.css";
 import { Link } from 'react-router-dom';
 
-const Cartitem = () => {
+const Cartitem = (props) => {
+    const { fullname, price, imageurl, discount, id} = props;
     return (
         <div className="card w-100 border-0">
             <div className="row g-0">
                 <div className="col-md-3 img-con">
-                    <img src="https://www.netmeds.com/images/product-v1/600x600/826468/itzhh_200mg_capsule_10_s_0.jpg" className="rounded-start image" alt="..." />
+                    <img src={imageurl} className="rounded-start image" alt="..." />
                 </div>
                 <div className="col-md-9">
                     <div className="card-body text-start">
-                        <div className='d-flex'>
-                            <Link to="/product/65ad2f0b61f79085ccbf0683" className='name'>Cetaphil Moisturizing Lotion Normal to Combination - Sensitive Skin 250 ml</Link>
+                        <div className='d-flex justify-content-between'>
+                            <Link to={`/product/${id}`} className='name-med'>{fullname}</Link>
                             <div>
-                                <a href="/"><i className="fa-solid fa-trash-can remove"></i></a>
+                                <i className="fa-solid fa-trash-can remove"></i>
                             </div>
                         </div>
                         <p className="tag">Mfr: Galderma India Pvt Ltd</p>
-                        
+
                         <div className='d-flex justify-content-between mt'>
                             <div>
-                                <span className='price mt-2'>₹ 849.20</span>
-                                <span style={{display:"block",marginTop:"-7px"}}><span><strike className="actual-price">₹ 965.00</strike></span><span className='discount'>Save ₹115.80</span></span>
+                                <span className='price mt-2'>₹{price}</span>
+                                <span style={{ display: "block", marginTop: "-7px" }}><span><strike className="actual-price">₹ 965.00</strike></span><span className='discount'>Save {discount}</span></span>
                             </div>
                             <div className="dropdown size">
                                 <button className="dropdown-toggle pro-qty" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   QTY : 1
+                                    QTY : 1
                                 </button>
                                 <ul className="dropdown-menu">
                                     <li><a className="dropdown-item" href="/">1</a></li>

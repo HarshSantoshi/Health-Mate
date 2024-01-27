@@ -11,9 +11,9 @@ connectToMongoDB().then(()=>{
 .catch((error) => {
     console.log("MONGO DB CONNECTION FAILED " , error);
 })
-server.listen(8001, () => {
-    console.log('server running at http://localhost:8001');
-  });
+// server.listen(8001, () => {
+//     console.log('server running at http://localhost:8001');
+//   });
 app.on("error" , (error) =>{
     console.log(`Error while setting up the app : ${error}`)
 })

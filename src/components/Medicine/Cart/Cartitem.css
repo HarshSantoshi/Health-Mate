@@ -5,16 +5,15 @@
 .img-con .image{
     min-height: 140px;
     max-width: 140px;
-    margin-top: 20px;
 }
-.name{
+.name-med{
     text-decoration: none;
     word-break: break-word;
     color: #0b1219;
     font-weight: 500;
     letter-spacing: .15px;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 15px;
     padding-bottom: 4px;
 }
 .delete{
@@ -72,6 +71,7 @@
     min-width: 25px;
     display: inline-block;
     color: #6c757d;
+    cursor: pointer;
 }
 .size{
     max-width: 50%;
