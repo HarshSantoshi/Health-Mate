@@ -8,6 +8,7 @@ import MessageRouter from './routes/message.js';
 import { createServer } from 'http';
 import PatientRouter from './routes/patient.js';
 import MedicineRouter from './routes/medicine.js';
+import CartRouter from './routes/cart.js';
 
 const app = express();
 const server = createServer(app);
@@ -25,5 +26,6 @@ app.use('/api/v1/patient', PatientRouter);
 app.use('/api/v1/chat' , ChatRouter);
 app.use('/api/v1/message' , MessageRouter);
 app.use('/api/v1/medicine',MedicineRouter);
+app.use('/api/v1/cart',CartRouter);
 
 export { app, server };

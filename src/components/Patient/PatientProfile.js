@@ -33,30 +33,30 @@ const PatientProfile = () => {
       <div className='details'>
         {profileData && (
           <div className='profileForm'>
-            <label for="patientName">Name : </label>
+            <label htmlFor="patientName">Name : </label>
             <input type='text' id = "patientName" name = "patientName" value={profileData.patientName}/>
             <br/>
-            <label for="email">Email : </label>
+            <label htmlFor="email">Email : </label>
             <input type='email' id = "email" value={profileData.email} name = "email"/>
             <br/>
-            <label for="Gender">Gender : </label>
-            <label for="M">Male</label>
+            <label htmlFor="Gender">Gender : </label>
+            <label htmlFor="M">Male</label>
             <input type='radio' id = "M" name='gender' value="M"/>
-            <label for="F">Female</label>
+            <label htmlFor="F">Female</label>
             <input type='radio' id = "F" name='gender' value="F"/>
-            <label for="O">Other</label>
+            <label htmlFor="O">Other</label>
             <input type='radio' id = "O" name='gender' value="O"/>
             <br/>
-            <label for="dateofBirth">Date of Birth :</label>
+            <label htmlFor="dateofBirth">Date of Birth :</label>
             <input type='date' id = "dateofBirth" value="" name = "dateofBirth"/>
             <br/>
-            <label for="disease">Disease : </label>
+            <label htmlFor="disease">Disease : </label>
             <input type='text' id = "disease" name ="disease" value=""/>
             <br/>
-            <label for="phoneNo">Contact Number : </label>
+            <label htmlFor="phoneNo">Contact Number : </label>
             <input type='number' id = "phoneNo" value="" name = "phoneNo"/>
             <br/>
-            <label for="bloodGroup">Blood Group : </label>
+            <label htmlFor="bloodGroup">Blood Group : </label>
             <input type='text' id = "bloodGroup" name ="bloodGroup" value=""/>
             <br/>
             
