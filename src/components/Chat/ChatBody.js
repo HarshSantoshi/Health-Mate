@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@mui/material';
 import InputEmoji from "react-input-emoji"
+import { VideoCall as VideoCallIcon } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 const Body = styled('div')`
   height: 100%;
   border: 1px solid black;
@@ -97,12 +99,30 @@ const Button = styled('button')`
   color: white;
   border-radius: 10px;
 `;
+// const GenerateButton = styled(VideoCallIcon)`
+//   position: relative;
+//   &:hover {
+
+//     &:before {
+//       content: "Generate meeting id";
+//       position: absolute;
+//       bottom: 100%;
+//       left: 10;
+//       background: white;
+//       padding: 5px;
+//       border: 1px solid #ccc;
+//       border-radius: 5px;
+//       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//       z-index: 1;
+//     }
+//   }
+// `;
 const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiveMessage}) => {
   const [userData , setUserData] = useState(null);
   const [message, setMessages] = useState([]);
   const [newMessage, setnewMessage] = useState("");
   const chatContainerRef = useRef();
-  
+  const navigate  = useNavigate();
   //setting header of the chat
   useEffect(()=>{
     const userId = chat?.members?.find((id)=>id!==currentUserId);
@@ -137,7 +157,7 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
       try {
         const response = await fetch(`http://localhost:8000/api/v1/message/${chat?._id}`);
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setMessages(data);
       } catch (error) {
         console.log(error);
@@ -173,16 +193,26 @@ const scrollToBottom = () => {
     const min = new Date(date).getMinutes();
     return `${hours < 10 ? '0' + hours : hours}:${min < 10 ? '0' + min : min}`;
   };
+ 
+  const generateID = async()=>{
+    const text = `Join my meeting  , ${chat._id}`;
+    await handleSend(text);
+  }
   const handleChange = (text) => {
     setnewMessage(text);
   };
+  const handleJoinRoom = useCallback(()=>{
+    navigate(`/meet/${chat._id}`, { state: { userID: currentUserId   } });
+  },[navigate , chat])
   
-  const handleSend = async () => {
+  const handleSend = async (link) => {
+    if(newMessage == "" && link == "")return ;
     const msg = {
       senderId: currentUserId,
       chatId: chat._id,
-      text: newMessage
+      text: newMessage || link
     };
+    let  sentMessage;
   
     try {
       const response = await fetch('http://localhost:8000/api/v1/message/', {
@@ -197,7 +227,8 @@ const scrollToBottom = () => {
         throw new Error(`Failed to send message: ${response.status}`);
       }
   
-      const sentMessage = await response.json();
+      sentMessage = await response.json();
+      console.log("sent message ",sentMessage);
   
       setMessages([...message, sentMessage]);
       setnewMessage("");
@@ -208,12 +239,12 @@ const scrollToBottom = () => {
     const receiverId = chat?.members?.find((id) => id !== currentUserId);
   
     if (receiverId) {
-      setSendMessage({ ...msg, receiverId: receiverId });
+      setSendMessage({ ...sentMessage, receiverId: receiverId });
     }
   };
   useEffect(()=>{
     if(receiveMessage !==null && receiveMessage.chatId === chat._id){
-      console.log("receivedd messg ",receiveMessage);
+      // console.log("receivedd messg ",receiveMessage);
       setMessages([...message , receiveMessage])
     }
   },[receiveMessage])
@@ -255,13 +286,40 @@ const scrollToBottom = () => {
               ))}
             </ChatContainer>
             <InputContainer>
+            {
+              currUserRole === 'doctor' ? <>
+              <VideoCallIcon
+                sx={{
+                  position: 'relative',
+                  cursor:'pointer',
+                  '&:hover': {
+                    '&:before': {
+                      content: '"Generate meeting id"',
+                      position: 'absolute',
+                      bottom: '100%',
+                      left: '10',
+                      background: 'white',
+                      padding: '5px',
+                      border: '1px solid #ccc',
+                      borderRadius: '5px',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                      zIndex: 1,
+                    },
+                  },
+                }}
+                onClick = {()=>generateID()}
+              />
+              </> : ""
+            }
             <InputEmoji 
             onChange={handleChange}
             value = {newMessage}
             onKeyDown={handleKeyPress}
             />
             <Button onClick={ handleSend}>Send</Button>
+            <button onClick={handleJoinRoom}>Join</button>
             </InputContainer>
+           
           </>
         )}
       </Body>

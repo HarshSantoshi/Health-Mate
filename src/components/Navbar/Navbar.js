@@ -3,6 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import './navbar.css'
 import toast from 'react-hot-toast';
 import {jwtDecode} from 'jwt-decode';
+import styled from 'styled-components';
+const Logo = styled('img')`
+  height : 60px;
+  border-radius:50%;
+`;
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -20,7 +25,7 @@ const Navbar = () => {
         const doctorIdFromToken = decodedToken.doctor.id;
 
         setDoctorId(doctorIdFromToken);
-        // console.log(doctorId);
+        console.log(doctorId);
       }
       else if(role == "patient"){
         const patientIdFromToken = decodedToken.patient.id;
@@ -38,19 +43,21 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">LOGO</Link>
+          <Link className="navbar-brand" to="/">
+            <Logo src='logo.png' alt='logo'/>
+          </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
+              <li className="nav-item"  style={{fontSize:'20px'}}>
                 <Link className="nav-link active" to="/">Home</Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item"  style={{fontSize:'20px'}}>
                 <Link className="nav-link" to="/">About Us</Link>
               </li>
-              <li className="nav-item dropdown">
+              <li className="nav-item dropdown"  style={{fontSize:'20px'}}>
                 <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Features
                 </Link>
@@ -62,10 +69,10 @@ const Navbar = () => {
               </li>
 
               {localStorage.getItem('role') === 'doctor' ?
-                <li className="nav-item">
+                <li className="nav-item"  style={{fontSize:'20px'}}>
                   <Link className="nav-link" to={`/chat/${doctorId}`}>Your chats</Link>
                 </li>
-                : <li className="nav-item">
+                : <li className="nav-item"  style={{fontSize:'20px'}}>
                 <Link className="nav-link" to={`/chat/${patientId}`}>Your chats</Link>
               </li>
               }
