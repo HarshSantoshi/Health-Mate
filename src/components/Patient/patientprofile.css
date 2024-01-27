@@ -10,13 +10,16 @@
 }
 .details{
     text-align: left;
-    font-size: 14px;
+    font-size: 20px;
+}
+
+.form-label{
+    font-size : 16px;
+    font-weight : 600;
 }
 .profileImage{
-    margin-top: 60px;
     height:200px;
     width:200px;
-    background-color:black;
     border-radius:50%;
 }
 .profileImage img{
@@ -29,20 +32,3 @@
     margin-top: 30px;
     margin-bottom: 10px;
 }
-/* .profileForm{
-    border:1px solid red;
-}
-.profileForm >*{
-    margin : 10px;
-}
-.profileForm label{
-    color:red;
-    padding : 3px;
-    display:inline;
-}
-.profileForm input{
-    border-bottom:2px solid black;
-    padding : 3px ;
-    width:auto;
-    margin: 10px 30px;
-} */
