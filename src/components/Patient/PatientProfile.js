@@ -41,18 +41,14 @@ const PatientProfile = () => {
   const handleEditProfile = () => {
     setEdit(true);
   };
-  function formatDate(date) {
-    
-  }
-  
-  const updatedate = (dateString)=>{
-    
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
+  const updatedate = (dateString) => {
 
-  return `${year}-${month}-${day}`;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,11 +56,10 @@ const PatientProfile = () => {
     updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate);
     setEdit(false);
   };
-  const handleCancel = (e)=>{
+  const handleCancel = (e) => {
     e.preventDefault();
     fetchData();
     setEdit(false);
-
   }
   const onchange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value })
