@@ -41,9 +41,6 @@ const PatientProfile = () => {
   const handleEditProfile = () => {
     setEdit(true);
   };
-  function formatDate(date) {
-    
-  }
   
   const updatedate = (dateString)=>{
     

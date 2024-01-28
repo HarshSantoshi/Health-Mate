@@ -8,6 +8,10 @@
     font-family: LatoBold;
     cursor: pointer;
     margin-bottom: 10px;
+    &:hover{
+        background-color:white;
+        color:black;
+    }
 }
 
 .card{
@@ -46,6 +50,11 @@
     text-align: left;
     font-family: LatoBold;
     color: #0b1219;
+}
+.selected{
+    display : flex;
+    align-items:center;
+    justify-content : space-between;
 }
 .card-body .dis-item {
     font-size: 14px;

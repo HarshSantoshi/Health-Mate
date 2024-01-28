@@ -2,17 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './navbar.css'
 import toast from 'react-hot-toast';
+import {ShoppingCart as ShoppingCartIcon} from '@mui/icons-material';
 import {jwtDecode} from 'jwt-decode';
 import styled from 'styled-components';
+import { Badge } from '@mui/material';
 const Logo = styled('img')`
   height : 60px;
   border-radius:50%;
+`;
+const CartIcon = styled(ShoppingCartIcon)`
+  color: grey;
+  position: relative;
+  
+  &:hover{
+    color:black;
+    cursor:pointer
+  }
+  
 `;
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [doctorId, setDoctorId] = useState("");
   const [patientId, setPatientId] = useState("");
+  const [cartCount, setCartCount] = useState(0);
+
   useEffect(() => {
     // Fetch the token from localStorage
     const token = localStorage.getItem('token');
@@ -33,6 +47,25 @@ const Navbar = () => {
       }
     }
   }, []);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/auth/patientdetail", {
+        method: "GET",
+        headers: {
+          "token": localStorage.getItem('token')
+        }
+      });
+      const json = await response.json();
+      setCartCount(json.carts.length)
+    } catch (error) {
+      console.error('Error fetching patient details:', error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
@@ -105,6 +138,10 @@ const Navbar = () => {
                           </button>
                         </div> :
                         <div>
+                          <Badge badgeContent={cartCount} color="primary">
+                            
+                            <Link to={`/cart/${patientId}`} ><CartIcon /></Link>
+                          </Badge>
                           <button type="button" className="btn btn-primary login">
                             <Link to="/patientprofile">Profile</Link>
                           </button>
