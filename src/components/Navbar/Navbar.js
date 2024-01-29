@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './navbar.css'
 import toast from 'react-hot-toast';
@@ -6,6 +6,7 @@ import {ShoppingCart as ShoppingCartIcon} from '@mui/icons-material';
 import {jwtDecode} from 'jwt-decode';
 import styled from 'styled-components';
 import { Badge } from '@mui/material';
+import cartcontext from '../../context/cart/cartcontext.js';
 const Logo = styled('img')`
   height : 60px;
   border-radius:50%;
@@ -23,10 +24,14 @@ const CartIcon = styled(ShoppingCartIcon)`
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const {cartCount,getitems} = useContext(cartcontext);
   const [doctorId, setDoctorId] = useState("");
   const [patientId, setPatientId] = useState("");
-  const [cartCount, setCartCount] = useState(0);
-
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      getitems();
+    }
+  })
   useEffect(() => {
     // Fetch the token from localStorage
     const token = localStorage.getItem('token');
@@ -56,7 +61,6 @@ const Navbar = () => {
         }
       });
       const json = await response.json();
-      setCartCount(json.carts.length)
     } catch (error) {
       console.error('Error fetching patient details:', error);
     }

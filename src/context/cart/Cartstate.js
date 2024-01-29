@@ -1,5 +1,6 @@
 import cartcontext from "./cartcontext.js";
 import { useState } from "react";
+import toast from 'react-hot-toast';
 
 const CartState = (props) => {
     const host = "http://localhost:8000";
@@ -35,11 +36,12 @@ const CartState = (props) => {
             const json = await response.json();
             if(json.message){
                 updateitem(id,json.quantity+1);
+                toast.success("Already Added");
             }
             else {
-                setitems(json.cart);
-                setCartCount(json.cart.length);
-                
+                setitems(json);
+                setCartCount(json.length);
+                toast.success("Added to cart");
             }
         } catch (error) {
             console.log(error);
@@ -58,6 +60,7 @@ const CartState = (props) => {
             });
             const json = await response.json();
             setitems(json);
+            toast.success("Deleted Successfully");
             setCartCount(json.length);
         } catch (error) {
             console.log(error)
@@ -77,7 +80,7 @@ const CartState = (props) => {
             // eslint-disable-next-line
             const json = await response.json();
             setitems(json.cart);
-           
+            toast.success("Quantity Updated Successfully");
         } catch (error) {
             console.log(error)
         }
