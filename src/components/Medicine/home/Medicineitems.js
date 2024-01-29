@@ -3,7 +3,6 @@ import "./Medicineitem.css";
 import { Link } from 'react-router-dom';
 // import { Add as AddIcon } from '@mui/icons-material';
 // import { Remove as RemoveIcon } from '@mui/icons-material';
-import toast from 'react-hot-toast';
 import cartcontext from '../../../context/cart/cartcontext.js';
 
 function Medicineitems(props) {
@@ -12,7 +11,6 @@ function Medicineitems(props) {
     const handleAddtoCart =(e)=>{
         e.preventDefault();
         additem(id);
-        toast.success("Added to cart");
     }
     return (
         <div className="card">
