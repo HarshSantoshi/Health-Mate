@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import "./Product.css";
+import cartcontext from '../../../context/cart/cartcontext.js';
 
 function Product() {
+  const context = useContext(cartcontext);
+  const {additem} = context;
   const [idvData, setidvData] = useState("");
   const { fullname, price, discount, urltoimage } = idvData;
   const { id } = useParams("");
@@ -43,7 +46,7 @@ function Product() {
               <span className='return_prods'>* Country of Origin: NA</span>
               <span className='return_prods'>* Delivery charges if applicable will be applied at checkout.</span>
               <div className='box-tocart'>
-                <a href="/cart" className="btn toCart">Add To Cart</a>
+                <a href="/cart" className="btn toCart" onClick={()=>additem(id)}>Add To Cart</a>
               </div>
             </div>
             <hr />

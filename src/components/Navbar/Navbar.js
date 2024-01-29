@@ -35,13 +35,13 @@ const Navbar = () => {
     if (token) {
       const decodedToken = jwtDecode(token);
       // console.log(decodedToken);
-      if(role == "doctor"){
+      if(role === "doctor"){
         const doctorIdFromToken = decodedToken.doctor.id;
 
         setDoctorId(doctorIdFromToken);
         console.log(doctorId);
       }
-      else if(role == "patient"){
+      else if(role === "patient"){
         const patientIdFromToken = decodedToken.patient.id;
         setPatientId(patientIdFromToken);
       }
@@ -139,8 +139,9 @@ const Navbar = () => {
                         </div> :
                         <div>
                           <Badge badgeContent={cartCount} color="primary">
-                            
-                            <Link to={`/cart/${patientId}`} ><CartIcon /></Link>
+
+                            <Link to={`/cart`} ><CartIcon /></Link>
+
                           </Badge>
                           <button type="button" className="btn btn-primary login">
                             <Link to="/patientprofile">Profile</Link>

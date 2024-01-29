@@ -228,7 +228,7 @@ const scrollToBottom = () => {
       }
   
       sentMessage = await response.json();
-      console.log("sent message ",sentMessage);
+      // console.log("sent message ",sentMessage);
   
       setMessages([...message, sentMessage]);
       setnewMessage("");

@@ -1,58 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import "./Medicineitem.css";
-import { Link, useLocation } from 'react-router-dom';
-import { Add as AddIcon } from '@mui/icons-material';
-import { Remove as RemoveIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+// import { Add as AddIcon } from '@mui/icons-material';
+// import { Remove as RemoveIcon } from '@mui/icons-material';
+import toast from 'react-hot-toast';
+import cartcontext from '../../../context/cart/cartcontext.js';
 
 function Medicineitems(props) {
     const { name, price, imageurl, discount, id } = props;
-    const [added, setadd] = useState(false);
-    const [qty , setqty] = useState(1);
-    const location = useLocation();
-    const patientId = location.state?.patientId;
-    const handleAddtoCart = async () => {
-        try {
-            console.log("medicine id ", id);
-            console.log("patient id ", patientId);
-            setadd(true);
-    
-            const response = await fetch(`http://localhost:8000/CartRouter/additem/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "token": localStorage.getItem("token")
-                },
-              
-            });
-    
-            if (!response.ok) {
-                throw new Error(`Failed to add item to cart: ${response.status}`);
-            }
-    
-            // Handle the response data if needed
-            const responseData = await response.json();
-            console.log(responseData);
-        } catch (error) {
-            console.error('Error adding item to cart:', error);
-        }
-    };
-    
-
-    const handleAdd = (e) => {
-        // e.stopPropagation();
-        setqty(qty => qty + 1);
+    const { additem } = useContext(cartcontext);
+    const handleAddtoCart =(e)=>{
+        e.preventDefault();
+        additem(id);
+        toast.success("Added to cart");
     }
-
-    const handleRemove = () => {
-        if (qty >= 1) {
-            setqty(qty - 1);
-        } else {
-            setadd(false);
-        }
-        console.log(qty);
-    };
-    
-
     return (
         <div className="card">
             <Link to={`/product/${id}`}>
@@ -66,18 +27,36 @@ function Medicineitems(props) {
                     </span>
                 </div>
             </Link>
-            <button className="btn addtocart" onClick={handleAddtoCart}>
-            {added || qty ===0? 
-                <div className='selected'>
-                    <RemoveIcon onClick={()=>handleRemove()} />
-                    {qty}
-                    <AddIcon onClick={handleAdd} />
-                </div> : "Add to Cart"
-            }
-
-            </button>
+            <button className="btn addtocart" onClick={handleAddtoCart}>Add to Cart</button>
         </div>
     );
 }
 
 export default Medicineitems;
+
+
+// {added || qty ===0? 
+//     <div className='selected'>
+//         <RemoveIcon onClick={()=>handleRemove()} />
+//         {qty}
+//         <AddIcon onClick={handleAdd} />
+//     </div> : "Add to Cart"
+// }
+
+
+
+
+
+
+
+
+
+
+    // const handleRemove = () => {
+    //     if (qty >= 1) {
+    //         setqty(qty - 1);
+    //     } else {
+    //         setadd(false);
+    //     }
+    //     console.log(qty);
+    // };

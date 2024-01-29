@@ -4,6 +4,7 @@ import Banner from './home/Banner.js'
 import Medicinedeals from './home/Medicinedeals.js'
 
 export default function MedicineMain() {
+
   return (
     <>
       <MedicineNav/>

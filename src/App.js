@@ -15,6 +15,8 @@ import MedicineMain from './components/Medicine/MedicineMain.js';
 import Productmain from './components/Medicine/Product/Productmain.js';
 import Cart from './components/Medicine/Cart/Cart.js';
 import Meet from './components/Meeting/Meet.js';
+import cartcontext from './context/cart/cartcontext.js';
+import CartState from './context/cart/Cartstate.js';
 function App() {
 
   return (
@@ -32,6 +34,7 @@ function App() {
             }
           }
         }}/>
+        <CartState>
       <Router>
         <Navbar />
         <Routes>
@@ -51,6 +54,7 @@ function App() {
         </Routes>
         {/* <Footer/> */}
       </Router>
+      </CartState>
     </div>
   );
 }
