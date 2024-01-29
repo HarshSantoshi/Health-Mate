@@ -28,7 +28,7 @@ CartRouter.post('/additem',fetchPatient,async (req,res)=>{
     }
 });
 
-CartRouter.get('/fetchitems/:id',fetchPatient,async (req,res)=>{
+CartRouter.get('/fetchitems',fetchPatient,async (req,res)=>{
     try {
         const patientId = req.patient.id;
         const patient = await Patient.findById(patientId);
