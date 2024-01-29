@@ -4,9 +4,6 @@ const medicineSchema = new Schema({
    name:{
     type:String
    },
-   fullname:{
-    type:String
-   },
    price:{
     type:String
    },

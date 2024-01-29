@@ -26,6 +26,7 @@ const Button = styled('button')({
   marginTop:'15px',
   backgroundColor:'#4eb54e',
   color:'white',
+  border:"none",
   borderRadius:'10px',
 
 })
@@ -50,18 +51,22 @@ export default function DoctorCard({props}) {
       if (!response.ok) {
         throw new Error(`Failed to create chat: ${response.status}`);
       }
+      //redirect to patient chat page  
+      navigate(`/chat/${patientId}`);
     } catch (error) {
       console.error('Error sending message:', error);
     }
-    //redirect to patient chat page
-    navigate(`/chat/${patientId}`);
   }
   return (
-    <div style={{padding:"5px", height:'auto' , marginBottom:'10px', margin:'20px 0px'}}>
+    <div style={{padding:"5px", height:'auto' , marginBottom:'10px', margin:'20px 0px'}} 
+    onClick={() => handleClick(props.id)}
+    role="button"
+    tabIndex="0"
+    >
       <div style={{borderRadius:'10px'}}  >
         <img src="https://www.summit-urgentcare.com/wp-content/uploads/2014/12/Dollarphotoclub_69741928.jpg" alt='doctor' style={{width:"300px" , borderRadius:'10px'}}/>
       </div>
-      <h2 style={{fontSize : "18px" , fontWeight:"700"}}>
+      <h2 style={{fontSize : "18px" , fontWeight:"600"}}>
         {props.name}
       </h2>
       <Content>
@@ -79,7 +84,7 @@ export default function DoctorCard({props}) {
 
       </Content>
       <Button onClick={()=>handleClick(props.id)}>
-          Schedule a meeting
+          Chat Now
       </Button>
 
     </div>

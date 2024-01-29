@@ -28,7 +28,7 @@ CartRouter.post('/additem',fetchPatient,async (req,res)=>{
     }
 });
 
-CartRouter.get('/fetchitems',fetchPatient,async (req,res)=>{
+CartRouter.get('/fetchitems/:id',fetchPatient,async (req,res)=>{
     try {
         const patientId = req.patient.id;
         const patient = await Patient.findById(patientId);
@@ -55,6 +55,7 @@ CartRouter.delete('/deleteitem/:id', fetchPatient, async (req, res) => {
             await patient.save();
             // console.log(cartdata);
             res.status(200).json(patient.carts);
+
         } else {
             res.status(401).send("Invalid User");
         }
@@ -64,7 +65,9 @@ CartRouter.delete('/deleteitem/:id', fetchPatient, async (req, res) => {
     }
 });
 
+
 CartRouter.put('/updateitem',fetchPatient,async (req,res)=>{
+
     try {
         const {id,quantity} = req.body;
         const patientId = req.patient.id;

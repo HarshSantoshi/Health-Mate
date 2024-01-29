@@ -1,9 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ServicesCard from '../ServicesCard/ServicesCard.js'
 import CircleCard from '../CircleCard/CircleCard.js'
 import './LandingPage.css'
 import { Link } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 const LandingPage = () => {
+  const [doctorId, setDoctorId] = useState("");
+  const [patientId, setPatientId] = useState("");
+  useEffect(() => {
+    // Fetch the token from localStorage
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      // console.log(decodedToken);
+      if(role === "doctor"){
+        const doctorIdFromToken = decodedToken.doctor.id;
+
+        setDoctorId(doctorIdFromToken);
+        // console.log(doctorId);
+      }
+      else{
+        const patientIdFromToken = decodedToken.patient.id;
+        setPatientId(patientIdFromToken);
+      }
+    }
+  }, []);
   return (
     <>
       <div className='bannerImg'>
@@ -31,7 +54,7 @@ const LandingPage = () => {
         </Link>
         <ServicesCard feature="Find Doctors " text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  />
         
-        <Link className="text-decoration" to='/allmedicinepage'>
+        <Link className="text-decoration" to='/allmedicinepage' state={{patientId : patientId}}>
         <ServicesCard feature="Medicines" text="Essentials at your doorstep" img="medicines-img.jpg" />
         </Link>
         <ServicesCard feature="Lab Test" text="Sample pickup at your home" img="labtest-img.jpeg" />
