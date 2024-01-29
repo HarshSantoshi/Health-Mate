@@ -1,3 +1,4 @@
+
 import React, { useEffect,useState,useContext } from 'react'
 import Cartitem from './Cartitem.js'
 import "./Cart.css"
@@ -10,6 +11,7 @@ function Cart() {
     useEffect(()=>{
         getitems();
     },[]);
+
     return (
         <div className='bg'>
             <div className='cart-container'>
@@ -17,11 +19,13 @@ function Cart() {
                 <div className="row">
                     <div className='left mb-3 col-md-8 pr-lg-2'>
                         <div className='cart-product'>
+
                             {items.map((element, i) => {
                                 return <div key={i}>
                                     <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id} quantity={element.quantity} />
                                     <hr />
                                 </div>
+
                             })}
 
                             <div className="addmoreitems">

@@ -139,8 +139,9 @@ const Navbar = () => {
                         </div> :
                         <div>
                           <Badge badgeContent={cartCount} color="primary">
-                            
+
                             <Link to={`/cart`} ><CartIcon /></Link>
+
                           </Badge>
                           <button type="button" className="btn btn-primary login">
                             <Link to="/patientprofile">Profile</Link>
