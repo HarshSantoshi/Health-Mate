@@ -84,8 +84,8 @@ const ChatSection = () => {
       }
     }
     getChats();
-    console.log(conversation);
-    console.log(currChat);
+    // console.log(conversation);
+    // console.log(currChat);
   } ,[]);
 
 

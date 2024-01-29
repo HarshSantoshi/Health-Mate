@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import "./Cart.css"
+import React, { useEffect,useState,useContext } from 'react'
 import Cartitem from './Cartitem.js'
+import "./Cart.css"
 import Right from './Right.js'
+import cartcontext from '../../../context/cart/cartcontext.js'
+
 function Cart() {
-    const [items, setitems] = useState([]);
-    const fetchData = async () => {
-        const response = await fetch(`http://localhost:8000/api/v1/cart/fetchitems`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "token": localStorage.getItem("token")
-            }
-        });
-        const Data = await response.json();
-        setitems(Data.items);
-    };
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const context = useContext(cartcontext);
+    const {items,getitems} = context;
+    useEffect(()=>{
+        getitems();
+    },[]);
     return (
         <div className='bg'>
             <div className='cart-container'>
@@ -27,13 +19,13 @@ function Cart() {
                         <div className='cart-product'>
                             {items.map((element, i) => {
                                 return <div key={i}>
-                                    <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id}/>
+                                    <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id} quantity={element.quantity} />
                                     <hr />
                                 </div>
                             })}
 
                             <div className="addmoreitems">
-                                <a href='/'>
+                                <a href='/allmedicinepage'>
                                     <div className='d-flex justify-content-between'>
                                         <div>
                                             <span>Add more items</span>
