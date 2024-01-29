@@ -11,7 +11,7 @@ function Cart() {
     useEffect(()=>{
         getitems();
     },[]);
-
+    let totalPrice =0;
     return (
         <div className='bg'>
             <div className='cart-container'>
@@ -21,8 +21,9 @@ function Cart() {
                         <div className='cart-product'>
 
                             {items.map((element, i) => {
+                                totalPrice += element.quantity * element.price;  
                                 return <div key={i}>
-                                    <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id} quantity={element.quantity} />
+                                    <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id} quantity={element.quantity} /> 
                                     <hr />
                                 </div>
 
@@ -43,7 +44,7 @@ function Cart() {
                         </div>
                     </div>
                     <div className="right col-md-4">
-                        <Right />
+                        <Right totalPrice = {totalPrice}/>
                     </div>
                 </div>
             </div>
