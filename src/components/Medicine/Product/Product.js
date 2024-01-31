@@ -8,6 +8,8 @@ function Product() {
   const {additem} = context;
   const [idvData, setidvData] = useState("");
   const { fullname, price, discount, urltoimage } = idvData;
+  let ActualAmount = Math.round(price * 100) / 100 + 0.13*Math.round(price*100)/100;
+  ActualAmount = ActualAmount.toFixed(2);
   const { id } = useParams("");
   useEffect(() => {
     const getIndividualData = async () => {
@@ -39,7 +41,7 @@ function Product() {
             <hr />
             <div className='price'>
               <span className="final-price">₹{price}</span>
-              <span className='price-dis' >MRP <strike>₹965.00</strike><span className='disc-price'>Save {discount}</span></span>
+              <span className='price-dis' >MRP <strike>₹{ActualAmount}</strike><span className='disc-price'>Save {discount}</span></span>
               <span className='txtContent'>Inclusive of all taxes</span>
               <span className='return_prods'>*This product cannot be returned for a refund or exchange.</span>
               <span className='return_prods'>* Mkt: Galderma India Pvt Ltd.</span>

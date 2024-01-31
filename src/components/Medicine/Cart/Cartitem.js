@@ -7,6 +7,8 @@ import cartcontext from '../../../context/cart/cartcontext.js';
 
 const Cartitem = (props) => {
     const { fullname, price, imageurl, discount, id, quantity } = props;
+    let ActualAmount = Math.round(price * 100) / 100 + 0.13*Math.round(price*100)/100;
+    ActualAmount = ActualAmount.toFixed(2);
     const context = useContext(cartcontext);
     const { deleteitem, updateitem } = context;
     const handleDec = (e) => {
@@ -41,7 +43,7 @@ const Cartitem = (props) => {
                         <div className='d-flex justify-content-between mt'>
                             <div>
                                 <span className='price mt-2'>₹{price}</span>
-                                <span style={{ display: "block", marginTop: "-7px" }}><span><strike className="actual-price">₹ 965.00</strike></span><span className='discount'>Save {discount}</span></span>
+                                <span style={{ display: "block", marginTop: "-7px" }}><span><strike className="actual-price">₹{ActualAmount}</strike></span><span className='discount'>Save {discount}</span></span>
                             </div>
                             <div className='inc-dec'>
                                 <RemoveIcon onClick={handleDec} />

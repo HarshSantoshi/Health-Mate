@@ -80,14 +80,12 @@ const CartState = (props) => {
             // eslint-disable-next-line
             const json = await response.json();
             setitems(json.cart);
-            toast.success("Quantity Updated Successfully");
         } catch (error) {
             console.log(error)
         }
     }
     const [items, setitems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
-    // const [amount, setamount] = useState({totalmrp:0,discount:0,totalamt:0,deliverych:0,totalpayable:0,totalsaving:0});
     return (
         <cartcontext.Provider value={{ items, getitems, additem, deleteitem,updateitem,cartCount }}>
             {props.children}
