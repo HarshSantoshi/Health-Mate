@@ -15,7 +15,7 @@ import MedicineMain from './components/Medicine/MedicineMain.js';
 import Productmain from './components/Medicine/Product/Productmain.js';
 import Cart from './components/Medicine/Cart/Cart.js';
 import Meet from './components/Meeting/Meet.js';
-import cartcontext from './context/cart/cartcontext.js';
+import DoctorDetailPage from './components/Doctor/DoctorDetailPage.js';
 import CartState from './context/cart/Cartstate.js';
 function App() {
 
@@ -46,6 +46,7 @@ function App() {
           <Route exact path="/patientprofile" element={<PatientProfile/>} />
           <Route exact path="/doctorprofile" element={<DoctorProfile/>} />
           <Route exact path="/alldoctorspage" element={<DoctorPage/>} />
+          <Route exact path="/doctor/:id" element={<DoctorDetailPage/>} />
           <Route exact path="/chat/:id" element={<ChatSection/>} />
           <Route exact path="/allmedicinepage" element={<MedicineMain/>} />
           <Route exact path="/product/:id" element={<Productmain/>} />
