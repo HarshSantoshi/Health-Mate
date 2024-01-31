@@ -4,7 +4,7 @@ import Cartitem from './Cartitem.js'
 import "./Cart.css"
 import Right from './Right.js'
 import cartcontext from '../../../context/cart/cartcontext.js'
-
+import Footer from '../../Footer/Footer.js'
 function Cart() {
     const context = useContext(cartcontext);
     const { items, getitems } = context;
@@ -13,8 +13,16 @@ function Cart() {
     }, []);
     let totalPrice = 0;
     return (
+        <>
         <div className='bg'>
-            <div className='cart-container'>
+            {
+                items.length === 0 ? 
+                <>
+                <h2>Your cart is Empty</h2>
+                <img src='cart.jpg' alt= "Empty cart" style={{height:"100%"}}/>
+                </>
+                :
+                <div className='cart-container'>
                 <h1>Order Summary</h1>
 
                 <div className="row">
@@ -49,7 +57,11 @@ function Cart() {
                     </div>
                 </div>
             </div>
+            }
         </div>
+        <Footer/>
+        </>
+        
     )
 }
 

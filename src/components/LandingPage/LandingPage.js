@@ -3,6 +3,7 @@ import ServicesCard from '../ServicesCard/ServicesCard.js'
 import CircleCard from '../CircleCard/CircleCard.js'
 import './LandingPage.css'
 import { Link } from 'react-router-dom'
+import Footer from '../Footer/Footer.js'
 import { jwtDecode } from 'jwt-decode'
 const LandingPage = () => {
   const [doctorId, setDoctorId] = useState("");
@@ -117,6 +118,7 @@ const LandingPage = () => {
           <span>Next</span>
         </button>
       </div>
+      <Footer/>
 
     </>
 
