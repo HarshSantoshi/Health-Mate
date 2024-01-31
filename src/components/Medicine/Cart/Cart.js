@@ -1,5 +1,5 @@
 
-import React, { useEffect,useState,useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import Cartitem from './Cartitem.js'
 import "./Cart.css"
 import Right from './Right.js'
@@ -7,23 +7,24 @@ import cartcontext from '../../../context/cart/cartcontext.js'
 
 function Cart() {
     const context = useContext(cartcontext);
-    const {items,getitems} = context;
-    useEffect(()=>{
+    const { items, getitems } = context;
+    useEffect(() => {
         getitems();
-    },[]);
-    let totalPrice =0;
+    }, []);
+    let totalPrice = 0;
     return (
         <div className='bg'>
             <div className='cart-container'>
                 <h1>Order Summary</h1>
+
                 <div className="row">
                     <div className='left mb-3 col-md-8 pr-lg-2'>
                         <div className='cart-product'>
 
                             {items.map((element, i) => {
-                                totalPrice += element.quantity * element.price;  
+                                totalPrice += element.quantity * element.price;
                                 return <div key={i}>
-                                    <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id} quantity={element.quantity} /> 
+                                    <Cartitem key={i} fullname={element.fullname} price={element.price} imageurl={element.urltoimage} discount={element.discount} id={element._id} quantity={element.quantity} />
                                     <hr />
                                 </div>
 
@@ -44,7 +45,7 @@ function Cart() {
                         </div>
                     </div>
                     <div className="right col-md-4">
-                        <Right totalPrice = {totalPrice}/>
+                        <Right totalPrice={totalPrice} />
                     </div>
                 </div>
             </div>
