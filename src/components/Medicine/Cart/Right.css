@@ -6,6 +6,8 @@
     border-radius: 8px;
     text-align: left;
     margin-bottom: 10px;
+    position:sticky;
+    top:0px;
 }
 .totalamt .title{
     font-family: LatoBold;
@@ -85,7 +87,7 @@
     display: inline-block;
     width: 100%;
     border-radius: 0 0 8px 8px;
-    z-index: 2;
+    z-index: 2; 
 }
 .process-col .totalamount{
     float: left;
@@ -132,3 +134,10 @@
     background-color: #fff;
     color: #24aeb1;
 }
+.remove {
+    &:hover {
+      color: red;
+      transform: translateY(-1px);
+    }
+  }
+  
