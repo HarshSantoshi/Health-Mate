@@ -29,6 +29,9 @@ const doctorSchema = new Schema({
     }
     ,
     education:{
+        type : Array
+    },
+    about:{
         type : String
     }
     ,
