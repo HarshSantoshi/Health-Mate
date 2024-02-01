@@ -28,10 +28,10 @@ const Navbar = () => {
   const [doctorId, setDoctorId] = useState("");
   const [patientId, setPatientId] = useState("");
   useEffect(()=>{
-    if(localStorage.getItem('token')){
+    if(localStorage.getItem('token') && localStorage.getItem('role')==="patient"){
       getitems();
     }
-  })
+  },[]);
   useEffect(() => {
     // Fetch the token from localStorage
     const token = localStorage.getItem('token');
@@ -66,7 +66,9 @@ const Navbar = () => {
     }
   };
   useEffect(() => {
-    fetchData();
+    if(localStorage.getItem('role') === "patient"){
+      fetchData();
+    }
   }, []);
   
 
