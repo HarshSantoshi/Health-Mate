@@ -1,0 +1,110 @@
+.bg{
+    background-color: #f6f6f7;
+    height: 100%;
+    width: 100%;
+}
+.profile-container{
+    border: 2px solid red;
+    background-color: #fff;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+.intro{
+    width: 100%;
+    margin: 0;
+    background: #fff;
+    border-radius: 15px;
+    border: 2px solid red;
+    margin-bottom: 10px;
+    margin-top: 100px;
+    padding: 10px 10px;
+}
+.intro .dr_image{
+    height:200px;
+    width:200px;
+    border-radius:50%;
+    margin: 0 auto;
+    margin-top: -100px;
+}
+.dr_image img{
+    height:100%;
+    border-radius:50%;
+}
+.intro .details{
+    text-align: left;
+}
+.intro .details .specialization{
+    font-size: 15px;
+    color: black;
+    line-height: 8px;
+}
+.intro .details .location{
+    font-size: 12px;
+    color: grey;
+    line-height: 6px;
+}
+.intro .details .count{
+    font-size: 16px;
+    color: rgb(45, 101, 232);
+    line-height: 6px;
+}
+.intro .hospital{
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    line-height: 6px;
+}
+.icon{
+    height: 30px;
+    min-width: 30px;
+    display: inline-block;
+    color: #6c757d;
+    cursor: pointer;
+}
+.profile-container .title{
+    margin: 0 0 0;
+    color: black;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.25px;
+    display: block;
+    padding: 4px 0px;
+}
+.profile-container .cnt{
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    border: 2px solid red;
+    margin-bottom: 10px;
+    padding: 10px 10px;
+    text-align: left;
+}
+.cnt .work .workat{
+    font-size: 18px;
+    font-weight: 500;
+}
+.cnt .work span{
+    color: grey;
+    font-size: 14px;
+    margin-right: 50px;
+    line-height: 6px;
+}
+/* .experience .info{
+    margin-top: 5px;
+}
+.experience .info .head{
+    font-size: 18px;
+}
+.experience .info span{
+    font-size: 12px;
+    color: grey;
+    line-height: normal;
+    padding: 0;
+    letter-spacing: .15px;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 1px;
+} */

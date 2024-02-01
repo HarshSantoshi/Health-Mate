@@ -27,7 +27,7 @@ DoctorRouter.get('/getdoctor/:id', async (req, res) => {
       return res.status(404).json({ error: 'Doctor not found' });
     }
 
-    return res.status(200).json({ doctor });
+    return res.status(200).json(doctor);
   } catch (error) {
     console.error('Error fetching doctor details:', error);
     return res.status(500).json({ error: 'Internal server error' });
