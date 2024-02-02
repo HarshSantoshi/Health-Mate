@@ -17,6 +17,7 @@ import Cart from './components/Medicine/Cart/Cart.js';
 import Meet from './components/Meeting/Meet.js';
 import DoctorDetailPage from './components/Doctor/DoctorDetailPage.js';
 import CartState from './context/cart/Cartstate.js';
+import DoctorState from './context/Doctor/DoctorState.js';
 function App() {
 
   return (
@@ -34,6 +35,7 @@ function App() {
             }
           }
         }}/>
+        <DoctorState>
         <CartState>
       <Router>
         <Navbar />
@@ -56,6 +58,7 @@ function App() {
         {/* <Footer/> */}
       </Router>
       </CartState>
+        </DoctorState>
     </div>
   );
 }

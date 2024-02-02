@@ -25,12 +25,44 @@ const doctorSchema = new Schema({
     }
     ,
     experienceYrs:{
-        type : Number 
+        type : Number,
+        default:0 
     }
     ,
-    education:{
-        type : Array
-    },
+    education:[
+        {
+            institution:{
+                type:String
+            },
+            speciality:{
+                type:String
+            },
+            startdate:{
+                type:String
+            },
+            enddate:{
+                type:String,
+                default:"Present"
+            }
+        }
+    ],
+    experience:[
+        {
+            hospital:{
+                type:String
+            },
+            service:{
+                type:String
+            },
+            startdate:{
+                type:String
+            },
+            enddate:{
+                type:String,
+                default:"Present"
+            }
+        }
+    ],
     about:{
         type : String
     }
@@ -47,8 +79,11 @@ const doctorSchema = new Schema({
         type :Number ,
         required : true , 
         default : 200
-    }
-    ,
+    },
+    currentlyserving:{
+        type:String,
+        default:"XYZ Hospital"
+    },
     avgRating : {
         type :Number
     },
