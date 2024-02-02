@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components';
+import "./DoctorDetailPage.css"
+import DoctorAbout from './DoctorAbout.js';
+import DoctorFeedback from './DoctorFeedback.js';
+import Footer from "../Footer/Footer.js";
 const Image = styled('img')`
 height : 250px;
 width : 200px;
+border:1px solid blue;
+padding: 5px;
 border-radius : 10px;
 `
 const Specialization = styled('div')({
@@ -56,11 +61,13 @@ const DoctorDetailPage = () => {
     const location = useLocation();
     const doctorID = location.state?.doctorID;
     const doctorInformation = location.state?.info;
+    const [tab , setTab] = useState("about")
   return (
-    <div style={{ maxWidth:"90%" , margin:"0 auto"}}>
-      <div style={{display:"flex" , justifyContent:"center"  , padding : "30px 5px"}}>
-        <div >
-          <Image src= "https://www.summit-urgentcare.com/wp-content/uploads/2014/12/Dollarphotoclub_69741928.jpg" />
+    <>
+    <div style={{ maxWidth:"90%" , margin:"0 auto" }}>
+      <div style={{display:"flex" , justifyContent:"center" , alignItems:"center" , padding : "30px 5px"}}>
+        <div>
+          <Image src= "https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png" />
         </div>
         <Content>
         <Specialization>Surgeon</Specialization>
@@ -81,15 +88,32 @@ const DoctorDetailPage = () => {
       </div>
       <hr/>
 
-      <div>
-      <div>
-        About
+      <div style={{display:"flex" , margin:"0 100px" , borderBottom:"1px solid grey"}}>
+        <button 
+        onClick={()=>setTab('about')}
+        className= {`${tab ==='about' && 'activetab'} btns `}
+        >
+          About
+        </button>
+        <button 
+        onClick={()=>setTab('feedback')}
+        className= {`${tab ==='feedback' && 'activetab'} btns `}
+        >
+          Feedback
+        </button>
       </div>
-      <div>
-        Feedback
-      </div>
-      </div>
+      <div style={{marginTop:"20px"}}>
+          {
+            
+            tab === 'about' ?  
+            <DoctorAbout/>:
+            <DoctorFeedback/>
+          }
+        </div>
+        
     </div>
+    <Footer/>
+    </>
   )
 }
 
