@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import "./DoctorDetailPage.css"
 import DoctorAbout from './DoctorAbout.js';
 import DoctorFeedback from './DoctorFeedback.js';
 import Footer from "../Footer/Footer.js";
+import doctorcontext from '../../context/Doctor/doctorcontext.js';
 const Image = styled('img')`
 height : 250px;
 width : 200px;
@@ -57,11 +58,31 @@ const Star = styled('i')`
 `;
 
 
+
 const DoctorDetailPage = () => {
     const location = useLocation();
     const doctorID = location.state?.doctorID;
     const doctorInformation = location.state?.info;
+    const [doctor , setDoctor] = useState({});
     const [tab , setTab] = useState("about")
+    
+    useEffect(()=>{
+      const fetchData = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/v1/doctors/getdoctor/${doctorID}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const json = await response.json();
+            setDoctor(json.doctor);
+        } catch (error) {
+            console.error('Error fetching doctor details:', error);
+        }
+      };
+      fetchData();
+    },[])
   return (
     <>
     <div style={{ maxWidth:"90%" , margin:"0 auto" }}>
@@ -70,8 +91,8 @@ const DoctorDetailPage = () => {
           <Image src= "https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png" />
         </div>
         <Content>
-        <Specialization>Surgeon</Specialization>
-        <Name> Harsh Santoshi </Name>
+        <Specialization>{doctor.specialization}</Specialization>
+        <Name> {doctor.doctorName} </Name>
         <StarContainer>
         <Star className="fa-solid fa-star" />
 
@@ -81,8 +102,8 @@ const DoctorDetailPage = () => {
             (100) 
           </span>
         </StarContainer>
-        <Fee> <span style={{fontSize:"18px" , fontWeight:"600"}}>Consultation Fees </span>  : $40</Fee>
-        <TagLine>Lorem ipsum is fsa aspw jfaw paiw asap asfep ansjd panv aint wf f;akhf ;akheg ;ehg bfhagbf kagefjsbjkrgwrlgf wfbkal felugf jakbgk jah fjabefjbaejfbelug a aejf kkaf aefg uafa fkjaee fjkae fajkaef fhah ahf kf aewfuhfiuw whqi f whf iwh f ehih erq rqhi rh f sfh whe eqhuq t iewhf sjf wei hiwer hf ahfeiw oqirj fha ioae kereghie w hiogFKHAYSNF JHSE EF fhsefh jg ajhats fkhg kjsnatoshi hcla ds  thhha tt sfjal</TagLine>
+        <Fee> <span style={{fontSize:"18px" , fontWeight:"600"}}>Consultation Fees </span>  : Rs {doctor.fees}/-</Fee>
+        <TagLine>Empowering Health, Inspiring Life: Your Wellness Journey Starts Here</TagLine>
         </Content>
 
       </div>
@@ -106,8 +127,8 @@ const DoctorDetailPage = () => {
           {
             
             tab === 'about' ?  
-            <DoctorAbout/>:
-            <DoctorFeedback/>
+            <DoctorAbout doctor = {doctor}/>:
+            <DoctorFeedback doctor = {doctor}/>
           }
         </div>
         
