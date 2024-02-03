@@ -5,7 +5,51 @@ import "./DoctorDetailPage.css"
 import DoctorAbout from './DoctorAbout.js';
 import DoctorFeedback from './DoctorFeedback.js';
 import Footer from "../Footer/Footer.js";
+import { Box } from '@mui/material';
+import { Modal } from '@mui/material';
+import { useTheme } from '@mui/material';
+import { OutlinedInput } from '@mui/material';
+import { InputLabel } from '@mui/material';
+import { MenuItem } from '@mui/material';
+import { FormControl } from '@mui/material';
+import { Select } from '@mui/material';
+import { TextField } from '@mui/material';
 import doctorcontext from '../../context/Doctor/doctorcontext.js';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  '12:00-12:15',
+  '12:15-12:30',
+  '12:30-12:45',
+  '12:45-13:00',
+  '13:00-13:15',
+  '13:15-13:30',
+  '13:30-13:45',
+  '13:45-14:00',
+  '14:00-14:15',
+  '14:15-14:30',
+  '14:30-14:45',
+  '14:45-15:00'
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName === name
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
+  };
+}
 const Image = styled('img')`
 height : 250px;
 width : 200px;
@@ -18,7 +62,7 @@ const Specialization = styled('div')({
   // width:"content",
   color: 'blue',
   padding: '2px 6px',
-  textAlign:"center",
+  textAlign: "center",
   fontWeight: '700',
   borderRadius: '4px',
 });
@@ -31,10 +75,10 @@ display:flex;
 flex-direction : column;
 align-items:start;
 height : 230px;
-overflow-y: auto;
-&::-webkit-scrollbar {
-  width: 8px;  
-}
+// overflow-y: auto;
+// &::-webkit-scrollbar {
+//   width: 8px;  
+// }
 `
 const Name = styled('div')`
 font-size : 25px;
@@ -56,84 +100,163 @@ font-size : 16px;
 const Star = styled('i')`
   color: gold;
 `;
-
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 800,
+  height: '70%',
+  overflow: 'scroll',
+  backgroundColor: 'background.paper',
+  borderRadius: '15px',
+  // border: '2px solid #000',
+  // boxShadow: '24px', 
+  '&::-webkit-scrollbar': {
+    width: '0px',
+  },
+  p: '16px',
+};
 
 
 const DoctorDetailPage = () => {
-    const location = useLocation();
-    const doctorID = location.state?.doctorID;
-    const doctorInformation = location.state?.info;
-    const [doctor , setDoctor] = useState({});
-    const [tab , setTab] = useState("about")
-    
-    useEffect(()=>{
-      const fetchData = async (id) => {
-        try {
-            const response = await fetch(`http://localhost:8000/api/v1/doctors/getdoctor/${doctorID}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            const json = await response.json();
-            setDoctor(json.doctor);
-        } catch (error) {
-            console.error('Error fetching doctor details:', error);
-        }
-      };
-      fetchData();
-    },[])
+  const location = useLocation();
+  const doctorID = location.state?.doctorID;
+  const doctorInformation = location.state?.info;
+  const [doctor, setDoctor] = useState({});
+  const [tab, setTab] = useState("about")
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [minDate, setMinDate] = useState('');
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState('');
+
+  const handleChange = (event) => {
+    setPersonName(event.target.value);
+  };
+  useEffect(() => {
+    const fetchData = async (id) => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/doctors/getdoctor/${doctorID}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        const json = await response.json();
+        setDoctor(json.doctor);
+        const today = new Date().toISOString().split('T')[0];
+        setMinDate(today);
+      } catch (error) {
+        console.error('Error fetching doctor details:', error);
+      }
+    };
+    fetchData();
+  }, [])
   return (
     <>
-    <div style={{ maxWidth:"90%" , margin:"0 auto" }}>
-      <div style={{display:"flex" , justifyContent:"center" , alignItems:"center" , padding : "30px 5px"}}>
-        <div>
-          <Image src= "https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png" />
+      <div style={{ maxWidth: "90%", margin: "0 auto" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "30px 5px" }}>
+          <div>
+            <Image src="https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png" />
+          </div>
+          <Content>
+            <Specialization>{doctor.specialization}</Specialization>
+            <Name> {doctor.doctorName} </Name>
+            <StarContainer>
+              <Star className="fa-solid fa-star" />
+
+              <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '16px' }}> 4.5
+              </span>
+              <span style={{ fontSize: '15px', color: 'grey', fontWeight: '400' }}>
+                (100)
+              </span>
+            </StarContainer>
+            <Fee> <span style={{ fontSize: "18px", fontWeight: "600" }}>Consultation Fees </span>  : Rs {doctor.fees}/-</Fee>
+            <button type="button" className="btn btn-outline-dark my-2" onClick={handleOpen}>Book Appointment</button>
+            <TagLine>Empowering Health, Inspiring Life: Your Wellness Journey Starts Here</TagLine>
+          </Content>
+
         </div>
-        <Content>
-        <Specialization>{doctor.specialization}</Specialization>
-        <Name> {doctor.doctorName} </Name>
-        <StarContainer>
-        <Star className="fa-solid fa-star" />
+        <hr />
 
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '16px' }}> 4.5
-          </span>
-          <span style={{ fontSize: '15px', color: 'grey', fontWeight: '400' }}>
-            (100) 
-          </span>
-        </StarContainer>
-        <Fee> <span style={{fontSize:"18px" , fontWeight:"600"}}>Consultation Fees </span>  : Rs {doctor.fees}/-</Fee>
-        <TagLine>Empowering Health, Inspiring Life: Your Wellness Journey Starts Here</TagLine>
-        </Content>
-
-      </div>
-      <hr/>
-
-      <div style={{display:"flex" , margin:"0 100px" , borderBottom:"1px solid grey"}}>
-        <button 
-        onClick={()=>setTab('about')}
-        className= {`${tab ==='about' && 'activetab'} btns `}
-        >
-          About
-        </button>
-        <button 
-        onClick={()=>setTab('feedback')}
-        className= {`${tab ==='feedback' && 'activetab'} btns `}
-        >
-          Feedback
-        </button>
-      </div>
-      <div style={{marginTop:"20px"}}>
+        <div style={{ display: "flex", margin: "0 100px", borderBottom: "1px solid grey" }}>
+          <button
+            onClick={() => setTab('about')}
+            className={`${tab === 'about' && 'activetab'} btns `}
+          >
+            About
+          </button>
+          <button
+            onClick={() => setTab('feedback')}
+            className={`${tab === 'feedback' && 'activetab'} btns `}
+          >
+            Feedback
+          </button>
+        </div>
+        <div style={{ marginTop: "20px" }}>
           {
-            
-            tab === 'about' ?  
-            <DoctorAbout doctor = {doctor}/>:
-            <DoctorFeedback doctor = {doctor}/>
+
+            tab === 'about' ?
+              <DoctorAbout doctor={doctor} /> :
+              <DoctorFeedback doctor={doctor} />
           }
         </div>
-        
-    </div>
-    <Footer/>
+
+      </div>
+      <Footer />
+      <Modal
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <h3 className='title' style={{ color: "black" }}>Book Appointment</h3>
+          <div className='col-md-6 appointment'>
+            <form className="row g-3 ">
+              <div className="col-12">
+                <label htmlFor="doctorName" className="form-label">Name</label>
+                <input type="text" className="form-control" id="doctorName" name="doctorName"  value={doctor.doctorName}/>
+              </div>
+              <div className="col-12">
+                <label htmlFor="date" className="form-label">Select Date</label>
+                <input type="Date" className="form-control" id="date" name="date" min={minDate} value="" />
+              </div>
+              <div>
+                <FormControl sx={{ my: 2, width: 400 }}>
+                  <InputLabel id="demo-single-name-label">Slot</InputLabel>
+                  <Select
+                    labelId="demo-single-name-label"
+                    id="demo-single-name"
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Name" />}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, personName, theme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div className='col-12 text-center'>
+                <div className="text-center">
+                  <button type="submit" className="btn btn-success me-2">Check Availaibity</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </Box>
+      </Modal>
     </>
   )
 }
