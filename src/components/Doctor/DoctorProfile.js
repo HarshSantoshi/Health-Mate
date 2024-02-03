@@ -40,12 +40,16 @@ const style = {
   width: 800,
   height: '70%',
   overflow: 'scroll',
-  bgcolor: 'background.paper',
+  backgroundColor: 'background.paper',
   borderRadius: '15px',
   // border: '2px solid #000',
-  // boxShadow: 24,
-  p: 4,
+  // boxShadow: '24px', 
+  '&::-webkit-scrollbar': {
+    width: '0px',
+  },
+  p: '16px', 
 };
+
 
 const DoctorProfile = () => {
   const { doctor, experience, education, fetchData,updatedoctor,Addexp ,Deleteexp,Addedu,Deleteedu} = useContext(doctorcontext);
