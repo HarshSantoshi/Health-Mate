@@ -37,7 +37,7 @@ export default function DoctorCard({ props }) {
 
   const handleClicktoDoctorDetails = (id, e) => {
     e.stopPropagation(); // Stop the propagation of the click event
-    navigate(`/doctordetail`, { state: { doctorID: id  , info : props} });
+    navigate(`/doctordetail`, { state: { doctorID: id  , info : props , patientId : patientId} });
   };
 
   const handleClick = async (id, e) => {
