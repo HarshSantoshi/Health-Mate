@@ -6,7 +6,7 @@ import "./Dash.css";
 function Dash() {
   return (
     <div className="Dash">
-      <h1 style={{ textAlign: "left" }}>Dashboard</h1>
+      <h2 style={{ textAlign: "center" }}>Dashboard</h2>
       <Cards />
       <Table />
     </div>

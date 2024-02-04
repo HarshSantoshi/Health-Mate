@@ -45,7 +45,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/doctorpage" element={<DoctorPage/>} />
-          <Route exact path="/doctordash" element={<DoctorDash/>} />
+          <Route exact path="/dashboard" element={<DoctorDash/>} />
           <Route exact path="/patientpage" element={<PatientPage/>} />
           <Route exact path="/patientprofile" element={<PatientProfile/>} />
           <Route exact path="/doctorprofile" element={<DoctorProfile/>} />

@@ -7,11 +7,11 @@ function RightSide() {
   return (
     <div className="RightSide">
       <div>
-        <h3 style={{textAlign:"left"}}>Feedbacks</h3>
+        <h3 style={{textAlign:"center"}}>Feedbacks</h3>
         <Updates />
       </div>
       <div>
-        <h3 style={{textAlign:"left"}}>Review</h3>
+        <h3 style={{textAlign:"center"}}>Review</h3>
         <Review />
       </div>
     </div>

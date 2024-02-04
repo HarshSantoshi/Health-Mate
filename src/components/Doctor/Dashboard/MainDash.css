@@ -16,7 +16,7 @@
   /* padding: 0.5rem 3.5rem; */
   color: var(--black);
   background: rgb(223 222 255);
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,12 +28,15 @@
   height: 97%;
   width: 97%;
   background: var(--glass);
-  border-radius: 2rem;
+  /* border-radius: 2rem; */
   gap: 16px;
   grid-template-columns: auto 20rem;
-  overflow: hidden;
+  overflow: scroll;
   padding: 10px;
   /* padding-right: 5px; */
+  &::-webkit-scrollbar {
+    width: 0.5em;
+  }
 }
 
 @media screen and (max-width: 1200px) {

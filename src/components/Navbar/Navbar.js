@@ -80,7 +80,7 @@ const Navbar = () => {
   }
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{padding:"1px"}}>
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <Logo src='logo.png' alt='logo'/>
@@ -135,14 +135,20 @@ const Navbar = () => {
                   <>
                     {
                       localStorage.getItem('role') === 'doctor' ?
-                        <div>
+                        <div style={{display:'flex'}}>
+                          <div>
+                            <Link to="dashboard">
+                            <img style={{height : "50px" , borderRadius:"50%"}} src='profile.png' alt ="..." />
+                            </Link>
+                          </div>
                           <button type="button" className="btn btn-primary login">
                             <Link to="/doctorprofile">Profile </Link>
                           </button>
                           <button onClick={handleLogout} type="button" className="btn btn-info register">
                             Logout
                           </button>
-                        </div> :
+                        </div> 
+                        :
                         <div>
                           <Badge badgeContent={cartCount} color="primary">
 
