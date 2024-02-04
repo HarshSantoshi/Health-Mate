@@ -13,9 +13,7 @@ import { InputLabel } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { FormControl } from '@mui/material';
 import { Select } from '@mui/material';
-import { TextField } from '@mui/material';
-import doctorcontext from '../../context/Doctor/doctorcontext.js';
-
+import toast from 'react-hot-toast';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -122,6 +120,7 @@ const style = {
 const DoctorDetailPage = () => {
   const location = useLocation();
   const doctorID = location.state?.doctorID;
+  const patientID = location.state?.patientId;
   const doctorInformation = location.state?.info;
   const [doctor, setDoctor] = useState({});
   const [tab, setTab] = useState("about")
@@ -130,11 +129,79 @@ const DoctorDetailPage = () => {
   const handleClose = () => setOpen(false);
   const [minDate, setMinDate] = useState('');
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState('');
+  const [personName, setPersonName] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [available , setAvailable] = useState(false);
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
+    console.log(doctorID);
+    console.log(selectedDate)
+    console.log(patientID);
+    // console.log(personName);
+    // console.log(personName.substring(0, 5));
+    // console.log(parseInt(personName.substring(0, 5)));
+    // console.log(personName.substring(personName.length -5));
   };
+  const handleBook = async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/patient/bookappointment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          date: selectedDate,
+          starttime:personName.substring(0, 5), 
+          endtime: personName.substring(personName.length - 5),
+          doctorId: doctorID,
+          patientId : patientID,
+          status : "approved"
+        })
+      });
+    
+      const json = await response.json();
+      console.log(json);
+      if (json.success) {
+        toast.success("Appointment Booked");
+      }
+      setAvailable(false);
+    } catch (error) {
+      console.error('Error while booking:', error);
+    }
+  }
+  const handleCheck = async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/patient/checkavailability`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body:  JSON.stringify({
+          date: selectedDate,
+          starttime:personName.substring(0, 5), 
+          endtime: personName.substring(personName.length - 5),
+          doctorId: doctorID,
+          status : "approved"
+        })
+        
+      });
+      const json = await response.json();
+      console.log(json);
+      if(json.success === true){
+        toast.success("Slot is available!");
+        setAvailable(true);
+      }
+      else if(json.success === false){
+        toast.error("Slot is not available!");
+      }
+      console.log(json);
+    } catch (error) {
+      console.error('Error fetching appointment details:', error);
+    }
+  }
   useEffect(() => {
     const fetchData = async (id) => {
       try {
@@ -162,8 +229,8 @@ const DoctorDetailPage = () => {
             <Image src="https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png" />
           </div>
           <Content>
-            <Specialization>{doctor.specialization}</Specialization>
-            <Name> {doctor.doctorName} </Name>
+            <Specialization>{doctor?.specialization}</Specialization>
+            <Name> {doctor?.doctorName} </Name>
             <StarContainer>
               <Star className="fa-solid fa-star" />
 
@@ -173,7 +240,7 @@ const DoctorDetailPage = () => {
                 (100)
               </span>
             </StarContainer>
-            <Fee> <span style={{ fontSize: "18px", fontWeight: "600" }}>Consultation Fees </span>  : Rs {doctor.fees}/-</Fee>
+            <Fee> <span style={{ fontSize: "18px", fontWeight: "600" }}>Consultation Fees </span>  : Rs {doctor?.fees}/-</Fee>
             <button type="button" className="btn btn-outline-dark my-2" onClick={handleOpen}>Book Appointment</button>
             <TagLine>Empowering Health, Inspiring Life: Your Wellness Journey Starts Here</TagLine>
           </Content>
@@ -218,12 +285,14 @@ const DoctorDetailPage = () => {
           <div className='col-md-6 appointment'>
             <form className="row g-3 ">
               <div className="col-12">
-                <label htmlFor="doctorName" className="form-label">Name</label>
-                <input type="text" className="form-control" id="doctorName" name="doctorName"  value={doctor.doctorName}/>
+                <h3 style={{textAlign:"center"}}>{doctor?.doctorName}</h3>
               </div>
               <div className="col-12">
                 <label htmlFor="date" className="form-label">Select Date</label>
-                <input type="Date" className="form-control" id="date" name="date" min={minDate} value="" />
+                <input type="Date" className="form-control" id="date" name="date" min={minDate}
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                />
               </div>
               <div>
                 <FormControl sx={{ my: 2, width: 400 }}>
@@ -250,7 +319,12 @@ const DoctorDetailPage = () => {
               </div>
               <div className='col-12 text-center'>
                 <div className="text-center">
-                  <button type="submit" className="btn btn-success me-2">Check Availaibity</button>
+                  {
+                    available?
+                    <button type="submit" className="btn btn-success me-2" onClick={handleBook}>Book Now</button>
+                    :
+                    <button type="submit" className="btn btn-success me-2" onClick={handleCheck}>Check Availaibity</button>
+                  }
                 </div>
               </div>
             </form>

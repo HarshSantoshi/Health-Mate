@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import Patient from '../models/patientSchema.js';
+import Appointment from '../models/appointmentSchema.js';
 import { fetchPatient } from '../middleware/fetchPatient.js';
-
 const PatientRouter = Router();
 
 PatientRouter.get("/getallpatients", async (req, res) => {
@@ -55,6 +55,60 @@ PatientRouter.put('/updatepatient', fetchPatient, async (req, res) => {
   } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error")
+  }
+})
+PatientRouter.post("/checkavailability" ,async(req , res)=>{
+  try {
+    const { date , starttime , endtime , doctorId } = req.body;
+    console.log("Date " , date)
+    console.log("StartTime " , starttime)
+    console.log("endTime " , endtime)
+    console.log("doctorId " , doctorId)
+    const appointments = await Appointment.find({
+      doctorId: doctorId,
+      date: date,
+      starttime: starttime,
+      endtime: endtime,
+      status: "approved"
+    });
+    console.log(appointments);
+    if(appointments.length == 0){
+      return res.status(200).send({
+
+        message :"Appointment available",
+        success : true
+      })
+    }
+    else{
+      return res.status(200).send({
+        message:"Appointment not available",
+        success : false
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error")
+  }
+})
+PatientRouter.post("/bookappointment" ,async(req , res)=>{
+  try {
+    const { date , starttime , endtime , doctorId , patientId} = req.body;
+    const newAppointment = await Appointment.create({
+      doctorId ,
+      date,
+      patientId,
+      starttime,
+      endtime,
+      status : "approved"
+    })
+    // console.log(newAppointment);
+    return res.status(200).json({
+      appointment :newAppointment,
+      success : true
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error")
   }
 })
 
