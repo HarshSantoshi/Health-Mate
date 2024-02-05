@@ -19,6 +19,7 @@ import DoctorDetailPage from './components/Doctor/DoctorDetailPage.js';
 import DoctorDash from './components/Doctor/Dashboard/MainDash.js'
 import CartState from './context/cart/Cartstate.js';
 import DoctorState from './context/Doctor/DoctorState.js';
+import Bookings from './components/Patient/Bookings.js';
 function App() {
 
   return (
@@ -55,7 +56,8 @@ function App() {
           <Route exact path="/allmedicinepage" element={<MedicineMain/>} />
           <Route exact path="/product/:id" element={<Productmain/>} />
           <Route exact path="/cart" element={<Cart/>} />
-          <Route exact path="/meet/:meetId" element={<Meet/>} />
+          <Route exact path="/meet/:id" element={<Meet/>} />
+          <Route exact path="/bookings" element={<Bookings/>} />
         </Routes>
         {/* <Footer/> */}
       </Router>

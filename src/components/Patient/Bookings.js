@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState ,useCallback} from 'react';
 import { Table as MuiTable, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { Button } from '@mui/material';
-import "./Table.css";
+import "../Doctor/Dashboard/Table/Table.css";
 import { useNavigate } from 'react-router-dom';
 
 const makeStyle = (status) => {
@@ -25,13 +25,8 @@ const makeStyle = (status) => {
 
 
 function Table() {
-    const [appointments, setAppointments] = useState([]);
+    const [bookings, setBookings] = useState([]);
     const navigate = useNavigate();
-    const handleJoinRoom = useCallback((id , meetId)=>{
-        console.log(meetId)
-        console.log(id)
-        navigate(`/meet/${meetId}`, { state: { userID: id } });
-    },[navigate])
 
     const generateRandomNumber = (id) => {
         const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -39,27 +34,31 @@ function Table() {
         const result = Math.floor(random % 1000000);
         return result;
     };
+    const handleJoinRoom = useCallback((id , meetId)=>{
+        console.log(meetId)
+        console.log(id)
+        navigate(`/meet/${meetId}`, { state: { userID: id  } });
+    },[navigate])
 
-    const fetchPatientName = async (id) => {
+    const fetchDoctorName = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8000/api/v1/patient/getpatient/${id}`, {
+            const response = await fetch(`http://localhost:8000/api/v1/doctors/getdoctor/${id}`, {
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
-                },
+                    "Content-Type": "application/json"
+                }
             });
             const data = await response.json();
-            // console.log(data.patient);
-            return data.patient.patientName;
+            return data?.doctor?.doctorName;
         } catch (error) {
             console.log("Error while fetching Name of patient ", error);
-            return ""; // Return an empty string or handle the error as needed
+            return ""; 
         }
     };
 
-    const fetchAppointments = async () => {
+    const fetchBookings = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/v1/appointment/getallappointments`, {
+            const response = await fetch(`http://localhost:8000/api/v1/appointment/getallbookings`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -67,37 +66,37 @@ function Table() {
                 },
             });
             const data = await response.json();
-            // console.log(data.appointments);
+            // console.log(data.bookings);
 
-            const appointmentsWithPatientNames = await Promise.all(
+            const bookingsWithDoctorNames = await Promise.all(
                 data.appointments.map(async (row) => ({
                     ...row,
-                    patientName: await fetchPatientName(row.patientId),
+                    doctorName: await fetchDoctorName(row.doctorId),
                 }))
             );
 
-            setAppointments(appointmentsWithPatientNames);
+            setBookings(bookingsWithDoctorNames);
         } catch (error) {
-            console.log("Error while fetching appointment details in dashboard ", error);
+            console.log("Error while fetching appointment details in booking ", error);
         }
     };
 
     useEffect(() => {
-        fetchAppointments();
+        fetchBookings();
     }, []);
 
     return (
-        <div className="Table">
-            <h3 style={{ textAlign: "center", marginTop: "10px" }}>Your Appointments</h3>
+        <div className="Table" style={{width:"80%"  , margin:"20px auto" }}>
+            <h3 style={{ textAlign: "center", marginTop: "10px" }}>Your bookings</h3>
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029 " }}
                 className='tablecon'
             >
-                <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">
+                <MuiTable sx={{ minWidth: 650}} aria-label="simple table">
                     <TableHead className="sticky-top" style={{ background: "#fff", zIndex: "1" }}>
                         <TableRow>
-                            <TableCell>Patient Name</TableCell>
+                            <TableCell>Doctor Name</TableCell>
                             <TableCell align="left">Tracking ID</TableCell>
                             <TableCell align="left">Date</TableCell>
                             <TableCell align="left">Slot</TableCell>
@@ -108,13 +107,13 @@ function Table() {
                         </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>
-                        {appointments.map((row, i) => (
+                        {bookings &&  bookings.map((row, i) => (
                             <TableRow
                                 key={i}
                                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.patientName}
+                                    {row?.doctorName}
                                 </TableCell>
                                 <TableCell align="left">{generateRandomNumber(row._id)}</TableCell>
                                 <TableCell align="left">{row.date}</TableCell>
@@ -124,7 +123,7 @@ function Table() {
                                 </TableCell>
                                 <TableCell align="left" className="Details">
                                 <Button variant="contained" onClick={()=>handleJoinRoom(Date.now().toString() , row._id)}>Join</Button>
-                                    </TableCell>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
