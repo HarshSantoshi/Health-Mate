@@ -56,7 +56,7 @@ function App() {
           <Route exact path="/allmedicinepage" element={<MedicineMain/>} />
           <Route exact path="/product/:id" element={<Productmain/>} />
           <Route exact path="/cart" element={<Cart/>} />
-          <Route exact path="/meet/:meetId" element={<Meet/>} />
+          <Route exact path="/meet/:id" element={<Meet/>} />
           <Route exact path="/bookings" element={<Bookings/>} />
         </Routes>
         {/* <Footer/> */}

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Table as MuiTable, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { Button } from '@mui/material';
 import "./Table.css";
+import { useNavigate } from 'react-router-dom';
 
 const makeStyle = (status) => {
     if (status === 'Approved') {
@@ -25,6 +26,12 @@ const makeStyle = (status) => {
 
 function Table() {
     const [appointments, setAppointments] = useState([]);
+    const navigate = useNavigate();
+    const handleJoinRoom = useCallback((id , meetId)=>{
+        console.log(meetId)
+        console.log(id)
+        navigate(`/meet/${meetId}`, { state: { userID: id } });
+    },[navigate])
 
     const generateRandomNumber = (id) => {
         const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -115,7 +122,9 @@ function Table() {
                                 <TableCell align="left">
                                     <span className="status" style={makeStyle(row.status)}>{row.status}</span>
                                 </TableCell>
-                                <TableCell align="left" className="Details"><Button variant="contained">Join</Button></TableCell>
+                                <TableCell align="left" className="Details">
+                                <Button variant="contained" onClick={()=>handleJoinRoom(Date.now().toString() , row._id)}>Join</Button>
+                                    </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
