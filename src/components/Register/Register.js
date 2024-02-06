@@ -85,7 +85,7 @@ const Register = () => {
       if(json.success){
         localStorage.setItem('token', json.authToken); 
         localStorage.setItem('role','doctor');
-        navigate("/doctorpage");
+        navigate("/dashboard");
         toast.success("Doctor account created successfully!");
       }
       else{  
