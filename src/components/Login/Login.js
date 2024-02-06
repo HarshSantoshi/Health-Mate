@@ -36,7 +36,7 @@ const Login = () => {
         localStorage.setItem('token', json.authToken); 
         localStorage.setItem('role','doctor');
         
-        navigate("/doctorpage");
+        navigate("/dashboard");
         toast.success("Logged In successfully!");
       }
       else{  
