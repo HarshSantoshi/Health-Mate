@@ -4,30 +4,30 @@ import { Typography } from '@mui/material';
 import InputEmoji from "react-input-emoji"
 import { VideoCall as VideoCallIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import "./ChatBody.css"
 const Body = styled('div')`
   height: 100%;
-  border: 1px solid black;
-  width: 70%;
+  width: 100%;
+  @media screen and (min-width: 768px) {
+    width: 75%;
+  }
 `;
 
 const ChatContainer = styled('div')`
   height: 80%;
-  border: 1px solid black;
   width: 100%;
   padding: 10px;
   overflow-y: auto;
-
   &::-webkit-scrollbar {
     width: 0.5em;
   }
-
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
 `;
 
 const Sent = styled('div')`
-  background: blue;
+  background: #006496;
   max-width: 55%;
   margin-left: auto;
   padding: 2px 5px;
@@ -43,7 +43,7 @@ const Sent = styled('div')`
 const Received = styled('div')`
   background: green;
   max-width: 55%;
-  color: white;
+  color: #fff;
   width: fit-content;
   display: flex;
   align-items: center;
@@ -52,8 +52,6 @@ const Received = styled('div')`
   margin-top: 10px;
   word-break: break-word;
 `;
-
-
 
 const Chat = styled(Typography)`
   font-size: 14px;
@@ -64,24 +62,29 @@ const Time = styled(Typography)`
   color: white;
   font-size: 10px !important;
   margin-top: auto;
+  margin-right: 3px;
   word-break: keep-all;
 `;
 
 const Header = styled('div')`
   height: 10%;
-  width: 100%;
-  background-color: #e0e0e0;
+  width: 98%;
+  background-color: #f6f6f7;
   display : flex;
   align-items:center;
-  justify-content : center;
+  margin-top: 5px;
+  border-radius:8px;
+  // justify-content : center;
 `;
 const InputContainer = styled('div')`
   height: 10%;
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 100%;
   display: flex;
-  align-items: center; /* Correct property name */
+  align-items: center; 
   justify-content: center;
+  margin:0 5px;
+  overflow:"hidden"
 `;
 
 const ProfileImg = styled('img')`
@@ -92,12 +95,29 @@ margin: 0 10px;
 const Name = styled('div')`
 font-weight : bold;
 `
+
 const Button = styled('button')`
-  height: 80%;
-  margin:0 20px;
-  background-color: blue;
+  height: 40px;
+  width: auto;
+  background-color: #4CAF50;
+  border: none;
   color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items:center;
+  font-size: 16px;
+  margin: 4px 0;
+  margin-right:10px;
+  transition-duration: 0.4s;
+  cursor: pointer;
   border-radius: 10px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  
+  &:hover {
+    background-color: #45a049;
+  }
 `;
 // const GenerateButton = styled(VideoCallIcon)`
 //   position: relative;
@@ -251,9 +271,15 @@ const scrollToBottom = () => {
   
   return (
     <>
-      <Body>
+      <Body >
+        <div className='maincon'>
       {chat === null ? (
-          <Typography>Select a user </Typography>
+        <>
+          <div className='selectchat'>
+            <img src="../chat.jpg" alt="" className='img-con' style={{height:"100%",width:"100%"}}/>
+            <Typography style={{fontSize:"20px"}}>Select a user </Typography>
+          </div>
+        </>
         ) : (
           <>
            <Header>
@@ -304,6 +330,7 @@ const scrollToBottom = () => {
                       borderRadius: '5px',
                       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
                       zIndex: 1,
+                      
                     },
                   },
                 }}
@@ -315,13 +342,15 @@ const scrollToBottom = () => {
             onChange={handleChange}
             value = {newMessage}
             onKeyDown={handleKeyPress}
+            className="react-emoji"
             />
-            <Button onClick={ handleSend}>Send</Button>
-            <button onClick={handleJoinRoom}>Join</button>
+            <Button onClick={ handleSend}><i className="fa-regular fa-paper-plane"></i></Button>
+            <Button onClick={handleJoinRoom}>Join</Button>
             </InputContainer>
            
           </>
         )}
+        </div>
       </Body>
     </>
   );
