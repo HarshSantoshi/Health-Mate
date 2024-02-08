@@ -1,0 +1,50 @@
+.maincon{
+    width: 98%;
+    height: 98%;    
+    background:#fff;
+    border-radius: 10px;
+    margin: auto auto;
+    margin-top: 14px;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    @media screen and (max-width: 768px) {
+        height: 100%;
+    }
+}
+.selectchat{
+    height: 50%;
+    width: 50%;
+    margin: 0 auto;
+}
+.img-con{
+    border-radius: 14px;
+    margin-top: 100px;
+    margin-bottom: 4px;
+}
+.react-emoji {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 85%;
+    overflow: hidden;
+}
+.react-input-emoji--input {
+    font-weight: 400; 
+    max-height: 40px;
+    min-height: 20px;
+    outline: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    z-index: 1;
+    width: 100%;
+    user-select: text;
+    padding: 9px 12px 11px;
+    text-align: left;
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+}
