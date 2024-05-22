@@ -10,6 +10,7 @@ import PatientRouter from './routes/patient.js';
 import MedicineRouter from './routes/medicine.js';
 import CartRouter from './routes/cart.js';
 import AppointmentRouter from './routes/appointment.js';
+import PaymentController from './routes/paymentcontroller.js';
 const app = express();
 const server = createServer(app);
 
@@ -28,6 +29,6 @@ app.use('/api/v1/message' , MessageRouter);
 app.use('/api/v1/medicine',MedicineRouter);
 app.use('/api/v1/cart',CartRouter);
 app.use('/api/v1/appointment',AppointmentRouter);
-
+app.use('/api/v1/payment',PaymentController);
 
 export { app, server };
