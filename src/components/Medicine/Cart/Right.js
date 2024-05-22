@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { paymenthandler } from '../../Payment/Payment.js'
 import "./Right.css"
 
 function Right({totalPrice}) {
@@ -6,6 +7,15 @@ function Right({totalPrice}) {
     // console.log(totalPrice);
     const totalAmount = Math.round(totalPrice * 100) / 100 - 0.13*Math.round(totalPrice*100)/100 ;
     const totalDiscount = 0.13*Math.round(totalPrice*100)/100;
+    const handlepayment = async (e)=>{
+        e.preventDefault();
+        const paymentCompleted = await paymenthandler(Math.round(totalAmount)*100);
+        if (paymentCompleted){
+
+        }else {
+            console.log('Payment failed');
+        }
+    }
     return (
         <div className='totalamt'>
             <h4 className='title'>Payment Details</h4>
@@ -44,7 +54,7 @@ function Right({totalPrice}) {
                     <span className="save-price">₹ {Math.round(totalAmount*100)/100 + 0.0}</span>
                 </div>
                 <div className="process-checkout">
-                    <a className="btn btn_to_checkout" href="/" role="button">Proceed</a>
+                    <a className="btn btn_to_checkout" role="button" onClick={handlepayment}>Proceed</a>
                 </div>
             </div>
         </div>

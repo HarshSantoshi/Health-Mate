@@ -14,6 +14,7 @@ import { MenuItem } from '@mui/material';
 import { FormControl } from '@mui/material';
 import { Select } from '@mui/material';
 import toast from 'react-hot-toast';
+import { paymenthandler } from '../Payment/Payment.js'
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -143,34 +144,69 @@ const DoctorDetailPage = () => {
     // console.log(parseInt(personName.substring(0, 5)));
     // console.log(personName.substring(personName.length -5));
   };
-  const handleBook = async(e)=>{
+  // const handleBook = async(e)=>{
+  //   e.preventDefault();
+  //   paymenthandler(doctor.fees*100);
+  //   try {
+  //     const response = await fetch(`http://localhost:8000/api/v1/patient/bookappointment`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({
+  //         date: selectedDate,
+  //         starttime:personName.substring(0, 5), 
+  //         endtime: personName.substring(personName.length - 5),
+  //         doctorId: doctorID,
+  //         patientId : patientID,
+  //         status : "approved"
+  //       })
+  //     });
+    
+  //     const json = await response.json();
+  //     console.log(json);
+  //     if (json.success) {
+  //       toast.success("Appointment Booked");
+  //     }
+  //     setAvailable(false);
+  //   } catch (error) {
+  //     console.error('Error while booking:', error);
+  //   }
+  // }
+  const handleBook = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/patient/bookappointment`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          date: selectedDate,
-          starttime:personName.substring(0, 5), 
-          endtime: personName.substring(personName.length - 5),
-          doctorId: doctorID,
-          patientId : patientID,
-          status : "approved"
-        })
-      });
-    
-      const json = await response.json();
-      console.log(json);
-      if (json.success) {
-        toast.success("Appointment Booked");
-      }
-      setAvailable(false);
+        const paymentCompleted = await paymenthandler(doctor.fees*100);
+        if (paymentCompleted) {
+            const response = await fetch(`http://localhost:8000/api/v1/patient/bookappointment`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    date: selectedDate,
+                    starttime: personName.substring(0, 5),
+                    endtime: personName.substring(personName.length - 5),
+                    doctorId: doctorID,
+                    patientId: patientID,
+                    status: "approved"
+                })
+            });
+
+            const json = await response.json();
+            console.log(json);
+            if (json.success) {
+                toast.success("Appointment Booked");
+            }
+            setAvailable(false);
+        } else {
+            console.log('Payment failed');
+        }
     } catch (error) {
-      console.error('Error while booking:', error);
+        console.error('Error while booking:', error);
     }
-  }
+}
+
   const handleCheck = async(e)=>{
     e.preventDefault();
     try {
