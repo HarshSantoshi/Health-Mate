@@ -226,7 +226,9 @@ const scrollToBottom = () => {
   },[navigate , chat])
   
   const handleSend = async (link) => {
-    if(newMessage == "" && link == "")return ;
+    if(newMessage == "" || link == ""){
+      return ;
+    }
     const msg = {
       senderId: currentUserId,
       chatId: chat._id,
@@ -294,23 +296,23 @@ const scrollToBottom = () => {
               </Name>
             )}
           </Header>
-            <ChatContainer ref={chatContainerRef}>
-              {message.map((msg, index) => (
-                <>
-                {msg.senderId === currentUserId ? 
-                <Sent key={index}>
-                <Chat>{msg.text}</Chat>
-                <Time>{formatDate(msg.createdAt) || msg.date}</Time>
-              </Sent>
-              :
-              <Received key={index}>
-                <Chat>{msg.text}</Chat>
-                <Time>{formatDate(msg.createdAt) || msg.createdAt}</Time>
-              </Received>
-                }
-                </>
-              ))}
-            </ChatContainer>
+          <ChatContainer ref={chatContainerRef}>
+            {message.map((msg, index) => (
+              <React.Fragment key={index}>
+                {msg.senderId === currentUserId ? (
+                  <Sent>
+                    <Chat>{msg.text}</Chat>
+                    <Time>{formatDate(msg.createdAt) || msg.date}</Time>
+                  </Sent>
+                ) : (
+                  <Received key={index}>
+                    <Chat>{msg.text}</Chat>
+                    <Time>{formatDate(msg.createdAt) || msg.createdAt}</Time>
+                  </Received>
+                )}
+              </React.Fragment>
+            ))}
+          </ChatContainer>
             <InputContainer>
             {
               currUserRole === 'doctor' ? <>
