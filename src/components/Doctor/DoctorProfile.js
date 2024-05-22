@@ -54,15 +54,54 @@ const style = {
 const DoctorProfile = () => {
   const { doctor, experience, education, fetchData,updatedoctor,Addexp ,Deleteexp,Addedu,Deleteedu} = useContext(doctorcontext);
   //Info start
-  const [info, setinfo] = useState([]);
+  const [info, setInfo] = useState({
+    doctorName: "",
+    specialization: "",
+    experienceYrs: "",
+    currentlyserving: "",
+    fees: "",
+    phoneNo: "",
+    about: ""
+  });
+
+  const [openabout, setOpenabout] = useState(false);
+
   const onchange = (e) => {
-    setinfo({ ...info, [e.target.name]: e.target.value })
+    setInfo({ ...info, [e.target.name]: e.target.value });
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    updatedoctor(info.specialization,info.experienceYrs,info.about,info.fees,info.currentlyserving,info.phoneNo)
+    updatedoctor(info.specialization, info.experienceYrs, info.about, info.fees, info.currentlyserving, info.phoneNo);
     handleCloseabout();
   };
+
+  const handleOpenabout = () => {
+    setInfo({
+      doctorName: doctor.doctorName || "",
+      specialization: doctor.specialization || "",
+      experienceYrs: doctor.experienceYrs || "",
+      currentlyserving: doctor.currentlyserving || "",
+      fees: doctor.fees || "",
+      phoneNo: doctor.phoneNo || "",
+      about: doctor.about || ""
+    });
+    setOpenabout(true);
+  };
+
+  const handleCloseabout = () => {
+    setOpenabout(false);
+    setInfo({
+      doctorName: doctor.doctorName || "",
+      specialization: doctor.specialization || "",
+      experienceYrs: doctor.experienceYrs || "",
+      currentlyserving: doctor.currentlyserving || "",
+      fees: doctor.fees || "",
+      phoneNo: doctor.phoneNo || "",
+      about: doctor.about || ""
+    });
+  };
+
   //info end
 
   //experience start
@@ -109,13 +148,10 @@ const DoctorProfile = () => {
   //Modal start
   const [openexp, setOpenexp] = React.useState(false);
   const [openedu, setOpenedu] = React.useState(false);
-  const [openabout, setOpenabout] = React.useState(false);
   const handleOpenexp = () => setOpenexp(true);
   const handleCloseexp = () => setOpenexp(false);
   const handleOpenedu = () => setOpenedu(true);
   const handleCloseedu = () => setOpenedu(false);
-  const handleOpenabout = () => {setinfo(doctor); setOpenabout(true)};
-  const handleCloseabout = () => {setOpenabout(false); setinfo(doctor)};
   //Modal end
 
   useEffect(() => {
@@ -360,7 +396,7 @@ const DoctorProfile = () => {
           <form className="row g-3" onSubmit={handleSubmit}>
             <div className="col-md-6">
               <label htmlFor="doctorName" className="form-label">Name</label>
-              <input type="text" className="form-control" id="doctorName" name="doctorName" value={info.doctorName} />
+              <input type="text" className="form-control" id="doctorName" name="doctorName" value={info.doctorName} readOnly/>
             </div>
             <div className="col-md-6">
               <label htmlFor="specialization" className="form-label">Specialization</label>
