@@ -1,5 +1,5 @@
 export const paymenthandler = async (amount) => {
-  // const amount = 500;
+  
   const currency = 'INR';
   const receiptId = '1234567890';
 
