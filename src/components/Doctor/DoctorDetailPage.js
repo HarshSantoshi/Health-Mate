@@ -148,7 +148,7 @@ const DoctorDetailPage = () => {
   //   e.preventDefault();
   //   paymenthandler(doctor.fees*100);
   //   try {
-  //     const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/patient/bookappointment`, {
+  //     const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/bookappointment`, {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json"
@@ -178,7 +178,7 @@ const DoctorDetailPage = () => {
     try {
         const paymentCompleted = await paymenthandler(doctor.fees*100);
         if (paymentCompleted) {
-            const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/patient/bookappointment`, {
+            const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/bookappointment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -210,7 +210,7 @@ const DoctorDetailPage = () => {
   const handleCheck = async(e)=>{
     e.preventDefault();
     try {
-      const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/patient/checkavailability`, {
+      const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/checkavailability`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -241,7 +241,7 @@ const DoctorDetailPage = () => {
   useEffect(() => {
     const fetchData = async (id) => {
       try {
-        const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/doctors/getdoctor/${doctorID}`, {
+        const response = await fetch(`https://health-mate-server.vercel.app/api/v1/doctors/getdoctor/${doctorID}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json"

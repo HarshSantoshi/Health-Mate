@@ -42,7 +42,7 @@ function Table() {
 
     const fetchDoctorName = async (id) => {
         try {
-            const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/doctors/getdoctor/${id}`, {
+            const response = await fetch(`https://health-mate-server.vercel.app/api/v1/doctors/getdoctor/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -58,7 +58,7 @@ function Table() {
 
     const fetchBookings = async () => {
         try {
-            const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/appointment/getallbookings`, {
+            const response = await fetch(`https://health-mate-server.vercel.app/api/v1/appointment/getallbookings`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

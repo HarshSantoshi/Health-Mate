@@ -21,12 +21,12 @@ const Conversation = ({data , currentUserId , currUserRole}) => {
             try {
                 let response;
                 if(currUserRole === "doctor"){
-                    response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/patient/getpatient/${userId}`);
+                    response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/getpatient/${userId}`);
                     const data = await response.json();
                     setUserData(data.patient);
                 }
                 else if(currUserRole === 'patient'){
-                    response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/doctors/getdoctor/${userId}`);
+                    response = await fetch(`https://health-mate-server.vercel.app/api/v1/doctors/getdoctor/${userId}`);
                     const data = await response.json();
                     setUserData(data.doctor);
                 }
