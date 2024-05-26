@@ -3,7 +3,7 @@ export const paymenthandler = async (amount) => {
     const currency = 'INR';
     const receiptId = '1234567890';
   
-    const response = await fetch("http://localhost:8000/api/v1/payment/orders", {
+    const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/payment/orders", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -28,7 +28,7 @@ export const paymenthandler = async (amount) => {
                 const body = { ...response }
   
                 try {
-                    const validateResponse = await fetch('http://localhost:8000/api/v1/payment/verify', {
+                    const validateResponse = await fetch('https://health-mate-server-new.vercel.app/api/v1/payment/verify', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

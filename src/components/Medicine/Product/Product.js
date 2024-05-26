@@ -13,7 +13,7 @@ function Product() {
   const { id } = useParams("");
   useEffect(() => {
     const getIndividualData = async () => {
-      const response = await fetch(`http://localhost:8000/api/v1/medicine/medicinedetail/${id}`, {
+      const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/medicine/medicinedetail/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

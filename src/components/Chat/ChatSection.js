@@ -92,7 +92,7 @@ const ChatSection = () => {
   useEffect(() => {
     const getChats = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/chat/${id}`);
+        const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/chat/${id}`);
         const data = await response.json();
         setConversations(data)
       } catch (error) {
