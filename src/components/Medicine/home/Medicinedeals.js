@@ -10,7 +10,7 @@ function Medicinedeals(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/v1/medicine/getallmedicine");
+                const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/medicine/getallmedicine");
                 const data = await response.json();
                 setmedicine(data.medicine || []);
             } catch (error) {

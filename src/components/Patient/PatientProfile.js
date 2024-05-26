@@ -7,7 +7,7 @@ const PatientProfile = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/v1/auth/patientdetail", {
+      const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/auth/patientdetail", {
         method: "GET",
         headers: {
           "token": localStorage.getItem('token')
@@ -25,7 +25,7 @@ const PatientProfile = () => {
   }, []);
   const updatepatient = async (phoneNo, gender, bloodGroup, disease, dateofBirth) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/patient/updatepatient`, {
+      const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/patient/updatepatient`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -152,12 +152,12 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
           let response;
           if(currUserRole === "doctor"){
            
-              response = await fetch(`http://localhost:8000/api/v1/patient/getpatient/${userId}`);
+              response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/patient/getpatient/${userId}`);
               const data = await response.json();
               setUserData(data.patient);
           }
           else if(currUserRole === 'patient'){
-              response = await fetch(`http://localhost:8000/api/v1/doctors/getdoctor/${userId}`);
+              response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/doctors/getdoctor/${userId}`);
               const data = await response.json();
               setUserData(data.doctor);
           }
@@ -175,7 +175,7 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
   useEffect(()=>{
     const fetchMessages = async()=>{
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/message/${chat?._id}`);
+        const response = await fetch(`https://health-mate-server-new.vercel.app/api/v1/message/${chat?._id}`);
         const data = await response.json();
         // console.log(data);
         setMessages(data);
@@ -237,7 +237,7 @@ const scrollToBottom = () => {
     let  sentMessage;
   
     try {
-      const response = await fetch('http://localhost:8000/api/v1/message/', {
+      const response = await fetch('https://health-mate-server-new.vercel.app/api/v1/message/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

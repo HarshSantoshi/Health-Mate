@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault();
     if(credentials.userType === 'doctor'){
-      const response = await fetch("http://localhost:8000/api/v1/auth/logindoctor", {
+      const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/auth/logindoctor", {
         method :"POST",
         headers : {
           'Content-Type' : 'application/json'
@@ -44,7 +44,7 @@ const Login = () => {
       }
     }
     else if(credentials.userType === 'patient'){
-      const response = await fetch("http://localhost:8000/api/v1/auth/loginpatient", {
+      const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/auth/loginpatient", {
         method :"POST",
         headers : {
           'Content-Type' : 'application/json'
