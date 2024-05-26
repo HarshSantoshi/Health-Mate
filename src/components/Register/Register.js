@@ -69,7 +69,7 @@ const Register = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault();
     if(credentials.userType === 'doctor'){
-      const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/auth/createdoctor", {
+      const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/createdoctor", {
         method :"POST",
         headers : {
           'Content-Type' : 'application/json'
@@ -93,7 +93,7 @@ const Register = () => {
       }
     }
     else if(credentials.userType === 'patient'){
-      const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/auth/createpatient", {
+      const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/createpatient", {
         method :"POST",
         headers : {
           'Content-Type' : 'application/json'

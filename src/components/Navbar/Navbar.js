@@ -54,7 +54,7 @@ const Navbar = () => {
   }, []);
   const fetchData = async () => {
     try {
-      const response = await fetch("https://health-mate-server-new.vercel.app/api/v1/auth/patientdetail", {
+      const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/patientdetail", {
         method: "GET",
         headers: {
           "token": localStorage.getItem('token')
