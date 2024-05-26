@@ -2,7 +2,7 @@ import doctorcontext from "./doctorcontext.js";
 import { useState } from "react";
 
 const DoctorState = (props) => {
-    const host = "https://health-mate-server-new.vercel.app";
+    const host = "https://health-mate-server.vercel.app";
 
     //Fetchdoctor
     const fetchData = async (id) => {

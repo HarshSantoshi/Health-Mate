@@ -3,7 +3,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 
 const CartState = (props) => {
-    const host = "https://health-mate-server-new.vercel.app";
+    const host = "https://health-mate-server.vercel.app";
     //Getallitems
     const getitems = async () => {
         try {
