@@ -75,7 +75,7 @@ const ChatSection = () => {
   }, [sendMessage])
 
   useEffect(() => {
-    socket.current = io('http://localhost:8800');
+    socket.current = io('https://health-mate-socket.vercel.app');
 
     socket.current.emit("new-user-add", id);
     socket.current.on('get-users', (users) => {
