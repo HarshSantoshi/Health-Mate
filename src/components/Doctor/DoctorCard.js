@@ -69,16 +69,16 @@ export default function DoctorCard({ props }) {
 
   return (
     <div
-      style={{ padding: '5px', height: 'auto', marginBottom: '10px', margin: '20px 0px' }}
+      style={{ padding: '10px', height: 'auto', marginBottom: '10px', margin: '30px 10px' }}
       onClick={(e) => handleClicktoDoctorDetails(props.id , e)}
       role="button"
       tabIndex="0"
     >
-      <div style={{ borderRadius: '10px' }}>
+      <div style={{ borderRadius: '10px' , height:'250px' , width:'250px'}}>
         <img
-          src="https://www.summit-urgentcare.com/wp-content/uploads/2014/12/Dollarphotoclub_69741928.jpg"
+          src={props.image? props.image :"https://www.summit-urgentcare.com/wp-content/uploads/2014/12/Dollarphotoclub_69741928.jpg" }
           alt="doctor"
-          style={{ width: '300px', borderRadius: '10px' }}
+          style={{ width: '250px',height:'250px', borderRadius: '10px' }}
         />
       </div>
       <h2 style={{ fontSize: '18px', fontWeight: '600' }}>{props.name}</h2>
