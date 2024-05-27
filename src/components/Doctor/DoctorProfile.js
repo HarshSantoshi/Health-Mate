@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import { Modal } from '@mui/material';
 import { jwtDecode } from 'jwt-decode';
 import doctorcontext from '../../context/Doctor/doctorcontext.js';
+import axios from 'axios';
 
 const CollegeName = styled('span')`
 font-Weight : 600;
@@ -52,7 +53,7 @@ const style = {
 
 
 const DoctorProfile = () => {
-  const { doctor, experience, education, fetchData,updatedoctor,Addexp ,Deleteexp,Addedu,Deleteedu} = useContext(doctorcontext);
+  const { doctor, experience, education, fetchData,updatedoctorProfile,updatedoctor,Addexp ,Deleteexp,Addedu,Deleteedu} = useContext(doctorcontext);
   //Info start
   const [info, setInfo] = useState({
     doctorName: "",
@@ -61,8 +62,12 @@ const DoctorProfile = () => {
     currentlyserving: "",
     fees: "",
     phoneNo: "",
-    about: ""
+    about: "",
+    doctorImage : ""
   });
+  const presetKey = "healthmate";
+  const cloud_name = "dgarsqfvl";
+  const [image , setImage] = useState("profile.png");
 
   const [openabout, setOpenabout] = useState(false);
 
@@ -84,7 +89,8 @@ const DoctorProfile = () => {
       currentlyserving: doctor.currentlyserving || "",
       fees: doctor.fees || "",
       phoneNo: doctor.phoneNo || "",
-      about: doctor.about || ""
+      about: doctor.about || "",
+      doctorImage : doctor.doctorImage||""
     });
     setOpenabout(true);
   };
@@ -98,7 +104,8 @@ const DoctorProfile = () => {
       currentlyserving: doctor.currentlyserving || "",
       fees: doctor.fees || "",
       phoneNo: doctor.phoneNo || "",
-      about: doctor.about || ""
+      about: doctor.about || "",
+      doctorImage : doctor.doctorImage||""
     });
   };
 
@@ -133,6 +140,31 @@ const DoctorProfile = () => {
   const handleeduchange = (e) => {
     setedu({ ...edu, [e.target.name]: e.target.value })
   }
+  const uploadPicture = async(e) => {
+  
+    
+    const data = new FormData();
+
+    data.append("file", image);
+    data.append("upload_preset", presetKey);
+    data.append("cloud_name" , cloud_name)
+  
+    fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+      // mode : "no-cors",
+      method: "POST",
+      body: data
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Upload successful:", data);
+        updatedoctorProfile(data.url)
+        // console.log(data.url);
+        
+      })
+      .catch(error => console.error("Error uploading image:", error));
+      
+  };
+  
   const handleEdu = (e) => {
     e.preventDefault();
     refedu.current.click();
@@ -175,10 +207,13 @@ const DoctorProfile = () => {
       <div className='profile-container'>
         <div className='intro'>
           <div style={{ textAlign: "right" }} onClick={handleOpenabout}><i className="fa-solid fa-pen Add"></i></div>
+          
           <div className='dr_image'>
-            <img src='profile.png' alt="" />
-            <button className='btn btn-primary mt-3'>Change profile Image</button>
+          <img src={doctor.doctorImage? doctor.doctorImage : 'profile.png'} alt="" />
           </div>
+          <input type = "file" name = "image" onChange={(e)=>setImage(e.target.files[0])}></input>
+           <button className='btn btn-primary mt-3' onClick={uploadPicture}>Change profile Image</button>
+
           <div className='d-flex flex-wrap'>
             <div className='col-md-9 details'>
               <h3 className='name'>{doctor.doctorName}</h3>

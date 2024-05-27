@@ -21,6 +21,23 @@ const DoctorState = (props) => {
             console.error('Error fetching doctor details:', error);
         }
     };
+    const updatedoctorProfile= async(url) =>{
+        try {
+            const response = await fetch(`${host}/api/v1/doctors/updatedoctorimage`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "token": localStorage.getItem('token')
+                },
+                body: JSON.stringify(url),
+            });
+            const json = await response.json();
+            setdoctor(json.record);
+            
+        } catch (error) {
+            console.error('Error Updating doctor profile image:', error);
+        }
+    }
     //Update Info
     const updatedoctor = async (specialization,experienceYrs,about,fees,currentlyserving,phoneNo) => {
         try {
@@ -105,7 +122,7 @@ const DoctorState = (props) => {
     const [education, seteducation] = useState([]);
 
     return (
-        <doctorcontext.Provider value={{ doctor, experience, education, fetchData ,updatedoctor,Addexp,Deleteexp,Addedu,Deleteedu}}>
+        <doctorcontext.Provider value={{ doctor, experience, education, fetchData,updatedoctorProfile ,updatedoctor,Addexp,Deleteexp,Addedu,Deleteedu}}>
             {props.children}
         </doctorcontext.Provider>
     )
