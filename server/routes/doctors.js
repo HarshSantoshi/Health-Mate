@@ -113,7 +113,7 @@ DoctorRouter.delete('/deleteexperience/:id',fetchDoctor, async (req, res) => {
 DoctorRouter.put('/updatedoctorimage' , fetchDoctor , async(req,res)=>{
   try {
     const {url} = req.body;
-    // console.log("URL" , url);
+    
     const newdoctor = {};
     newdoctor.doctorImage = url;
 
@@ -125,7 +125,7 @@ DoctorRouter.put('/updatedoctorimage' , fetchDoctor , async(req,res)=>{
     record = await Doctor.findByIdAndUpdate(req.doctor.id,{$set:newdoctor},{new:true});
     res.json({record});
   } catch (error) {
-    console.error(error.message);
+    
     res.status(500).send("Internal server error")
 }
 }) 

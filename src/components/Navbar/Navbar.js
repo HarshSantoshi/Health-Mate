@@ -41,12 +41,12 @@ const Navbar = () => {
 
     if (token) {
       const decodedToken = jwtDecode(token);
-      // console.log(decodedToken);
+    
       if (role === "doctor") {
         const doctorIdFromToken = decodedToken.doctor.id;
         fetchData(doctorIdFromToken);
         setDoctorId(doctorIdFromToken);
-        // console.log(doctorId);
+        
       }
       else if (role === "patient") {
         const patientIdFromToken = decodedToken.patient.id;

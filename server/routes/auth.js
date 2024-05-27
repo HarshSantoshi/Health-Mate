@@ -19,7 +19,7 @@ Authrouter.post('/createdoctor',[
 ],async(req,res)=>{
     let success = false;
     // if bad request return errors and bad request
-    // console.log(req.body);
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
@@ -61,7 +61,7 @@ Authrouter.post('/createpatient',[
 ],async(req,res)=>{
     let success = false;
     // if bad request return errors and bad request
-    // console.log(req.body);
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
@@ -166,7 +166,7 @@ Authrouter.get('/patientdetail', fetchPatient , async(req , res) => {
     try {
         const patientId = req.patient.id;
         const patient = await Patient.findById(patientId);
-        // console.log(patient);
+        
         res.send(patient);
     } catch (error) {
         res.status(500).send("Internal Server Error");

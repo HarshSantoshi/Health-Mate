@@ -162,7 +162,7 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
               setUserData(data.doctor);
           }
       } catch (error) {
-          console.log(error);
+        console.error(error)
       }
       
   }
@@ -177,10 +177,10 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
       try {
         const response = await fetch(`https://health-mate-server.vercel.app/api/v1/message/${chat?._id}`);
         const data = await response.json();
-        // console.log(data);
+        
         setMessages(data);
       } catch (error) {
-        console.log(error);
+        console.error(error)
       }
     }
     if(chat !== null){
@@ -250,7 +250,7 @@ const scrollToBottom = () => {
       }
   
       sentMessage = await response.json();
-      // console.log("sent message ",sentMessage);
+      
   
       setMessages([...message, sentMessage]);
       setnewMessage("");
@@ -266,7 +266,7 @@ const scrollToBottom = () => {
   };
   useEffect(()=>{
     if(receiveMessage !==null && receiveMessage.chatId === chat._id){
-      // console.log("receivedd messg ",receiveMessage);
+      
       setMessages([...message , receiveMessage])
     }
   },[receiveMessage])

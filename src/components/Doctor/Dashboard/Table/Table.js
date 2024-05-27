@@ -28,8 +28,7 @@ function Table() {
     const [appointments, setAppointments] = useState([]);
     const navigate = useNavigate();
     const handleJoinRoom = useCallback((id , meetId)=>{
-        console.log(meetId)
-        console.log(id)
+       
         navigate(`/meet/${meetId}`, { state: { userID: id } });
     },[navigate])
 
@@ -49,11 +48,11 @@ function Table() {
                 },
             });
             const data = await response.json();
-            // console.log(data.patient);
+            
             return data.patient.patientName;
         } catch (error) {
-            console.log("Error while fetching Name of patient ", error);
-            return ""; // Return an empty string or handle the error as needed
+            console.error(error)
+            // return ""; // Return an empty string or handle the error as needed
         }
     };
 
@@ -67,7 +66,7 @@ function Table() {
                 },
             });
             const data = await response.json();
-            // console.log(data.appointments);
+           
 
             const appointmentsWithPatientNames = await Promise.all(
                 data.appointments.map(async (row) => ({
@@ -78,7 +77,7 @@ function Table() {
 
             setAppointments(appointmentsWithPatientNames);
         } catch (error) {
-            console.log("Error while fetching appointment details in dashboard ", error);
+            console.error(error)
         }
     };
 

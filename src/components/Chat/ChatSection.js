@@ -69,7 +69,7 @@ const ChatSection = () => {
   const socket = useRef();
   useEffect(() => {
     if (sendMessage !== null) {
-      console.log("message send")
+      
       socket.current.emit('send-message', sendMessage);
     }
   }, [sendMessage])
@@ -96,12 +96,11 @@ const ChatSection = () => {
         const data = await response.json();
         setConversations(data)
       } catch (error) {
-        console.log(error);
+        console.error(error)
       }
     }
     getChats();
-    // console.log(conversation);
-    // console.log(currChat);
+    
   }, []);
 
 

@@ -77,7 +77,7 @@ patientSchema.methods.addtocart = async function(cart) {
         await this.save();
         return this.carts;
     } catch (error) {
-        console.log(error);
+        console.error(error)
     }
 };
 patientSchema.methods.removeFromCart = async function(itemToRemove) {
@@ -86,7 +86,7 @@ patientSchema.methods.removeFromCart = async function(itemToRemove) {
         await this.save();
         return this.carts;
     } catch (error) {
-        console.log(error);
+        console.error(error)
     }
 };
 
@@ -100,7 +100,7 @@ patientSchema.methods.updateCartItemQuantity = async function(itemId, newQuantit
         await this.save();
         return this.carts;
     } catch (error) {
-        console.log(error);
+        console.error(error)
     }
 };
 
