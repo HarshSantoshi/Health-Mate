@@ -113,7 +113,7 @@ DoctorRouter.delete('/deleteexperience/:id',fetchDoctor, async (req, res) => {
 DoctorRouter.put('/updatedoctorimage' , fetchDoctor , async(req,res)=>{
   try {
     const {url} = req.body;
-    console.log("URL" , url);
+    // console.log("URL" , url);
     const newdoctor = {};
     newdoctor.doctorImage = url;
 

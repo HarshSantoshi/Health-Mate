@@ -29,7 +29,7 @@ const DoctorState = (props) => {
                     "Content-Type": "application/json",
                     "token": localStorage.getItem('token')
                 },
-                body: JSON.stringify(url),
+                body: JSON.stringify({url}),
             });
             const json = await response.json();
             setdoctor(json.record);
