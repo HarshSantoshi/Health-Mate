@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Badge } from '@mui/material';
 import cartcontext from '../../context/cart/cartcontext.js';
 import doctorcontext from '../../context/Doctor/doctorcontext.js';
+import { fetchId } from '../Data/Id.js';
 const Logo = styled('img')`
   height : 60px;
   border-radius:50%;
@@ -27,33 +28,36 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { cartCount, getitems } = useContext(cartcontext);
   const { doctor, fetchData } = useContext(doctorcontext);
-  const [doctorId, setDoctorId] = useState("");
-  const [patientId, setPatientId] = useState("");
+  // const [doctorId, setDoctorId] = useState("");
+  // const [patientId, setPatientId] = useState("");
   useEffect(() => {
     if (localStorage.getItem('token') && localStorage.getItem('role') === "patient") {
       getitems();
     }
-  }, []);
-  useEffect(() => {
-    // Fetch the token from localStorage
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      // console.log(decodedToken);
-      if (role === "doctor") {
-        const doctorIdFromToken = decodedToken.doctor.id;
-        fetchData(doctorIdFromToken);
-        setDoctorId(doctorIdFromToken);
-        // console.log(doctorId);
-      }
-      else if (role === "patient") {
-        const patientIdFromToken = decodedToken.patient.id;
-        setPatientId(patientIdFromToken);
-      }
+    else if(localStorage.getItem('token') && localStorage.getItem('role') === "doctor"){
+      fetchData(fetchId());
     }
   }, []);
+  // useEffect(() => {
+  //   // Fetch the token from localStorage
+  //   const token = localStorage.getItem('token');
+  //   const role = localStorage.getItem('role');
+
+  //   if (token) {
+  //     const decodedToken = jwtDecode(token);
+  //     // console.log(decodedToken);
+  //     if (role === "doctor") {
+  //       const doctorIdFromToken = decodedToken.doctor.id;
+  //       fetchData(doctorIdFromToken);
+  //       setDoctorId(doctorIdFromToken);
+  //       // console.log(doctorId);
+  //     }
+  //     else if (role === "patient") {
+  //       const patientIdFromToken = decodedToken.patient.id;
+  //       setPatientId(patientIdFromToken);
+  //     }
+  //   }
+  // }, []);
   const fetchdata = async () => {
     try {
       const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/patientdetail", {
@@ -86,10 +90,10 @@ const Navbar = () => {
         <div className="container-fluid">
           {localStorage.getItem('role') === 'patient' ?
             <Link className="navbar-brand" to="/">
-              <Logo src='logo.png' alt='logo' />
+              <Logo src='https://res.cloudinary.com/dgarsqfvl/image/upload/v1716809247/healthmate-images/Logo_pbidd6.png' alt='logo' />
             </Link> :
             <Link className="navbar-brand" to="/dashboard">
-              <Logo src='logo.png' alt='logo' />
+              <Logo src='https://res.cloudinary.com/dgarsqfvl/image/upload/v1716809247/healthmate-images/Logo_pbidd6.png' alt='logo' />
             </Link>
 
           }
@@ -139,15 +143,17 @@ const Navbar = () => {
                 </ul>
               </li> */}
 
-              {localStorage.getItem('role') === 'doctor' ?
+              {/* {localStorage.getItem('role') === 'doctor' ?
                 <li className="nav-item" style={{ fontSize: '20px' }}>
-                  <Link className="nav-link" to={`/chat/${doctorId}`}>Your chats</Link>
+                  <Link className="nav-link" to={`/chat/${fetchId()}`}>Your chats</Link>
                 </li>
                 : <li className="nav-item" style={{ fontSize: '20px' }}>
-                  <Link className="nav-link" to={`/chat/${patientId}`}>Your chats</Link>
+                  <Link className="nav-link" to={`/chat/${fetchId()}`}>Your chats</Link>
                 </li>
-              }
-
+              } */}
+              <li className="nav-item" style={{ fontSize: '20px' }}>
+                  <Link className="nav-link" to={`/chat/${fetchId()}`}>Your chats</Link>
+                </li>
             </ul>
             {/* <form className="d-flex" role="search">
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
