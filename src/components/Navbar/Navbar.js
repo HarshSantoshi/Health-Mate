@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import styled from 'styled-components';
 import { Badge } from '@mui/material';
 import cartcontext from '../../context/cart/cartcontext.js';
+import doctorcontext from '../../context/Doctor/doctorcontext.js';
 const Logo = styled('img')`
   height : 60px;
   border-radius:50%;
@@ -25,6 +26,7 @@ const CartIcon = styled(ShoppingCartIcon)`
 const Navbar = () => {
   const navigate = useNavigate();
   const { cartCount, getitems } = useContext(cartcontext);
+  const { doctor, fetchData } = useContext(doctorcontext);
   const [doctorId, setDoctorId] = useState("");
   const [patientId, setPatientId] = useState("");
   useEffect(() => {
@@ -42,7 +44,7 @@ const Navbar = () => {
       // console.log(decodedToken);
       if (role === "doctor") {
         const doctorIdFromToken = decodedToken.doctor.id;
-
+        fetchData(doctorIdFromToken);
         setDoctorId(doctorIdFromToken);
         // console.log(doctorId);
       }
@@ -52,7 +54,7 @@ const Navbar = () => {
       }
     }
   }, []);
-  const fetchData = async () => {
+  const fetchdata = async () => {
     try {
       const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/patientdetail", {
         method: "GET",
@@ -67,7 +69,7 @@ const Navbar = () => {
   };
   useEffect(() => {
     if (localStorage.getItem('role') === "patient") {
-      fetchData();
+      fetchdata();
     }
   }, []);
 
@@ -82,21 +84,33 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ padding: "1px" }}>
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
-            <Logo src='logo.png' alt='logo' />
-          </Link>
+          {localStorage.getItem('role') === 'patient' ?
+            <Link className="navbar-brand" to="/">
+              <Logo src='logo.png' alt='logo' />
+            </Link> :
+            <Link className="navbar-brand" to="/dashboard">
+              <Logo src='logo.png' alt='logo' />
+            </Link>
+
+          }
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
-              <li className="nav-item" style={{ fontSize: '20px' }}>
-                <Link className="nav-link active" to="/">Home</Link>
-              </li>
+              {localStorage.getItem('role') === 'patient' ?
+                <li className="nav-item" style={{ fontSize: '20px' }}>
+                  <Link className="nav-link active" to="/">Home</Link>
+                </li>
+                : <li className="nav-item" style={{ fontSize: '20px' }}>
+                  <Link className="nav-link active" to="/dashboard">Home</Link>
+                </li>
+              }
+
               <li className="nav-item" style={{ fontSize: '20px' }}>
                 <Link className="nav-link" to="/">About Us</Link>
               </li>
-              <li className="nav-item dropdown" style={{ fontSize: '20px' }}>
+              {/* <li className="nav-item dropdown" style={{ fontSize: '20px' }}>
                 <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Features
                 </Link>
@@ -123,22 +137,22 @@ const Navbar = () => {
                     </>
 
                 </ul>
-              </li>
+              </li> */}
 
-              {/* {localStorage.getItem('role') === 'doctor' ?
-                <li className="nav-item"  style={{fontSize:'20px'}}>
+              {localStorage.getItem('role') === 'doctor' ?
+                <li className="nav-item" style={{ fontSize: '20px' }}>
                   <Link className="nav-link" to={`/chat/${doctorId}`}>Your chats</Link>
                 </li>
-                : <li className="nav-item"  style={{fontSize:'20px'}}>
-                <Link className="nav-link" to={`/chat/${patientId}`}>Your chats</Link>
-              </li>
-              } */}
+                : <li className="nav-item" style={{ fontSize: '20px' }}>
+                  <Link className="nav-link" to={`/chat/${patientId}`}>Your chats</Link>
+                </li>
+              }
 
             </ul>
-            <form className="d-flex" role="search">
+            {/* <form className="d-flex" role="search">
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
               <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </form> */}
             <div style={{ marginLeft: 10 }}>
               {
                 !localStorage.getItem('token') ?
@@ -156,7 +170,7 @@ const Navbar = () => {
                         <div style={{ display: 'flex' }}>
                           <div>
                             <Link to="dashboard">
-                              <img style={{ height: "50px", borderRadius: "50%" }} src='profile.png' alt="..." />
+                              <img style={{ height: "50px", borderRadius: "50%" }} src={doctor.doctorImage ? doctor.doctorImage : 'profile.png'} alt="..." />
                             </Link>
                           </div>
                           <button type="button" className="btn btn-primary login">
