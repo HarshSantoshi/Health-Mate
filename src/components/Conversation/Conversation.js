@@ -31,7 +31,7 @@ const Conversation = ({data , currentUserId , currUserRole}) => {
                     setUserData(data.doctor);
                 }
             } catch (error) {
-                console.log(error);
+              console.error(error)
             }
         }
         getUserData();

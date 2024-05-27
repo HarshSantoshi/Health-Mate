@@ -12,19 +12,19 @@ PaymentRouter.post('/orders',async(req,res)=>{
         });
 
         if(!req.body){
-            console.log("body error ")
+            
             return res.status(400).send("Bad request");
         }
         const options = req.body;
         const order  = await instance.orders.create(options);
 
         if(!order){
-            console.log("error ")
+            
             return res.status(400).send("Bad request");
         }
         res.json(order);
     } catch (error) {
-        console.log(error);
+        
         res.status(500).send(error);
     }
 })

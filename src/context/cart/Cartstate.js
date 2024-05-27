@@ -19,7 +19,7 @@ const CartState = (props) => {
             setitems(json);
             setCartCount(json.length);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
     //Additem
@@ -44,7 +44,7 @@ const CartState = (props) => {
                 toast.success("Added to cart");
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
     //Deleteitem
@@ -63,7 +63,7 @@ const CartState = (props) => {
             toast.success("Deleted Successfully");
             setCartCount(json.length);
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
     //updateitem
@@ -81,7 +81,7 @@ const CartState = (props) => {
             const json = await response.json();
             setitems(json.cart);
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
     const [items, setitems] = useState([]);

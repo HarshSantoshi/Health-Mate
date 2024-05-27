@@ -15,12 +15,12 @@ const LandingPage = () => {
 
     if (token) {
       const decodedToken = jwtDecode(token);
-      // console.log(decodedToken);
+      
       if(role === "doctor"){
         const doctorIdFromToken = decodedToken.doctor.id;
 
         setDoctorId(doctorIdFromToken);
-        // console.log(doctorId);
+        
       }
       else{
         const patientIdFromToken = decodedToken.patient.id;

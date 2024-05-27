@@ -4,14 +4,15 @@ import "./Right.css"
 
 function Right({totalPrice}) {
     
-    // console.log(totalPrice);
+    
     const totalAmount = Math.round(totalPrice * 100) / 100 - 0.13*Math.round(totalPrice*100)/100 ;
     const totalDiscount = 0.13*Math.round(totalPrice*100)/100;
     const handlepayment = async (e)=>{
         e.preventDefault();
         const paymentCompleted = await paymenthandler(Math.round(totalAmount)*100);
         if (paymentCompleted){
-
+            // need to remove the items from the cart once the payment is complete
+            
         }else {
             console.log('Payment failed');
         }

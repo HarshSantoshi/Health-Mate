@@ -136,43 +136,9 @@ const DoctorDetailPage = () => {
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
-    console.log(doctorID);
-    console.log(selectedDate)
-    console.log(patientID);
-    // console.log(personName);
-    // console.log(personName.substring(0, 5));
-    // console.log(parseInt(personName.substring(0, 5)));
-    // console.log(personName.substring(personName.length -5));
-  };
-  // const handleBook = async(e)=>{
-  //   e.preventDefault();
-  //   paymenthandler(doctor.fees*100);
-  //   try {
-  //     const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/bookappointment`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({
-  //         date: selectedDate,
-  //         starttime:personName.substring(0, 5), 
-  //         endtime: personName.substring(personName.length - 5),
-  //         doctorId: doctorID,
-  //         patientId : patientID,
-  //         status : "approved"
-  //       })
-  //     });
     
-  //     const json = await response.json();
-  //     console.log(json);
-  //     if (json.success) {
-  //       toast.success("Appointment Booked");
-  //     }
-  //     setAvailable(false);
-  //   } catch (error) {
-  //     console.error('Error while booking:', error);
-  //   }
-  // }
+  };
+  
   const handleBook = async (e) => {
     e.preventDefault();
     try {
@@ -194,13 +160,13 @@ const DoctorDetailPage = () => {
             });
 
             const json = await response.json();
-            console.log(json);
+           
             if (json.success) {
                 toast.success("Appointment Booked");
             }
             setAvailable(false);
         } else {
-            console.log('Payment failed');
+            
         }
     } catch (error) {
         console.error('Error while booking:', error);
@@ -225,7 +191,7 @@ const DoctorDetailPage = () => {
         
       });
       const json = await response.json();
-      console.log(json);
+      
       if(json.success === true){
         toast.success("Slot is available!");
         setAvailable(true);
@@ -233,7 +199,7 @@ const DoctorDetailPage = () => {
       else if(json.success === false){
         toast.error("Slot is not available!");
       }
-      console.log(json);
+      
     } catch (error) {
       console.error('Error fetching appointment details:', error);
     }
