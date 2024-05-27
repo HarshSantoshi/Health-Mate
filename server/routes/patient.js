@@ -60,10 +60,6 @@ PatientRouter.put('/updatepatient', fetchPatient, async (req, res) => {
 PatientRouter.post("/checkavailability" ,async(req , res)=>{
   try {
     const { date , starttime , endtime , doctorId } = req.body;
-    console.log("Date " , date)
-    console.log("StartTime " , starttime)
-    console.log("endTime " , endtime)
-    console.log("doctorId " , doctorId)
     const appointments = await Appointment.find({
       doctorId: doctorId,
       date: date,
@@ -71,7 +67,7 @@ PatientRouter.post("/checkavailability" ,async(req , res)=>{
       endtime: endtime,
       status: "approved"
     });
-    console.log(appointments);
+    
     if(appointments.length == 0){
       return res.status(200).send({
 
@@ -101,7 +97,7 @@ PatientRouter.post("/bookappointment" ,async(req , res)=>{
       endtime,
       status : "approved"
     })
-    // console.log(newAppointment);
+    
     return res.status(200).json({
       appointment :newAppointment,
       success : true

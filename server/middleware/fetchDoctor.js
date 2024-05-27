@@ -10,7 +10,7 @@ export const fetchDoctor = (req ,res , next) =>{
         req.doctor = data.doctor;
         next();
     } catch (error) {
-        console.log(error);
+        
         return res.status(400).json("Something went wrong while verifying token")
     }
 

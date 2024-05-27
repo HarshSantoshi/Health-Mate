@@ -13,7 +13,7 @@ CartRouter.post('/additem',fetchPatient,async (req,res)=>{
         const patient = await Patient.findById(patientId);
         const existingitem = patient.carts.find(item => item._id.toString() === id);
         if(existingitem){
-            // console.log("Already Exists");
+            
             res.status(200).json({message:"Already Exist", quantity: existingitem.quantity});
         }
         else if(patient){
@@ -53,7 +53,7 @@ CartRouter.delete('/deleteitem/:id', fetchPatient, async (req, res) => {
         if (patient) {
             const cartdata = await patient.removeFromCart(id);
             await patient.save();
-            // console.log(cartdata);
+            
             res.status(200).json(patient.carts);
 
         } else {

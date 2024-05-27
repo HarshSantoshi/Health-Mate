@@ -31,30 +31,3 @@ function Medicineitems(props) {
 }
 
 export default Medicineitems;
-
-
-// {added || qty ===0? 
-//     <div className='selected'>
-//         <RemoveIcon onClick={()=>handleRemove()} />
-//         {qty}
-//         <AddIcon onClick={handleAdd} />
-//     </div> : "Add to Cart"
-// }
-
-
-
-
-
-
-
-
-
-
-    // const handleRemove = () => {
-    //     if (qty >= 1) {
-    //         setqty(qty - 1);
-    //     } else {
-    //         setadd(false);
-    //     }
-    //     console.log(qty);
-    // };

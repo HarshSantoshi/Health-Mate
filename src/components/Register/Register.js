@@ -57,7 +57,6 @@ const Register = () => {
   const handleChange=(e)=>{
     const value = e.target.value;
     const name = e.target.name;
-    // console.log(name + " " + value);
     setCredentials((prev)=>{
       return {
         ...prev , [name] : value

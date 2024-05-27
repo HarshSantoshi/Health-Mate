@@ -12,7 +12,7 @@ export const paymenthandler = async (amount) => {
     });
   
     const order = await response.json();
-    console.log('order', order);
+    
   
     return new Promise((resolve, reject) => {
         var option = {
@@ -37,7 +37,7 @@ export const paymenthandler = async (amount) => {
                     });
   
                     const jsonResponse = await validateResponse.json();
-                    console.log('jsonResponse', jsonResponse);
+                    
                     resolve(true); // Resolve the Promise with true if payment is successful
                 } catch (error) {
                     console.error('Error verifying payment:', error);

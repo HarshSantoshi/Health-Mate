@@ -156,9 +156,9 @@ const DoctorProfile = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("Upload successful:", data);
+        
         updatedoctorProfile(data.url)
-        // console.log(data.url);
+        
         
       })
       .catch(error => console.error("Error uploading image:", error));
