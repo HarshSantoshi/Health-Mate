@@ -86,10 +86,10 @@ const Navbar = () => {
         <div className="container-fluid">
           {localStorage.getItem('role') === 'patient' ?
             <Link className="navbar-brand" to="/">
-              <Logo src='logo.png' alt='logo' />
+              <Logo src='https://res.cloudinary.com/dgarsqfvl/image/upload/v1716809247/healthmate-images/Logo_pbidd6.png' alt='logo' />
             </Link> :
             <Link className="navbar-brand" to="/dashboard">
-              <Logo src='logo.png' alt='logo' />
+              <Logo src='https://res.cloudinary.com/dgarsqfvl/image/upload/v1716809247/healthmate-images/Logo_pbidd6.png' alt='logo' />
             </Link>
 
           }
