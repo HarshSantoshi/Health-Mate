@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { jwtDecode } from 'jwt-decode';
 import doctorcontext from '../../context/Doctor/doctorcontext.js';
 import cartcontext from '../../context/cart/cartcontext.js';
+import { fetchId } from '../Data/Id.js';
 // changessss
 const Login = () => {
   const [credentials , setCredentials] = useState({userType:"" , email:"", password :""});
@@ -41,10 +42,8 @@ const Login = () => {
         localStorage.setItem('token', json.authToken); 
         
         localStorage.setItem('role','doctor');
-        const token = localStorage.getItem('token');
-        const decodedToken = jwtDecode(token);
-        const doctorIdFromToken = decodedToken.doctor.id;
-        fetchData(doctorIdFromToken);
+        const doctorid = fetchId();
+        fetchData(doctorid);
         navigate("/dashboard");
         toast.success("Logged In successfully!");
       }
@@ -67,6 +66,7 @@ const Login = () => {
       if(json.success){
         localStorage.setItem('token', json.authToken); 
         localStorage.setItem('role','patient');
+        fetchId();
         getitems();
         navigate("/");
         toast.success("Patient Logged In successfully!");
