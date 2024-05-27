@@ -53,8 +53,7 @@ const LandingPage = () => {
         <Link className="text-decoration" to='/alldoctorspage'>
           <ServicesCard feature="Video Call" text="Connect within 60 seconds" img="videocall-img.png" />
         </Link>
-        <ServicesCard feature="Find Doctors " text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  />
-        
+        <Link className="text-decoration" to={`/bookings`}><ServicesCard feature="Booking" text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  /></Link>
         <Link className="text-decoration" to='/allmedicinepage' state={{patientId : patientId}}>
         <ServicesCard feature="Medicines" text="Essentials at your doorstep" img="medicines-img.jpg" />
         </Link>

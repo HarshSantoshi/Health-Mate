@@ -1,5 +1,6 @@
 import React from 'react'
 import './CircleCard.css'
+import { Link } from "react-router-dom"
 const CircleCard = ({img , disease}) => {
   return (
     <>
@@ -10,9 +11,9 @@ const CircleCard = ({img , disease}) => {
         <div className = "disease">
             {disease} 
         </div>
-        <div className = "consult">
+        <Link className = "consult text-decoration" to='/alldoctorspage'>
             Consult Now
-        </div>
+        </Link>
     </div>
     
     </>

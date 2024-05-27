@@ -1,12 +1,17 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import {TextField,MenuItem, Paper} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { jwtDecode } from 'jwt-decode';
+import doctorcontext from '../../context/Doctor/doctorcontext.js';
+import cartcontext from '../../context/cart/cartcontext.js';
 // changessss
 const Login = () => {
   const [credentials , setCredentials] = useState({userType:"" , email:"", password :""});
   const navigate = useNavigate();
+  const { fetchData } = useContext(doctorcontext);
+  const { getitems } = useContext(cartcontext);
   const handleChange=(e)=>{
     const value = e.target.value;
     const name = e.target.name;
@@ -34,9 +39,12 @@ const Login = () => {
       const json = await response.json();
       if(json.success){
         localStorage.setItem('token', json.authToken); 
-        console.log(json.authToken);
+        // console.log(json.authToken);
         localStorage.setItem('role','doctor');
-        
+        const token = localStorage.getItem('token');
+        const decodedToken = jwtDecode(token);
+        const doctorIdFromToken = decodedToken.doctor.id;
+        fetchData(doctorIdFromToken);
         navigate("/dashboard");
         toast.success("Logged In successfully!");
       }
@@ -59,6 +67,7 @@ const Login = () => {
       if(json.success){
         localStorage.setItem('token', json.authToken); 
         localStorage.setItem('role','patient');
+        getitems();
         navigate("/");
         toast.success("Patient Logged In successfully!");
       }
