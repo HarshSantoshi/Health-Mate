@@ -110,7 +110,25 @@ DoctorRouter.delete('/deleteexperience/:id',fetchDoctor, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+DoctorRouter.put('/updatedoctorimage' , fetchDoctor , async(req,res)=>{
+  try {
+    const {url} = req.body;
+    console.log("URL" , url);
+    const newdoctor = {};
+    newdoctor.doctorImage = url;
 
+    let record = await Doctor.findById(req.doctor.id);
+    if(!record){
+        return res.status(404).send("Not Found");
+    }
+
+    record = await Doctor.findByIdAndUpdate(req.doctor.id,{$set:newdoctor},{new:true});
+    res.json({record});
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error")
+}
+}) 
 DoctorRouter.put('/updatedoctor', fetchDoctor, async (req, res) => {
   try {
       const {specialization,experienceYrs,about,fees,currentlyserving,phoneNo} = req.body;
