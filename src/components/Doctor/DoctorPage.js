@@ -71,10 +71,10 @@ const DoctorPage = () => {
       <div style={{ height: "auto", display: "flex", flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
         {filteredDoctors.length
           ? filteredDoctors.map((doctor, index) => (
-            <DoctorCard key={index} props={{ name: doctor.doctorName, specialization: doctor.specialization, fees: doctor.fees, id: doctor._id, rating: "4.6", totalRatings: '10', patientId: patientId }} />
+            <DoctorCard key={index} props={{ name: doctor.doctorName, image : doctor.doctorImage, specialization: doctor.specialization, fees: doctor.fees, id: doctor._id, rating: "4.6", totalRatings: '10', patientId: patientId }} />
           ))
           : allDoctors.map((doctor, index) => (
-            <DoctorCard key={index} props={{ name: doctor.doctorName, specialization: doctor.specialization, fees: doctor.fees, id: doctor._id, rating: "4.6", totalRatings: '10', patientId: patientId }} />
+            <DoctorCard key={index} props={{ name: doctor.doctorName, image : doctor.doctorImage, specialization: doctor.specialization, fees: doctor.fees, id: doctor._id, rating: "4.6", totalRatings: '10', patientId: patientId }} />
           ))}
       </div>
     </div>

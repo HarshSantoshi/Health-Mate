@@ -6,6 +6,7 @@ const Container = styled('div')`
 `;
 const ProfileImg = styled('img')`
 height:40px;
+width:40px;
 border-radius : 50%;
 margin: 0 10px;
 `
@@ -39,7 +40,7 @@ const Conversation = ({data , currentUserId , currUserRole}) => {
   return (
     
     <Container>
-        <ProfileImg src="../profile.png" alt='banner' />
+        <ProfileImg src={ currUserRole == 'doctor'? (userData?.patientImage ?userData?.patientImage :"../profile.png"  ) :(userData?.doctorImage ? userData?.doctorImage :"../profile.png"  ) } alt='banner' />
         {currUserRole === 'doctor' ? (
               <Name>
                 {userData?.patientName}
