@@ -108,7 +108,7 @@ function Table() {
                 (
                 <TableContainer
                     component={Paper}
-                    style={{ boxShadow: "0px 13px 20px 0px #80808029 " , height:"100vh" }}
+                    style={{ boxShadow: "0px 13px 20px 0px #80808029 " , maxHeight:"450px" }}
                     className='tablecon'
                 >
                     <MuiTable sx={{ minWidth: 650 }} aria-label="simple table">

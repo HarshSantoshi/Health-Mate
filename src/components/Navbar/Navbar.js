@@ -112,7 +112,7 @@ const Navbar = () => {
               }
 
               <li className="nav-item" style={{ fontSize: '20px' }}>
-                <Link className="nav-link" to="/">About Us</Link>
+                <Link className="nav-link" to="/about">About Us</Link>
               </li>
               {/* <li className="nav-item dropdown" style={{ fontSize: '20px' }}>
                 <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
