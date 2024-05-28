@@ -228,7 +228,7 @@ const DoctorDetailPage = () => {
       <div style={{ maxWidth: "90%", margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "30px 5px" }}>
           <div>
-            <Image src="https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png" />
+            <Image src={doctor.doctorImage? doctor.doctorImage : "https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png"} />
           </div>
           <Content>
             <Specialization>{doctor?.specialization}</Specialization>

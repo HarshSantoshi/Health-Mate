@@ -66,6 +66,7 @@ const Login = () => {
       if(json.success){
         localStorage.setItem('token', json.authToken); 
         localStorage.setItem('role','patient');
+        // console.log(json.authToken);
         fetchId();
         getitems();
         navigate("/");

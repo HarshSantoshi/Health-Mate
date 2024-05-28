@@ -3,7 +3,7 @@ export const fetchPatient = (req ,res , next) =>{
 
     const token = req.header("token");
     if(!token){
-        return res.status(400).json("Token nor exist");
+        return res.status(400).json("Token not exist");
     }
     try {
         const data = jwt.verify(token , process.env.ACCESS_TOKEN_SECRET);

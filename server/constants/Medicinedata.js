@@ -13,6 +13,7 @@ const medicine = [
         "discount": "32%",
         "urltoimage": "https://www.netmeds.com/images/product-v1/600x600/826468/itzhh_200mg_capsule_10_s_0.jpg"
     },
+    
     {
         "name": "DOLO TH 4 Tablet",
         "fullname": "DOLO TH 4 Tablet 10's",

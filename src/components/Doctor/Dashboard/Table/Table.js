@@ -3,6 +3,7 @@ import { Table as MuiTable, TableBody, TableCell, TableContainer, TableHead, Tab
 import { Button } from '@mui/material';
 import "./Table.css";
 import { useNavigate } from 'react-router-dom';
+import {ClipLoader} from "react-spinners";
 
 const makeStyle = (status) => {
     if (status === 'Approved') {
@@ -23,12 +24,12 @@ const makeStyle = (status) => {
     }
 };
 
-
 function Table() {
     const [appointments, setAppointments] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
     const navigate = useNavigate();
+
     const handleJoinRoom = useCallback((id , meetId)=>{
-       
         navigate(`/meet/${meetId}`, { state: { userID: id } });
     },[navigate])
 
@@ -48,16 +49,15 @@ function Table() {
                 },
             });
             const data = await response.json();
-            
             return data.patient.patientName;
         } catch (error) {
             console.error(error)
-            // return ""; // Return an empty string or handle the error as needed
         }
     };
 
     const fetchAppointments = async () => {
         try {
+            setLoading(true); // Set loading to true before fetching data
             const response = await fetch(`https://health-mate-server.vercel.app/api/v1/appointment/getallappointments`, {
                 method: "GET",
                 headers: {
@@ -66,18 +66,17 @@ function Table() {
                 },
             });
             const data = await response.json();
-           
-
             const appointmentsWithPatientNames = await Promise.all(
                 data.appointments.map(async (row) => ({
                     ...row,
                     patientName: await fetchPatientName(row.patientId),
                 }))
             );
-
             setAppointments(appointmentsWithPatientNames);
         } catch (error) {
             console.error(error)
+        } finally {
+            setLoading(false); // Set loading to false after fetching data (even if there's an error)
         }
     };
 
@@ -85,9 +84,25 @@ function Table() {
         fetchAppointments();
     }, []);
 
+    
     return (
         <div className="Table">
             <h3 style={{ textAlign: "center", marginTop: "10px" }}>Your Appointments</h3>
+            {
+                loading == true ?
+                ( <div style={{margin:" 100px", height : "100px"}}>
+
+
+<ClipLoader
+        color={"blue"}
+        loading={loading}
+        size={30}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+
+                </div>)
+            :
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029 " }}
@@ -129,6 +144,7 @@ function Table() {
                     </TableBody>
                 </MuiTable>
             </TableContainer>
+            }
         </div>
     );
 }

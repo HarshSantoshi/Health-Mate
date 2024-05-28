@@ -160,6 +160,7 @@ const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiv
               response = await fetch(`https://health-mate-server.vercel.app/api/v1/doctors/getdoctor/${userId}`);
               const data = await response.json();
               setUserData(data.doctor);
+              console.log(data);
           }
       } catch (error) {
         console.error(error)
@@ -285,7 +286,7 @@ const scrollToBottom = () => {
         ) : (
           <>
            <Header>
-            <ProfileImg src="../profile.png" alt='banner' />
+            <ProfileImg src={ currUserRole == 'doctor'? (userData?.patientImage ?userData?.patientImage :"../profile.png"  ) :(userData?.doctorImage ? userData?.doctorImage :"../profile.png"  ) } alt='banner' />
             {currUserRole === 'doctor' ? (
               <Name>
                 Patient Name: {userData?.patientName}

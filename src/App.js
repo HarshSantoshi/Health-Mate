@@ -23,8 +23,9 @@ import Bookings from './components/Patient/Bookings.js';
 import Error404 from './Pages/Error/Error404.js';
 import Protected from './utils/ProctectedRoutes.js';
 import About from './components/About/About.js';
-function App() {
 
+function App() {
+  const role = localStorage.getItem('role')
   return (
     <div className="App">
       <Toaster position="top-center"
@@ -45,7 +46,17 @@ function App() {
           <Router>
             <Navbar />
             <Routes>
-              <Route exact path="/" element={<LandingPage />} />
+            <Route exact path="/" element=
+            {
+            role == "patient" ?
+            <LandingPage/>
+            :
+            (role == "doctor"?
+            <DoctorDash/>
+            :
+            <Error404/>
+          )
+            } />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/error" element={<Error404 />} />
               <Route exact path="/register" element={<Register />} />

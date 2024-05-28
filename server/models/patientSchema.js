@@ -41,6 +41,7 @@ const patientSchema = new Schema({
     disease:{
         type : String ,
     },
+    
     carts: [
         {
             itemId: {
@@ -68,6 +69,7 @@ const patientSchema = new Schema({
             }
         }
     ]
+    
 } , {timestamps:true});
 
 

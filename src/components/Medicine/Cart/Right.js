@@ -1,18 +1,20 @@
 import React, { useContext } from 'react'
 import { paymenthandler } from '../../Payment/Payment.js'
 import "./Right.css"
+import cartcontext from '../../../context/cart/cartcontext.js';
 
 function Right({totalPrice}) {
     
-    
+    const { emptyCart , getitems} = useContext(cartcontext);
     const totalAmount = Math.round(totalPrice * 100) / 100 - 0.13*Math.round(totalPrice*100)/100 ;
     const totalDiscount = 0.13*Math.round(totalPrice*100)/100;
     const handlepayment = async (e)=>{
         e.preventDefault();
+    
         const paymentCompleted = await paymenthandler(Math.round(totalAmount)*100);
         if (paymentCompleted){
-            // need to remove the items from the cart once the payment is complete
-            
+            await emptyCart()
+            await getitems();
         }else {
             console.log('Payment failed');
         }
