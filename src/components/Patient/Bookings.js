@@ -89,7 +89,7 @@ function Table() {
             <h3 style={{ textAlign: "center", marginTop: "10px" }}>Your bookings</h3>
             <TableContainer
                 component={Paper}
-                style={{ boxShadow: "0px 13px 20px 0px #80808029 " }}
+                style={{ boxShadow: "0px 13px 20px 0px #80808029 ",maxHeight:"450px" }}
                 className='tablecon'
             >
                 <MuiTable sx={{ minWidth: 650}} aria-label="simple table">

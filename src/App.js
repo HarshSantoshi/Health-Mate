@@ -22,6 +22,7 @@ import DoctorState from './context/Doctor/DoctorState.js';
 import Bookings from './components/Patient/Bookings.js';
 import Error404 from './Pages/Error/Error404.js';
 import Protected from './utils/ProctectedRoutes.js';
+import About from './components/About/About.js';
 function App() {
 
   return (
@@ -48,6 +49,7 @@ function App() {
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/error" element={<Error404 />} />
               <Route exact path="/register" element={<Register />} />
+              <Route exact path="/about" element={<About />} />
               <Route exact path="/dashboard" element={ <Protected role="doctor">
                     <DoctorDash />
                   </Protected>
