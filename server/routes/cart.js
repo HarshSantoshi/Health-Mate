@@ -10,6 +10,7 @@ CartRouter.post('/additem',fetchPatient,async (req,res)=>{
         const id = req.body.id;
         const data = await Medicine.findById(id);
         const patientId = req.patient.id;
+        
         const patient = await Patient.findById(patientId);
         const existingitem = patient.carts.find(item => item._id.toString() === id);
         if(existingitem){
@@ -32,6 +33,7 @@ CartRouter.get('/fetchitems',fetchPatient,async (req,res)=>{
     try {
         const patientId = req.patient.id;
         const patient = await Patient.findById(patientId);
+        // console.log("PATIENT" , patientId);
         if(patient){
             const items = patient.carts;
             res.status(200).json(items);
@@ -43,6 +45,22 @@ CartRouter.get('/fetchitems',fetchPatient,async (req,res)=>{
         res.status(500).send("Internal server error");
     }
 });
+CartRouter.delete('/emptycart' , fetchPatient , async(req , res)=>{
+    try {
+        const patientId = req.patient.id;
+        const patient = await Patient.findById(patientId);
+        if(patient){
+            patient.carts = [];
+            await patient.save();
+            res.status(200).send("Cart empty successfully");
+        }
+        else{
+            res.status(401).send("Invalid user");
+        }
+    } catch (error) {
+        res.status(500).send("Internal server error");
+    }
+})
 
 CartRouter.delete('/deleteitem/:id', fetchPatient, async (req, res) => {
     try {

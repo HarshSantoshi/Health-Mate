@@ -22,6 +22,23 @@ const CartState = (props) => {
             console.error(error);
         }
     }
+    const emptyCart = async()=>{
+        try {
+            const response = await fetch(`${host}/api/v1/cart/emptycart`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "token": localStorage.getItem('token')
+                }
+            });
+            const json = await response.json();
+            setitems(json);
+            toast.success("Order Placed");
+            setCartCount(json.length);
+        } catch (error) {
+            console.error(error)
+        }
+    }
     //Additem
     const additem = async (id) => {
         try {
@@ -87,7 +104,7 @@ const CartState = (props) => {
     const [items, setitems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
     return (
-        <cartcontext.Provider value={{ items, getitems, additem, deleteitem,updateitem,cartCount }}>
+        <cartcontext.Provider value={{ items, getitems, additem, deleteitem,updateitem,emptyCart,cartCount }}>
             {props.children}
         </cartcontext.Provider>
     )
