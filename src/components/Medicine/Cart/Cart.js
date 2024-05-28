@@ -5,6 +5,7 @@ import "./Cart.css"
 import Right from './Right.js'
 import cartcontext from '../../../context/cart/cartcontext.js'
 import Footer from '../../Footer/Footer.js'
+import { Link } from 'react-router-dom'
 function Cart() {
     const context = useContext(cartcontext);
     const { items, getitems } = context;
@@ -14,7 +15,12 @@ function Cart() {
     let totalPrice = 0;
     return (
         <>
+        
         <div className='bg'>
+        <Link to ='/allmedicinepage'>
+        <div style={{float : "left" , marginLeft:"20px" ,color : "blue"}}>
+        <i className="fa-solid fa-arrow-left" />
+        </div></Link>
             {
                 items.length === 0 ? 
                 <>

@@ -6,6 +6,7 @@ function Protected({ role , children }) {
     return <Navigate to="/login" replace />
   }
   else if(role != userRole && role != ""){
+    if(role == 'doctor')
     return <Navigate to = "/error" replace />
   }
   return children
