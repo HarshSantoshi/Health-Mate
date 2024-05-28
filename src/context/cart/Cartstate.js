@@ -24,17 +24,16 @@ const CartState = (props) => {
     }
     const emptyCart = async()=>{
         try {
-            const response = await fetch(`${host}/api/v1/cart/emptycart`, {
+            await fetch(`${host}/api/v1/cart/emptycart`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     "token": localStorage.getItem('token')
                 }
             });
-            const json = await response.json();
-            setitems(json);
+            
             toast.success("Order Placed");
-            setCartCount(json.length);
+            
         } catch (error) {
             console.error(error)
         }
