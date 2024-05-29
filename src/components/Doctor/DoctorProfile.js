@@ -140,7 +140,7 @@ const DoctorProfile = () => {
   const handleeduchange = (e) => {
     setedu({ ...edu, [e.target.name]: e.target.value })
   }
-  const uploadPicture = async(e) => {
+  const uploadPicture = async() => {
   
     
     const data = new FormData();
