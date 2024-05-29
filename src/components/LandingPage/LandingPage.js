@@ -29,12 +29,13 @@ const LandingPage = () => {
     }
   }, []);
   return (
+    
     <>
       <div className='bannerImg'>
         <img src="banner-img1.jpg" alt='banner' />
       </div>
 
-      <div className='bannerText' >
+      {/* <div className='bannerText' >
         <div className='Heading'>
           Get rid from your Diseases with a single touch
         </div>
@@ -44,7 +45,7 @@ const LandingPage = () => {
         </div>
         <div className="try">Register Today and get 15% off on your first service</div>
         <button type="button" className="btn btn-success"> Register</button>
-      </div>
+      </div> */}
 
       <div className="heading">
         Our Services
@@ -82,17 +83,17 @@ const LandingPage = () => {
         What our users have to say
       </div>
       <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-inner testimony">
+        <div className="carousel-inner">
           <div className="carousel-item active" data-bs-interval="10000">
-            <div className="d-block w-100" >
-              Very good app. Well thought out about booking/rescheduling/canceling an appointment.Doctor's feedback mechanism is good and describes all the basics.
+            <div className="testimony" >
+              Very good app. Well thought about booking/rescheduling/canceling an appointment.Doctor's feedback is good and describes all the basics.
             </div>
             <div className='author'>
               ~ Ashutosh
             </div>
           </div>
           <div className="carousel-item" data-bs-interval="2000">
-            <div className="d-block w-100" >
+            <div className="testimony" >
               Very easy to book,maintain history. Hassle free from older versions of booking appointment via telephone.. Thanks Practo for making it simple.
             </div>
             <div className='author'>
@@ -100,7 +101,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="carousel-item" data-bs-interval="2000">
-            <div className="d-block w-100" >
+            <div className="testimony" >
               Very helpful. Far easier than doing same things on computer. Allows quick and easy search with speedy booking. Even maintains history of doctors visited.   </div>
               <div className='author'>
               ~ Abhinav
