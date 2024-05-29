@@ -11,7 +11,7 @@
   font-size: 3rem;
 }
 .app-about {
-  max-width: 1120px;
+  max-width: 1130px;
   width: 100%;
   padding: 40px 0;
   display: flex;
@@ -27,7 +27,7 @@
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
-  max-width: 500px;
+  min-width: 400px;
   min-height: 400px;
 }
 
@@ -77,8 +77,8 @@
 
 .card-image {
   position: relative;
-  height: 150px;
-  width: 150px; 
+  height: 220px;
+  width: 220px; 
   border-radius: 50%;
   background: #FFF;
   padding: 3px;
@@ -93,7 +93,7 @@
 }
 
 .name {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
   color: #333;
 }
@@ -122,7 +122,10 @@
 
 @media screen and (max-width: 768px) {
   .app-about {
-    padding: 20px 10px;
+    padding: 10px;
+  }
+  .card-about{
+    min-width: 300px;
   }
 }
 .social{

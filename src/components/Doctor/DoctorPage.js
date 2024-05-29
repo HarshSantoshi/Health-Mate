@@ -60,7 +60,7 @@ const DoctorPage = () => {
   return (
     <div>
       <h1>Doctor Page</h1>
-      <div style={{position:"absolute" , right : '20px' , top:'92px'}}>
+      <div style={{position:"absolute" , right : '20px' , top:'92px',marginTop:"20px"}}>
       <Input
         placeholder='Search Doctor'
         value={query}
@@ -68,7 +68,7 @@ const DoctorPage = () => {
       />
       </div>
 
-      <div style={{ height: "auto", display: "flex", flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
+      <div style={{ height: "auto", display: "flex", flexWrap: 'wrap', justifyContent: 'space-evenly' ,marginTop:"20px"}}>
         {filteredDoctors.length
           ? filteredDoctors.map((doctor, index) => (
             <DoctorCard key={index} props={{ name: doctor.doctorName, image : doctor.doctorImage, specialization: doctor.specialization, fees: doctor.fees, id: doctor._id, rating: "4.6", totalRatings: '10', patientId: patientId }} />
