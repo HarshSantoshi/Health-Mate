@@ -34,19 +34,36 @@ PatientRouter.get('/getpatient/:id', async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
+PatientRouter.put('/updatepatientimage', fetchPatient, async (req, res) => {
+  try {
+      const {patientImage} = req.body;
+      const newpatient = {};
+      
+      newpatient.patientImage = patientImage;
+      
 
+      let record = await Patient.findById(req.patient.id);
+      if(!record){
+          return res.status(404).send("Not Found");
+      }
+
+      record = await Patient.findByIdAndUpdate(req.patient.id,{$set:newpatient},{new:true});
+      res.json({record});
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal server error")
+  }
+})
 PatientRouter.put('/updatepatient', fetchPatient, async (req, res) => {
   try {
-      const {phoneNo,gender,bloodGroup,disease,dateofBirth , patientImage} = req.body;
+      const {phoneNo,gender,bloodGroup,disease,dateofBirth} = req.body;
       const newpatient = {};
       if(phoneNo){newpatient.phoneNo = phoneNo};
       if(gender){newpatient.gender = gender};
       if(bloodGroup){newpatient.bloodGroup = bloodGroup};
       if(disease){newpatient.disease = disease};
       if(dateofBirth){newpatient.dateofBirth = dateofBirth};
-      if(patientImage){
-        newpatient.pateintImage = patientImage
-      }
+      
 
       let record = await Patient.findById(req.patient.id);
       if(!record){

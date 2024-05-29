@@ -17,6 +17,7 @@
     font-size : 16px;
     font-weight : 600;
 }
+
 .profileImage{
     height:200px;
     width:200px;
@@ -24,6 +25,7 @@
 }
 .profileImage img{
     height:100%;
+    width:100%;
     border-radius:50%;
 }
 .detail-heading{

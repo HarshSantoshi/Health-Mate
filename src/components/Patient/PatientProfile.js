@@ -4,6 +4,7 @@ import './patientprofile.css';
 const PatientProfile = () => {
   const [profileData, setProfileData] = useState();
   const [edit, setEdit] = useState(false);
+  const [patientImage , setPatientImage] = useState();
   const presetKey = "healthmate";
   const cloud_name = "dgarsqfvl";
   const [image, setImage] = useState("profile.png");
@@ -18,6 +19,7 @@ const PatientProfile = () => {
       });
       const json = await response.json();
       json.dateofBirth = updatedate(json.dateofBirth);
+      console.log(json);
       setProfileData(json);
     } catch (error) {
       console.error('Error fetching patient details:', error);
@@ -26,7 +28,22 @@ const PatientProfile = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const updatepatient = async (phoneNo, gender, bloodGroup, disease, dateofBirth , patientImage) => {
+  const  updatepatientImage = async(patientImage)=>{
+    try {
+      const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/updatepatientimage`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "token": localStorage.getItem('token')
+        },
+        body: JSON.stringify({ patientImage}),
+      });
+      fetchData();
+    } catch (error) {
+      console.error('Error Updating patient Image:', error);
+    }
+  }
+  const updatepatient = async (phoneNo, gender, bloodGroup, disease, dateofBirth) => {
     try {
       const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/updatepatient`, {
         method: "PUT",
@@ -34,7 +51,7 @@ const PatientProfile = () => {
           "Content-Type": "application/json",
           "token": localStorage.getItem('token')
         },
-        body: JSON.stringify({ phoneNo, gender, bloodGroup, disease, dateofBirth  , patientImage}),
+        body: JSON.stringify({ phoneNo, gender, bloodGroup, disease, dateofBirth }),
       });
       fetchData();
     } catch (error) {
@@ -57,10 +74,10 @@ const PatientProfile = () => {
     })
       .then(response => response.json())
       .then(data => {
-        const newdate = updatedate(profileData.dateofBirth);
         console.log(data.url)
+        setPatientImage(data.url)
 
-        updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate , data.url)
+        updatepatientImage( data.url)
 
 
       })
@@ -82,7 +99,7 @@ const PatientProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newdate = updatedate(profileData.dateofBirth);
-    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate , profileData.patientImage);
+    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate);
     setEdit(false);
   };
   const handleCancel = (e) => {
