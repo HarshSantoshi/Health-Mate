@@ -4,9 +4,9 @@
     display:flex;
     align-items:center;
     justify-content:space-evenly;
+    flex-wrap : wrap; 
     padding:20px;
-    height:300px;
-    min-height:270px;
+    width:100%;
 }
 .section{
     padding:5px;
