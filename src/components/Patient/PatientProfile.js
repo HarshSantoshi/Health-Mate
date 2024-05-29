@@ -4,6 +4,9 @@ import './patientprofile.css';
 const PatientProfile = () => {
   const [profileData, setProfileData] = useState();
   const [edit, setEdit] = useState(false);
+  const presetKey = "healthmate";
+  const cloud_name = "dgarsqfvl";
+  const [image, setImage] = useState("profile.png");
 
   const fetchData = async () => {
     try {
@@ -23,7 +26,7 @@ const PatientProfile = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const updatepatient = async (phoneNo, gender, bloodGroup, disease, dateofBirth) => {
+  const updatepatient = async (phoneNo, gender, bloodGroup, disease, dateofBirth , patientImage) => {
     try {
       const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/updatepatient`, {
         method: "PUT",
@@ -31,13 +34,39 @@ const PatientProfile = () => {
           "Content-Type": "application/json",
           "token": localStorage.getItem('token')
         },
-        body: JSON.stringify({ phoneNo, gender, bloodGroup, disease, dateofBirth }),
+        body: JSON.stringify({ phoneNo, gender, bloodGroup, disease, dateofBirth  , patientImage}),
       });
       fetchData();
     } catch (error) {
       console.error('Error Updating patient details:', error);
     }
   }
+  const uploadPicture = async () => {
+
+
+    const data = new FormData();
+
+    data.append("file", image);
+    data.append("upload_preset", presetKey);
+    data.append("cloud_name", cloud_name)
+
+    fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+      // mode : "no-cors",
+      method: "POST",
+      body: data
+    })
+      .then(response => response.json())
+      .then(data => {
+        const newdate = updatedate(profileData.dateofBirth);
+        console.log(data.url)
+
+        updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate , data.url)
+
+
+      })
+      .catch(error => console.error("Error uploading image:", error));
+
+  };
   const handleEditProfile = () => {
     setEdit(true);
   };
@@ -53,7 +82,7 @@ const PatientProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newdate = updatedate(profileData.dateofBirth);
-    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate);
+    updatepatient(profileData.phoneNo, profileData.gender, profileData.bloodGroup, profileData.disease, newdate , profileData.patientImage);
     setEdit(false);
   };
   const handleCancel = (e) => {
@@ -67,10 +96,13 @@ const PatientProfile = () => {
   return (
     <div className='profilecontainer'>
       <div className='row'>
-        <div className='col-md-4 d-flex align-items-center justify-content-center image-container'>
+        <div className='col-md-4 image-container ' style={{ margin:" auto " }}>
           <div className='profileImage'>
-            <img src='profile.png' alt='Profile' />
-            <button className="btn btn-primary mt-3">Change Profile image</button>
+            <img src={profileData?.patientImage ? profileData?.patientImage : 'profile.png'} alt="" />
+          </div>
+          <div>
+            <input type="file" name="image" onChange={(e) => setImage(e.target.files[0])}></input>
+            <button className='btn btn-primary mt-3' onClick={uploadPicture}>Change profile Image</button>
           </div>
         </div>
         <div className='col-md-8'>

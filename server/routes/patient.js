@@ -37,13 +37,16 @@ PatientRouter.get('/getpatient/:id', async (req, res) => {
 
 PatientRouter.put('/updatepatient', fetchPatient, async (req, res) => {
   try {
-      const {phoneNo,gender,bloodGroup,disease,dateofBirth} = req.body;
+      const {phoneNo,gender,bloodGroup,disease,dateofBirth , patientImage} = req.body;
       const newpatient = {};
       if(phoneNo){newpatient.phoneNo = phoneNo};
       if(gender){newpatient.gender = gender};
       if(bloodGroup){newpatient.bloodGroup = bloodGroup};
       if(disease){newpatient.disease = disease};
       if(dateofBirth){newpatient.dateofBirth = dateofBirth};
+      if(patientImage){
+        newpatient.pateintImage = patientImage
+      }
 
       let record = await Patient.findById(req.patient.id);
       if(!record){
