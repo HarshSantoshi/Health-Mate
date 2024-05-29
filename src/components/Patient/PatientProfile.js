@@ -4,7 +4,7 @@ import './patientprofile.css';
 const PatientProfile = () => {
   const [profileData, setProfileData] = useState();
   const [edit, setEdit] = useState(false);
-  const [patientImage , setPatientImage] = useState();
+  
   const presetKey = "healthmate";
   const cloud_name = "dgarsqfvl";
   const [image, setImage] = useState("profile.png");
@@ -74,9 +74,7 @@ const PatientProfile = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data.url)
-        setPatientImage(data.url)
-
+        
         updatepatientImage( data.url)
 
 
