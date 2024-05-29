@@ -1,26 +1,64 @@
 import React from 'react'
 import './About.css'
+import Footer from '../Footer/Footer.js';
 
 function About() {
     const cardsData = [
         {
-            name: 'David Dell',
+            name: 'Harsh Santoshi',
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident ad illo assumenda quasi repellendus aliquam, quisquam dicta expedita odio minima delectus! Facilis inventore assumenda quidem soluta! Animi, fugit. Asperiores nulla earum blanditiis voluptate labore tenetur cum sit doloribus assumenda non.The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.',
             imageUrl: 'logo.png',
         },
         {
-            name: 'David Dell',
+            name: 'Harsh',
             description: 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.',
             imageUrl: 'logo.png',
         }
     ];
     return (
+        <div>
         <div className='about'>
             <div className='app-about'>
-                <h3 className="about-heading">About</h3>
-                <p style={{textAlign:"justify"}}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit perspiciatis non, ratione dolorum aspernatur fuga doloribus voluptates necessitatibus quis! Quidem iusto minus ducimus vitae molestiae corrupti, ex, nam tempore obcaecati rem dolore, voluptas officiis assumenda consequuntur? Ipsa nam voluptatibus maiores fugiat ea laudantium odio fuga quis veritatis assumenda culpa animi accusantium magnam asperiores, facilis nemo ullam velit quibusdam cum? Culpa, adipisci! Itaque cumque, eos fugit, provident modi totam saepe, voluptas voluptatem dicta maiores autem? Aspernatur vel consequatur ipsam quis nulla dolor ab corrupti quas deleniti voluptate architecto dolorem eius eos exercitationem, beatae ipsum tenetur distinctio iure voluptas, laudantium optio mollitia tempora facilis. Repellat ab temporibus maiores unde architecto pariatur modi est, sint, consequatur totam iure facilis libero non adipisci repudiandae exercitationem quisquam minus laboriosam dolorum itaque commodi dicta possimus! Illo quas dolorum earum perspiciatis nulla nemo qui nam explicabo accusamus natus atque repudiandae neque, minima vitae dolor quo consequatur placeat ut debitis laudantium assumenda repellendus distinctio ducimus praesentium? Corporis nostrum repellat in blanditiis exercitationem earum libero eaque molestiae aperiam quaerat architecto quas hic ut quia, doloremque modi illo fuga explicabo temporibus officia dolores magnam ab aspernatur dolor? Ad dignissimos atque necessitatibus, magni explicabo incidunt ab, sunt fuga velit, rem optio?</p>
+                <h3 className="about-heading">About Our Website</h3>
+                <p style={{ textAlign: "justify" , fontSize : "18px" }}>
+                    Welcome to HealthMate, your comprehensive healthcare platform connecting patients with doctors seamlessly.
+
+                    At HealthMate, we understand the importance of accessible and efficient healthcare services. Our platform serves as a one-stop solution for patients, offering a range of features to streamline their healthcare journey.
+
+                    <div >
+                    <strong>1) Book Appointments :</strong> HealthMate allows patients to conveniently schedule appointments with doctors of their choice. With just a few clicks, patients can book appointments for in-person consultations or online meetings, ensuring flexibility and convenience.
+                    </div>
+
+                    <div>
+                    <strong>2) Online Consultations:</strong> Through our secure online platform, patients can have virtual consultations with doctors from the comfort of their homes. Our integrated video conferencing technology facilitates efficient communication between patients and doctors, enabling timely healthcare advice and support.
+                    </div>
+
+                    <div>
+                    <strong>3) Live Chat:</strong> Need quick advice or have a query? HealthMate's live chat feature enables patients to engage in real-time conversations with doctors, allowing them to seek guidance on health-related issues anytime, anywhere.
+
+                    </div>
+                   <div>
+                   <strong>4) Medicine Purchase:</strong> HealthMate goes beyond consultations by offering patients the convenience of purchasing prescribed medications directly from our platform. With access to a wide range of medicines at nominal prices, patients can easily fulfill their healthcare needs.
+                   </div>
+
+                    <div>
+                    <strong>5) Doctor Dashboard:</strong> For healthcare professionals, HealthMate provides a dedicated dashboard to manage their profiles, appointments, and patient interactions efficiently. Doctors can stay organized and focused on delivering high-quality care to their patients.
+                    </div>
+
+                    At HealthMate, we are committed to bridging the gap between patients and doctors, empowering individuals to take control of their health with ease and confidence.
+
+                    <div>
+                    Join us in our mission to revolutionize healthcare delivery and experience the difference with HealthMate today.
+                    </div>
+
+
+                </p>
             </div>
-            <div className='app-about'>
+            <div >
+               <div className='about-heading'>
+               About the Developers
+               </div>
+                <div className='app-about'>
                 {cardsData.map((data, id) => {
                     return <div className="card-about" key={id}>
                         <div className="image-content">
@@ -41,8 +79,13 @@ function About() {
                 })
 
                 }
+                </div>
             </div>
+            
         </div>
+        <Footer/>
+        </div>
+        
     )
 }
 
