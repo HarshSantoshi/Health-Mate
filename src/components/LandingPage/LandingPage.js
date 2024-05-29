@@ -5,9 +5,11 @@ import './LandingPage.css'
 import { Link } from 'react-router-dom'
 import Footer from '../Footer/Footer.js'
 import { jwtDecode } from 'jwt-decode'
+import {  useNavigate } from 'react-router-dom';
 const LandingPage = () => {
   const [doctorId, setDoctorId] = useState("");
   const [patientId, setPatientId] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     // Fetch the token from localStorage
     const token = localStorage.getItem('token');
@@ -31,9 +33,9 @@ const LandingPage = () => {
   return (
     
     <>
-      <div className='bannerImg'>
-        <img src="banner-img1.jpg" alt='banner' />
-      </div>
+      {/* <div className='bannerImg'>
+        <img src="landingimage.jpg" alt='banner' />
+      </div> */}
 
       {/* <div className='bannerText' >
         <div className='Heading'>
@@ -46,7 +48,21 @@ const LandingPage = () => {
         <div className="try">Register Today and get 15% off on your first service</div>
         <button type="button" className="btn btn-success"> Register</button>
       </div> */}
-
+      <div className='hero-image' >
+        <div className='hero-content'>
+          <div className='hero-content-inner'>
+            <h2>Get rid from your Diseases with a single touch</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, atque! Asperiores explicabo eligendi sunt, enim tenetur excepturi temporibus voluptatem cupiditate!</p>
+            <button type='button' onClick={()=>{
+              if(!localStorage.getItem('token')){
+                navigate('/login');
+              }else{
+                navigate('/alldoctorspage');
+              }
+            }}>Book Appointment</button>
+          </div>
+        </div>
+      </div>
       <div className="heading">
         Our Services
       </div>

@@ -69,7 +69,7 @@ function About() {
                         </div>
                         <div className="card-content">
                             <h2 className="name">{data.name}</h2>
-                            <p className="description">{data.description}</p>
+                            {/* <p className="description">{data.description}</p> */}
                             <div className="social">
                                 <a href="https://www.linkedin.com/in/harsh-34b5161a0/" target='blank'><i className="fa-brands fa-linkedin-in"></i></a>
                                 <a href="https://github.com/harsh809" target='blank'><i className="fa-brands fa-github"></i></a>

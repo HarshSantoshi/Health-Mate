@@ -23,15 +23,15 @@ function Cart() {
                     </div></Link>
                 {
                     items.length === 0 ?
-                        <div style={{background:"#f6f6f7",padding:"20px"}}>
-                            <div style={{ height: "390px", width: "500px", margin: "auto",paddingTop:"40px" }}>
-                                <img src='emptycart.png' alt="Empty cart" style={{ height: "100%", width: "100%" }} />
-
+                        <div className="empty-container">
+                            <div className="image-wrapper">
+                                <img src="emptycart.png" alt="Empty cart" className="responsive-image" />
                             </div>
-                            <div className="process-checkout" style={{ width: "500px", margin: "auto", marginTop: "25px" }}>
-                                <a className="btn btn_to_checkout" role="button" href='/allmedicinepage' style={{ width: "200px", height: "45px" }}>Add Medicine</a>
+                            <div className="process-checkout">
+                                <a className="btn btn_to_checkout" role="button" href="/allmedicinepage">Add Medicine</a>
                             </div>
                         </div>
+
                         :
                         <div className='cart-container'>
                             <h1>Order Summary</h1>
