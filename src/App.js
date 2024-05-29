@@ -46,17 +46,8 @@ function App() {
           <Router>
             <Navbar />
             <Routes>
-            <Route exact path="/" element=
-            {
-            role == "patient" ?
-            <LandingPage/>
-            :
-            (role == "doctor"?
-            <DoctorDash/>
-            :
-            <Error404/>
-          )
-            } />
+            
+              <Route exact path="/" element={<LandingPage />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/error" element={<Error404 />} />
               <Route exact path="/register" element={<Register />} />
