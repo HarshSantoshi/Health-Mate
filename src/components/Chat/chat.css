@@ -45,3 +45,7 @@
 .sendBtn:hover{
     background-color : #131290;
 }
+.hide{
+    display:none;
+    
+}

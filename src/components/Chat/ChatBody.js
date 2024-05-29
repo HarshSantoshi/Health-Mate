@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import "./ChatBody.css"
 const Body = styled('div')`
   height: 100%;
-  width: 100%;
-  @media screen and (min-width: 768px) {
-    width: 75%;
+  width: 70%;
+  @media screen and (max-width: 768px) {
+    display:none;
   }
 `;
 
@@ -137,70 +137,71 @@ const Button = styled('button')`
 //     }
 //   }
 // `;
-const ChatBody = ({ chat , currentUserId ,currUserRole , setSendMessage , receiveMessage}) => {
-  const [userData , setUserData] = useState(null);
+const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMessage }) => {
+  const [userData, setUserData] = useState(null);
   const [message, setMessages] = useState([]);
   const [newMessage, setnewMessage] = useState("");
   const chatContainerRef = useRef();
-  const navigate  = useNavigate();
+
+  const navigate = useNavigate();
   //setting header of the chat
-  useEffect(()=>{
-    const userId = chat?.members?.find((id)=>id!==currentUserId);
-    
-    const getUserData = async()=>{
+  useEffect(() => {
+    const userId = chat?.members?.find((id) => id !== currentUserId);
+
+    const getUserData = async () => {
       try {
-          let response;
-          if(currUserRole === "doctor"){
-           
-              response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/getpatient/${userId}`);
-              const data = await response.json();
-              setUserData(data.patient);
-          }
-          else if(currUserRole === 'patient'){
-              response = await fetch(`https://health-mate-server.vercel.app/api/v1/doctors/getdoctor/${userId}`);
-              const data = await response.json();
-              setUserData(data.doctor);
-              console.log(data);
-          }
+        let response;
+        if (currUserRole === "doctor") {
+
+          response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/getpatient/${userId}`);
+          const data = await response.json();
+          setUserData(data.patient);
+        }
+        else if (currUserRole === 'patient') {
+          response = await fetch(`https://health-mate-server.vercel.app/api/v1/doctors/getdoctor/${userId}`);
+          const data = await response.json();
+          setUserData(data.doctor);
+          console.log(data);
+        }
       } catch (error) {
         console.error(error)
       }
-      
-  }
-  if(chat!==null){
-    getUserData();
-  }
-  } , [chat , currentUserId])
+
+    }
+    if (chat !== null) {
+      getUserData();
+    }
+  }, [chat, currentUserId])
 
   //fetch messages
-  useEffect(()=>{
-    const fetchMessages = async()=>{
+  useEffect(() => {
+    const fetchMessages = async () => {
       try {
         const response = await fetch(`https://health-mate-server.vercel.app/api/v1/message/${chat?._id}`);
         const data = await response.json();
-        
+
         setMessages(data);
       } catch (error) {
         console.error(error)
       }
     }
-    if(chat !== null){
+    if (chat !== null) {
       fetchMessages();
     }
 
-  },[chat])
-  
+  }, [chat])
+
 
   useEffect(() => {
     scrollToBottom();
   }, [message]);
 
-  
-const scrollToBottom = () => {
-  if (chatContainerRef.current) {
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }
-};
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey && newMessage !== '') {
@@ -214,29 +215,29 @@ const scrollToBottom = () => {
     const min = new Date(date).getMinutes();
     return `${hours < 10 ? '0' + hours : hours}:${min < 10 ? '0' + min : min}`;
   };
- 
-  const generateID = async()=>{
+
+  const generateID = async () => {
     const text = `Join my meeting  , ${chat._id}`;
     await handleSend(text);
   }
   const handleChange = (text) => {
     setnewMessage(text);
   };
-  const handleJoinRoom = useCallback(()=>{
-    navigate(`/meet/${chat._id}`, { state: { userID: currentUserId   } });
-  },[navigate , chat])
-  
+  const handleJoinRoom = useCallback(() => {
+    navigate(`/meet/${chat._id}`, { state: { userID: currentUserId } });
+  }, [navigate, chat])
+
   const handleSend = async (link) => {
-    if(newMessage == "" || link == ""){
-      return ;
+    if (newMessage == "" || link == "") {
+      return;
     }
     const msg = {
       senderId: currentUserId,
       chatId: chat._id,
       text: newMessage || link
     };
-    let  sentMessage;
-  
+    let sentMessage;
+
     try {
       const response = await fetch('https://health-mate-server.vercel.app/api/v1/message/', {
         method: 'POST',
@@ -245,114 +246,115 @@ const scrollToBottom = () => {
         },
         body: JSON.stringify(msg),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Failed to send message: ${response.status}`);
       }
-  
+
       sentMessage = await response.json();
-      
-  
+
+
       setMessages([...message, sentMessage]);
       setnewMessage("");
     } catch (error) {
       console.error('Error sending message:', error);
     }
-  
+
     const receiverId = chat?.members?.find((id) => id !== currentUserId);
-  
+
     if (receiverId) {
       setSendMessage({ ...sentMessage, receiverId: receiverId });
     }
   };
-  useEffect(()=>{
-    if(receiveMessage !==null && receiveMessage.chatId === chat._id){
-      
-      setMessages([...message , receiveMessage])
+  useEffect(() => {
+    if (receiveMessage !== null && receiveMessage.chatId === chat._id) {
+
+      setMessages([...message, receiveMessage])
     }
-  },[receiveMessage])
-  
+  }, [receiveMessage])
+
   return (
     <>
       <Body >
         <div className='maincon'>
-      {chat === null ? (
-        <>
-          <div className='selectchat'>
-            <img src="../chat.jpg" alt="" className='img-con' style={{height:"100%",width:"100%"}}/>
-            <Typography style={{fontSize:"20px"}}>Select a user </Typography>
-          </div>
-        </>
-        ) : (
-          <>
-           <Header>
-            <ProfileImg src={ currUserRole == 'doctor'? (userData?.patientImage ?userData?.patientImage :"../profile.png"  ) :(userData?.doctorImage ? userData?.doctorImage :"../profile.png"  ) } alt='banner' />
-            {currUserRole === 'doctor' ? (
-              <Name>
-                Patient Name: {userData?.patientName}
-              </Name>
-            ) : (
-              <Name>
-                Doctor Name: {userData?.doctorName}
-              </Name>
-            )}
-          </Header>
-          <ChatContainer ref={chatContainerRef}>
-            {message.map((msg, index) => (
-              <React.Fragment key={index}>
-                {msg.senderId === currentUserId ? (
-                  <Sent>
-                    <Chat>{msg.text}</Chat>
-                    <Time>{formatDate(msg.createdAt) || msg.date}</Time>
-                  </Sent>
+          {chat === null ? (
+
+            <>
+              <div className='selectchat'>
+                <img src="../chat.jpg" alt="" className='img-con' style={{ height: "100%", width: "100%" }} />
+                <Typography style={{ fontSize: "20px" }}>Select a user </Typography>
+              </div>
+            </>
+          ) : (
+            <>
+              <Header>
+                <ProfileImg src={currUserRole == 'doctor' ? (userData?.patientImage ? userData?.patientImage : "../profile.png") : (userData?.doctorImage ? userData?.doctorImage : "../profile.png")} alt='banner' />
+                {currUserRole === 'doctor' ? (
+                  <Name>
+                    Patient Name: {userData?.patientName}
+                  </Name>
                 ) : (
-                  <Received key={index}>
-                    <Chat>{msg.text}</Chat>
-                    <Time>{formatDate(msg.createdAt) || msg.createdAt}</Time>
-                  </Received>
+                  <Name>
+                    Doctor Name: {userData?.doctorName}
+                  </Name>
                 )}
-              </React.Fragment>
-            ))}
-          </ChatContainer>
-            <InputContainer>
-            {
-              currUserRole === 'doctor' ? <>
-              <VideoCallIcon
-                sx={{
-                  position: 'relative',
-                  cursor:'pointer',
-                  '&:hover': {
-                    '&:before': {
-                      content: '"Generate meeting id"',
-                      position: 'absolute',
-                      bottom: '100%',
-                      left: '10',
-                      background: 'white',
-                      padding: '5px',
-                      border: '1px solid #ccc',
-                      borderRadius: '5px',
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                      zIndex: 1,
-                      
-                    },
-                  },
-                }}
-                onClick = {()=>generateID()}
-              />
-              </> : ""
-            }
-            <InputEmoji 
-            onChange={handleChange}
-            value = {newMessage}
-            onKeyDown={handleKeyPress}
-            className="react-emoji"
-            />
-            <Button onClick={ handleSend}><i className="fa-regular fa-paper-plane"></i></Button>
-            <Button onClick={handleJoinRoom}>Join</Button>
-            </InputContainer>
-           
-          </>
-        )}
+              </Header>
+              <ChatContainer ref={chatContainerRef}>
+                {message.map((msg, index) => (
+                  <React.Fragment key={index}>
+                    {msg.senderId === currentUserId ? (
+                      <Sent>
+                        <Chat>{msg.text}</Chat>
+                        <Time>{formatDate(msg.createdAt) || msg.date}</Time>
+                      </Sent>
+                    ) : (
+                      <Received key={index}>
+                        <Chat>{msg.text}</Chat>
+                        <Time>{formatDate(msg.createdAt) || msg.createdAt}</Time>
+                      </Received>
+                    )}
+                  </React.Fragment>
+                ))}
+              </ChatContainer>
+              <InputContainer>
+                {
+                  currUserRole === 'doctor' ? <>
+                    <VideoCallIcon
+                      sx={{
+                        position: 'relative',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          '&:before': {
+                            content: '"Generate meeting id"',
+                            position: 'absolute',
+                            bottom: '100%',
+                            left: '10',
+                            background: 'white',
+                            padding: '5px',
+                            border: '1px solid #ccc',
+                            borderRadius: '5px',
+                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                            zIndex: 1,
+
+                          },
+                        },
+                      }}
+                      onClick={() => generateID()}
+                    />
+                  </> : ""
+                }
+                <InputEmoji
+                  onChange={handleChange}
+                  value={newMessage}
+                  onKeyDown={handleKeyPress}
+                  className="react-emoji"
+                />
+                <Button onClick={handleSend}><i className="fa-regular fa-paper-plane"></i></Button>
+                <Button onClick={handleJoinRoom}>Join</Button>
+              </InputContainer>
+
+            </>
+          )}
         </div>
       </Body>
     </>

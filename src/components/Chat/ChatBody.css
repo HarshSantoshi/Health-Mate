@@ -15,6 +15,7 @@
 .selectchat{
     height: 50%;
     width: 50%;
+    background-color : red;
     margin: 0 auto;
 }
 .img-con{
@@ -46,5 +47,10 @@
     text-align: left;
     &::-webkit-scrollbar {
         width: 0;
+    }
+}
+@media only screen and (max-width: 480px){
+    .selectchat{
+        /* display:none; */
     }
 }

@@ -4,6 +4,7 @@ import ChatBody from './ChatBody.js';
 import { useParams } from 'react-router-dom';
 import Conversation from '../Conversation/Conversation.js';
 import { io } from 'socket.io-client';
+import './chat.css'
 const Container = styled.div`
   height: 88.5vh;
   width: 100%;
@@ -32,9 +33,9 @@ const LeftContainer = styled.div`
   &::-webkit-scrollbar {
     width: 0px;
   }
-
-  @media screen and (min-width: 768px) {
-    width: 25%;
+  width: ${({ isSelected }) => (isSelected ? '0%' : '100%')};
+  @media screen and (min-width: 1px) {
+    width: 100%;
     display: flex;
   }
 `;
@@ -84,6 +85,7 @@ const ChatSection = () => {
   }, [id])
 
   useEffect(() => {
+
     socket.current.on("receive-message", (data) => {
       setReceiveMessage(data);
     })
