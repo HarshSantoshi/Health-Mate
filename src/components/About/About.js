@@ -7,12 +7,12 @@ function About() {
         {
             name: 'Harsh Santoshi',
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident ad illo assumenda quasi repellendus aliquam, quisquam dicta expedita odio minima delectus! Facilis inventore assumenda quidem soluta! Animi, fugit. Asperiores nulla earum blanditiis voluptate labore tenetur cum sit doloribus assumenda non.The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.',
-            imageUrl: 'logo.png',
+            imageUrl: 'https://res.cloudinary.com/dgarsqfvl/image/upload/v1717068391/healthmate-images/Harsh_Passport_Size_photo_gc2h4j.jpg',
         },
         {
             name: 'Harsh',
             description: 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.',
-            imageUrl: 'logo.png',
+            imageUrl: 'https://res.cloudinary.com/dgarsqfvl/image/upload/v1717068316/healthmate-images/Harsh_77_photo_rqnsdl.jpg',
         }
     ];
     return (

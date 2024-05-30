@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import "./DoctorDetailPage.css"
 import DoctorAbout from './DoctorAbout.js';
@@ -131,6 +131,7 @@ const DoctorDetailPage = () => {
     setAvailable(false)
     setOpen(false)
   };
+  const navigate = useNavigate();
   const [minDate, setMinDate] = useState('');
   const theme = useTheme();
   const [personName, setPersonName] = useState('');
@@ -166,6 +167,8 @@ const DoctorDetailPage = () => {
 
         if (json.success) {
           toast.success("Appointment Booked");
+          navigate('/bookings')
+          
         }
         setAvailable(false);
       } else {
@@ -179,11 +182,11 @@ const DoctorDetailPage = () => {
   const handleCheck = async (e) => {
     e.preventDefault();
     if (!selectedDate) {
-      toast.success("Select Date!");
+      toast.error("Select Date!");
       return;
     }
     if (!personName) {
-      toast.success("Select Slot!");
+      toast.error("Select Slot!");
       return;
     }
     try {
