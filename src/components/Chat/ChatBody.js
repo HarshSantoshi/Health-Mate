@@ -8,8 +8,11 @@ import "./ChatBody.css"
 const Body = styled('div')`
   height: 100%;
   width: 70%;
+  min-width:400px;
+  box-shadow : 0 8px 24px -4px rgba(0,0,0,.1);
   @media screen and (max-width: 768px) {
-    display:none;
+    // display:none;
+    background:red;
   }
 `;
 
@@ -74,7 +77,7 @@ const Header = styled('div')`
   align-items:center;
   margin-top: 5px;
   border-radius:8px;
-  // justify-content : center;
+  padding:10px;
 `;
 const InputContainer = styled('div')`
   height: 10%;
@@ -84,7 +87,9 @@ const InputContainer = styled('div')`
   align-items: center; 
   justify-content: center;
   margin:0 5px;
-  overflow:"hidden"
+  overflow:hidden
+  position:fixed;
+  bottom:0;
 `;
 
 const ProfileImg = styled('img')`
@@ -137,10 +142,11 @@ const Button = styled('button')`
 //     }
 //   }
 // `;
-const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMessage }) => {
+const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMessage, setisActive ,isActive }) => {
   const [userData, setUserData] = useState(null);
   const [message, setMessages] = useState([]);
   const [newMessage, setnewMessage] = useState("");
+  
   const chatContainerRef = useRef();
 
   const navigate = useNavigate();
@@ -226,6 +232,8 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
   const handleJoinRoom = useCallback(() => {
     navigate(`/meet/${chat._id}`, { state: { userID: currentUserId } });
   }, [navigate, chat])
+  
+  
 
   const handleSend = async (link) => {
     if (newMessage == "" || link == "") {
@@ -275,7 +283,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
 
   return (
     <>
-      <Body >
+      <div className={(chat!== null) ? 'body active' : 'body' }>
         <div className='maincon'>
           {chat === null ? (
 
@@ -288,6 +296,10 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
           ) : (
             <>
               <Header>
+              <button type = "button" className= "backbtn" >
+              <i className="fa-solid fa-arrow-left" />
+
+              </button>
                 <ProfileImg src={currUserRole == 'doctor' ? (userData?.patientImage ? userData?.patientImage : "../profile.png") : (userData?.doctorImage ? userData?.doctorImage : "../profile.png")} alt='banner' />
                 {currUserRole === 'doctor' ? (
                   <Name>
@@ -356,7 +368,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
             </>
           )}
         </div>
-      </Body>
+      </div>
     </>
   );
 };

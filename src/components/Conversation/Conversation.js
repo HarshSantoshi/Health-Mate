@@ -10,9 +10,7 @@ width:40px;
 border-radius : 50%;
 margin: 0 10px;
 `
-const Name = styled('div')`
-font-weight : bold;
-`
+
 const Conversation = ({data , currentUserId , currUserRole}) => {
     const [userData , setUserData] = useState(null);
     useEffect(()=>{
@@ -42,13 +40,23 @@ const Conversation = ({data , currentUserId , currUserRole}) => {
     <Container>
         <ProfileImg src={ currUserRole == 'doctor'? (userData?.patientImage ?userData?.patientImage :"../profile.png"  ) :(userData?.doctorImage ? userData?.doctorImage :"../profile.png"  ) } alt='banner' />
         {currUserRole === 'doctor' ? (
-              <Name>
-                {userData?.patientName}
-              </Name>
+            <span style={{width:"80%",display:"grid" }}>
+            <span style={{ display:'block', fontSize:"16px" , fontWeight:"600"  , textAlign:'left'}}>
+            {userData?.patientName}
+            </span>
+            <span style={{fontSize:"13px" , textOverflow:"ellipsis" , overflow:"hidden" , whiteSpace:'nowrap'}}>
+              Last msg is thisjabjav aklvna vaksnakddaasd aih f anf awio av aeja afkjad s
+            </span>
+          </span>
             ) : (
-              <Name>
-                {userData?.doctorName}
-              </Name>
+              <span style={{width:"80%",display:"grid" }}>
+              <span style={{ display:'block', fontSize:"16px" , fontWeight:"600"  , textAlign:'left'}}>
+              {userData?.doctorName}
+              </span>
+              <span style={{fontSize:"13px" , textOverflow:"ellipsis" , overflow:"hidden" , whiteSpace:'nowrap'}}>
+                Last msg is thisjabjav aklvna vaksnakddaasd aih f anf awio av aeja afkjad s
+              </span>
+            </span>
             )}
     </Container>
   )

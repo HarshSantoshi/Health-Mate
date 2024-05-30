@@ -9,36 +9,8 @@ const Container = styled.div`
   height: 88.5vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
-
-  @media screen and (min-width: 768px) {
-    flex-direction: row;
-  }
 `;
 
-const LeftContainer = styled.div`
-  width: 100%;
-  flex: 1;
-  padding: 5px 8px;
-  overflow-y: auto;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  width: 98%;
-  height: 98%;
-  background: #f6f6f7;
-  border-radius: 10px;
-  margin: auto auto;
-  margin-top: 14px;
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-  width: ${({ isSelected }) => (isSelected ? '0%' : '100%')};
-  @media screen and (min-width: 1px) {
-    width: 100%;
-    display: flex;
-  }
-`;
 
 
 const UserContainer = styled(({ isSelected, ...rest }) => <div {...rest} />)`
@@ -50,11 +22,11 @@ const UserContainer = styled(({ isSelected, ...rest }) => <div {...rest} />)`
   cursor: pointer;
   margin: 5px 0;
   border-radius: 10px;
-  background-color: ${({ isSelected }) => (isSelected ? '#a5cbf0' : '#fff')};
+  background-color: ${({ isSelected }) => (isSelected ? '#e2e8f0' : '#fff')};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    background-color: #a5cbf0;
+    background-color: #f8fafc;
   }
 `;
 
@@ -67,7 +39,9 @@ const ChatSection = () => {
   const [sendMessage, setSendMessage] = useState(null);
   const [receiveMessage, setReceiveMessage] = useState(null);
   const [selected, setSelected] = useState(-1);
+  const [isActive, setisActive] = useState(false);
   const socket = useRef();
+  
   useEffect(() => {
     if (sendMessage !== null) {
       
@@ -110,15 +84,15 @@ const ChatSection = () => {
   return (
     <>
       <Container>
-        <LeftContainer>
+        <div className='leftcontainer'>
           <h4 style={{ textAlign: "left" }}>Your Chats </h4>
           {conversation.map((chat, index) => (
-            <UserContainer key={index} onClick={() => {setCurrChat(chat); setSelected(index)}} isSelected={selected === index} >
+            <UserContainer key={index} onClick={() => {setCurrChat(chat); setSelected(index) ; setisActive(true)}} isSelected={selected === index} >
               <Conversation data={chat} currentUserId={id} currUserRole={localStorage.getItem('role')} />
             </UserContainer>
           ))}
-        </LeftContainer>
-        <ChatBody chat={currChat} currentUserId={id} currUserRole={localStorage.getItem('role')} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
+        </div>
+        <ChatBody isActive setisActive= {setisActive}  chat={currChat} currentUserId={id} currUserRole={localStorage.getItem('role')} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
       </Container>
     </>
   );
