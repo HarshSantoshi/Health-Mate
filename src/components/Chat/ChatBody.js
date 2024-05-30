@@ -5,16 +5,7 @@ import InputEmoji from "react-input-emoji"
 import { VideoCall as VideoCallIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import "./ChatBody.css"
-const Body = styled('div')`
-  height: 100%;
-  width: 70%;
-  min-width:400px;
-  box-shadow : 0 8px 24px -4px rgba(0,0,0,.1);
-  @media screen and (max-width: 768px) {
-    // display:none;
-    background:red;
-  }
-`;
+
 
 const ChatContainer = styled('div')`
   height: 80%;
@@ -79,18 +70,7 @@ const Header = styled('div')`
   border-radius:8px;
   padding:10px;
 `;
-const InputContainer = styled('div')`
-  height: 10%;
-  // border: 1px solid black;
-  width: 100%;
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  margin:0 5px;
-  overflow:hidden
-  position:fixed;
-  bottom:0;
-`;
+
 
 const ProfileImg = styled('img')`
 height:40px;
@@ -142,7 +122,7 @@ const Button = styled('button')`
 //     }
 //   }
 // `;
-const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMessage, setisActive ,isActive }) => {
+const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMessage, setisActive ,isActive ,funcToMakeisActivefalse ,funcToMakeChatnull}) => {
   const [userData, setUserData] = useState(null);
   const [message, setMessages] = useState([]);
   const [newMessage, setnewMessage] = useState("");
@@ -232,9 +212,10 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
   const handleJoinRoom = useCallback(() => {
     navigate(`/meet/${chat._id}`, { state: { userID: currentUserId } });
   }, [navigate, chat])
-  
-  
-
+  const removeChat = ()=>{
+    funcToMakeChatnull();
+    funcToMakeisActivefalse();
+  }
   const handleSend = async (link) => {
     if (newMessage == "" || link == "") {
       return;
@@ -283,7 +264,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
 
   return (
     <>
-      <div className={(chat!== null) ? 'body active' : 'body' }>
+      <div className={(chat!== null && isActive) ? 'body active' : 'body' }>
         <div className='maincon'>
           {chat === null ? (
 
@@ -296,7 +277,8 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
           ) : (
             <>
               <Header>
-              <button type = "button" className= "backbtn" >
+              <button type = "button" className= "backbtn" onClick=
+              {removeChat}>
               <i className="fa-solid fa-arrow-left" />
 
               </button>
@@ -328,7 +310,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
                   </React.Fragment>
                 ))}
               </ChatContainer>
-              <InputContainer>
+              <div className='inputcontainer'>
                 {
                   currUserRole === 'doctor' ? <>
                     <VideoCallIcon
@@ -363,7 +345,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
                 />
                 <Button onClick={handleSend}><i className="fa-regular fa-paper-plane"></i></Button>
                 <Button onClick={handleJoinRoom}>Join</Button>
-              </InputContainer>
+              </div>
 
             </>
           )}

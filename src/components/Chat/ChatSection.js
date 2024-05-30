@@ -50,7 +50,7 @@ const ChatSection = () => {
   }, [sendMessage])
 
   useEffect(() => {
-    socket.current = io('https://health-mate-socket.vercel.app');
+    socket.current = io('https://health-mate-socket.vercel.app/');
 
     socket.current.emit("new-user-add", id);
     socket.current.on('get-users', (users) => {
@@ -64,6 +64,13 @@ const ChatSection = () => {
       setReceiveMessage(data);
     })
   }, [])
+  const funcToMakeisActivefalse = ()=>{
+    setisActive(false);
+  }
+  const funcToMakeChatnull = ()=>{
+    setCurrChat(null);
+
+  }
 
   useEffect(() => {
     const getChats = async () => {
@@ -92,7 +99,7 @@ const ChatSection = () => {
             </UserContainer>
           ))}
         </div>
-        <ChatBody isActive setisActive= {setisActive}  chat={currChat} currentUserId={id} currUserRole={localStorage.getItem('role')} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
+        <ChatBody isActive funcToMakeChatnull={funcToMakeChatnull} funcToMakeisActivefalse = {funcToMakeisActivefalse} setisActive= {setisActive}  chat={currChat} currentUserId={id} currUserRole={localStorage.getItem('role')} setSendMessage={setSendMessage} receiveMessage={receiveMessage} />
       </Container>
     </>
   );

@@ -5,7 +5,7 @@
     text-align: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('https://livedoc.in/assets_pages/images/livedoc_home_banner.jpg');
+    background-image: url('https://res.cloudinary.com/dgarsqfvl/image/upload/v1717068882/healthmate-images/Landingpage_image_r3kvjm.png');
 }
 .hero-image::before{
     content: '';

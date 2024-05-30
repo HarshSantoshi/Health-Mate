@@ -1,6 +1,6 @@
 const io = require('socket.io')(8800 , {
     cors:{
-        origin : "http://health-mate-neon.vercel.app"
+        origin : "https://health-mate-socket.vercel.app/"
     }
 })
 let activeUsers = [];
