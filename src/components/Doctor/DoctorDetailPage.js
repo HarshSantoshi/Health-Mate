@@ -104,17 +104,15 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 800,
-  height: '70%',
-  overflow: 'scroll',
-  backgroundColor: 'background.paper',
-  borderRadius: '15px',
-  // border: '2px solid #000',
-  // boxShadow: '24px', 
-  '&::-webkit-scrollbar': {
-    width: '0px',
-  },
-  p: '16px',
+  width: '90%',
+  maxWidth: 600,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '8px',
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'relative'
 };
 
 
@@ -127,79 +125,92 @@ const DoctorDetailPage = () => {
   const [tab, setTab] = useState("about")
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setSelectedDate('');
+    setPersonName('');
+    setAvailable(false)
+    setOpen(false)
+  };
   const [minDate, setMinDate] = useState('');
   const theme = useTheme();
   const [personName, setPersonName] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
-  const [available , setAvailable] = useState(false);
+  const [available, setAvailable] = useState(false);
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
-    
+
   };
-  
+
   const handleBook = async (e) => {
     e.preventDefault();
     try {
-        const paymentCompleted = await paymenthandler(doctor.fees*100);
-        if (paymentCompleted) {
-            const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/bookappointment`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    date: selectedDate,
-                    starttime: personName.substring(0, 5),
-                    endtime: personName.substring(personName.length - 5),
-                    doctorId: doctorID,
-                    patientId: patientID,
-                    status: "approved"
-                })
-            });
+      const paymentCompleted = await paymenthandler(doctor.fees * 100);
+      if (paymentCompleted) {
+        const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/bookappointment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            date: selectedDate,
+            starttime: personName.substring(0, 5),
+            endtime: personName.substring(personName.length - 5),
+            doctorId: doctorID,
+            patientId: patientID,
+            status: "approved"
+          })
+        });
 
-            const json = await response.json();
-           
-            if (json.success) {
-                toast.success("Appointment Booked");
-            }
-            setAvailable(false);
-        } else {
-            
+        const json = await response.json();
+
+        if (json.success) {
+          toast.success("Appointment Booked");
         }
-    } catch (error) {
-        console.error('Error while booking:', error);
-    }
-}
+        setAvailable(false);
+      } else {
 
-  const handleCheck = async(e)=>{
+      }
+    } catch (error) {
+      console.error('Error while booking:', error);
+    }
+  }
+
+  const handleCheck = async (e) => {
     e.preventDefault();
+    if (!selectedDate) {
+      toast.success("Select Date!");
+      return;
+    }
+    if (!personName) {
+      toast.success("Select Slot!");
+      return;
+    }
     try {
       const response = await fetch(`https://health-mate-server.vercel.app/api/v1/patient/checkavailability`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body:  JSON.stringify({
+        body: JSON.stringify({
           date: selectedDate,
-          starttime:personName.substring(0, 5), 
+          starttime: personName.substring(0, 5),
           endtime: personName.substring(personName.length - 5),
           doctorId: doctorID,
-          status : "approved"
+          status: "approved"
         })
-        
+
       });
       const json = await response.json();
-      
-      if(json.success === true){
+
+      if (json.success === true) {
         toast.success("Slot is available!");
         setAvailable(true);
       }
-      else if(json.success === false){
+      else if (json.success === false) {
         toast.error("Slot is not available!");
       }
-      
+
     } catch (error) {
       console.error('Error fetching appointment details:', error);
     }
@@ -226,9 +237,9 @@ const DoctorDetailPage = () => {
   return (
     <>
       <div style={{ maxWidth: "90%", margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "30px 5px" ,flexWrap:"wrap"}}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "30px 5px", flexWrap: "wrap" }}>
           <div>
-            <Image src={doctor.doctorImage? doctor.doctorImage : "https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png"} />
+            <Image src={doctor.doctorImage ? doctor.doctorImage : "https://static.vecteezy.com/system/resources/previews/027/308/944/non_2x/doctor-with-ai-generated-free-png.png"} />
           </div>
           <Content>
             <Specialization>{doctor?.specialization}</Specialization>
@@ -283,21 +294,34 @@ const DoctorDetailPage = () => {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={style}>
+          <i className="fa-solid fa-xmark"
+            style={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: 'grey.500',
+              fontSize:"20px",
+              cursor:"pointer"
+            }}
+            aria-label="close"
+            onClick={handleClose} >
+          </i>
           <h3 className='title' style={{ color: "black" }}>Book Appointment</h3>
-          <div className='col-md-6 appointment'>
-            <form className="row g-3 ">
+          <div className='appointment' style={{ margin: "auto" }}>
+            <form className="row g-3">
               <div className="col-12">
-                <h3 style={{textAlign:"center"}}>{doctor?.doctorName}</h3>
+                <h3 style={{ textAlign: "center" }}>{doctor?.doctorName}</h3>
               </div>
               <div className="col-12">
                 <label htmlFor="date" className="form-label">Select Date</label>
-                <input type="Date" className="form-control" id="date" name="date" min={minDate}
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                <input type="date" className="form-control" id="date" name="date" min={minDate}
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  required
                 />
               </div>
-              <div>
-                <FormControl sx={{ my: 2, width: 400 }}>
+              <div className="col-12">
+                <FormControl sx={{ my: 2, width: '100%' }} required>
                   <InputLabel id="demo-single-name-label">Slot</InputLabel>
                   <Select
                     labelId="demo-single-name-label"
@@ -306,6 +330,7 @@ const DoctorDetailPage = () => {
                     onChange={handleChange}
                     input={<OutlinedInput label="Name" />}
                     MenuProps={MenuProps}
+                    required
                   >
                     {names.map((name) => (
                       <MenuItem
@@ -322,10 +347,10 @@ const DoctorDetailPage = () => {
               <div className='col-12 text-center'>
                 <div className="text-center">
                   {
-                    available?
-                    <button type="submit" className="btn btn-success me-2" onClick={handleBook}>Book Now</button>
-                    :
-                    <button type="submit" className="btn btn-success me-2" onClick={handleCheck}>Check Availaibity</button>
+                    available ?
+                      <button type="submit" className="btn btn-success me-2" onClick={handleBook}>Book Now</button>
+                      :
+                      <button type="submit" className="btn btn-success me-2" onClick={handleCheck}>Check Availability</button>
                   }
                 </div>
               </div>

@@ -1,16 +1,18 @@
-.bg{
+.bg {
     background: rgb(244 242 238);
     height: 100%;
     width: 100%;
 }
-.profile-container{
+
+.profile-container {
     max-width: 1000px;
     margin: 0px auto;
     box-sizing: border-box;
     padding: 2px 10px;
-    border-radius:10px;
+    border-radius: 10px;
 }
-.intro{
+
+.intro {
     width: 100%;
     margin: 0;
     background: #fff;
@@ -19,50 +21,59 @@
     margin-top: 100px;
     padding: 10px 10px;
 }
-.intro .dr_image{
-    height:200px;
-    width:200px;
-    border-radius:50%;
+
+.intro .dr_image {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
     margin: 0 auto;
     margin-top: -120px;
 }
-.dr_image img{
-    height:100%;
-    width:100%;
-    border-radius:50%;
+
+.dr_image img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
 }
-.intro .details{
+
+.intro .details {
     text-align: left;
 }
-.intro .details .specialization{
+
+.intro .details .specialization {
     font-size: 15px;
     color: black;
     line-height: 8px;
 }
-.intro .details .location{
+
+.intro .details .location {
     font-size: 12px;
     color: grey;
     line-height: 6px;
 }
-.intro .details .count{
+
+.intro .details .count {
     font-size: 16px;
     color: rgb(45, 101, 232);
-    margin: 0 10px 0px  0px;
+    margin: 0 10px 0px 0px;
 }
-.intro .hospital{
+
+.intro .hospital {
     font-size: 18px;
     font-weight: 500;
     text-align: left;
     line-height: 6px;
 }
-.icon{
+
+.icon {
     height: 30px;
     min-width: 30px;
     display: inline-block;
     color: #6c757d;
     cursor: pointer;
 }
-.profile-container .title{
+
+.profile-container .title {
     margin: 0px 0;
     color: black;
     font-weight: bold;
@@ -72,7 +83,8 @@
     display: block;
     padding: 2px 0px;
 }
-.profile-container .cnt{
+
+.profile-container .cnt {
     width: 100%;
     background: #fff;
     border-radius: 15px;
@@ -80,28 +92,101 @@
     padding: 10px 10px;
     text-align: left;
 }
-.cnt .work .workat{
+
+.cnt .work .workat {
     font-size: 18px;
     font-weight: 500;
 }
-.cnt .work span{
+
+.cnt .work span {
     color: grey;
     font-size: 14px;
     margin-right: 50px;
     line-height: 6px;
 }
-.Add{
+
+.Add {
     height: 25px;
     min-width: 25px;
     display: inline-block;
     color: #6c757d;
     cursor: pointer;
 }
-.remove{
+
+.remove {
     height: 25px;
     min-width: 25px;
     display: inline-block;
     color: #6c757d;
     cursor: pointer;
     margin-top: 36px;
+}
+
+@media (max-width: 600px) {
+    .form-label {
+        font-size: 14px;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+.close-icon {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    color: grey;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.title-exp {
+    color: black;
+    margin-bottom: 20px;
+}
+
+.experience-item {
+    display: flex;
+    margin: 10px 0;
+}
+
+.experience-item .icon {
+    margin-right: 10px;
+}
+
+.work-place,
+.role,
+.year {
+    margin-bottom: 4px;
+}
+
+@media (max-width: 600px) {
+    .experience-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .experience-item .icon {
+        margin-bottom: 10px;
+    }
+
+    .col-md-6 {
+        width: 100%;
+    }
+
+    .accordion-button {
+        font-size: 14px;
+    }
+}
+
+.MuiBox-root {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 90vh;
 }
