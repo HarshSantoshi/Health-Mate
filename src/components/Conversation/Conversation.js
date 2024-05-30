@@ -44,18 +44,14 @@ const Conversation = ({data , currentUserId , currUserRole}) => {
             <span style={{ display:'block', fontSize:"16px" , fontWeight:"600"  , textAlign:'left'}}>
             {userData?.patientName}
             </span>
-            <span style={{fontSize:"13px" , textOverflow:"ellipsis" , overflow:"hidden" , whiteSpace:'nowrap'}}>
-              Last msg is thisjabjav aklvna vaksnakddaasd aih f anf awio av aeja afkjad s
-            </span>
+            
           </span>
             ) : (
               <span style={{width:"80%",display:"grid" }}>
               <span style={{ display:'block', fontSize:"16px" , fontWeight:"600"  , textAlign:'left'}}>
               {userData?.doctorName}
               </span>
-              <span style={{fontSize:"13px" , textOverflow:"ellipsis" , overflow:"hidden" , whiteSpace:'nowrap'}}>
-                Last msg is thisjabjav aklvna vaksnakddaasd aih f anf awio av aeja afkjad s
-              </span>
+              
             </span>
             )}
     </Container>

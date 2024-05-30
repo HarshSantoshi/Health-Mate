@@ -70,18 +70,7 @@ const Header = styled('div')`
   border-radius:8px;
   padding:10px;
 `;
-const InputContainer = styled('div')`
-  height: 10%;
-  // border: 1px solid black;
-  width: 100%;
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  margin:0 5px;
-  overflow:hidden
-  position : relative;
-  bottom :0;
-`;
+
 
 const ProfileImg = styled('img')`
 height:40px;
@@ -321,7 +310,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
                   </React.Fragment>
                 ))}
               </ChatContainer>
-              <InputContainer>
+              <div className='inputcontainer'>
                 {
                   currUserRole === 'doctor' ? <>
                     <VideoCallIcon
@@ -356,7 +345,7 @@ const ChatBody = ({ chat, currentUserId, currUserRole, setSendMessage, receiveMe
                 />
                 <Button onClick={handleSend}><i className="fa-regular fa-paper-plane"></i></Button>
                 <Button onClick={handleJoinRoom}>Join</Button>
-              </InputContainer>
+              </div>
 
             </>
           )}
