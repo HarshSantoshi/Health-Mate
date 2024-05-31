@@ -8,11 +8,15 @@ function About() {
             name: 'Harsh Santoshi',
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident ad illo assumenda quasi repellendus aliquam, quisquam dicta expedita odio minima delectus! Facilis inventore assumenda quidem soluta! Animi, fugit. Asperiores nulla earum blanditiis voluptate labore tenetur cum sit doloribus assumenda non.The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.',
             imageUrl: 'https://res.cloudinary.com/dgarsqfvl/image/upload/v1717068391/healthmate-images/Harsh_Passport_Size_photo_gc2h4j.jpg',
+            LinkedIn:'https://www.linkedin.com/in/harsh-santoshi/',
+            Github : "https://github.com/HarshSantoshi"
         },
         {
             name: 'Harsh',
             description: 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.',
             imageUrl: 'https://res.cloudinary.com/dgarsqfvl/image/upload/v1717068316/healthmate-images/Harsh_77_photo_rqnsdl.jpg',
+            LinkedIn:'https://www.linkedin.com/in/harsh-34b5161a0/',
+            Github : "https://github.com/harsh809"
         }
     ];
     return (
@@ -69,10 +73,9 @@ function About() {
                         </div>
                         <div className="card-content">
                             <h2 className="name">{data.name}</h2>
-                            {/* <p className="description">{data.description}</p> */}
                             <div className="social">
-                                <a href="https://www.linkedin.com/in/harsh-34b5161a0/" target='blank'><i className="fa-brands fa-linkedin-in"></i></a>
-                                <a href="https://github.com/harsh809" target='blank'><i className="fa-brands fa-github"></i></a>
+                                <a href={data.LinkedIn} target='blank'><i className="fa-brands fa-linkedin-in"></i></a>
+                                <a href={data.Github} target='blank'><i className="fa-brands fa-github"></i></a>
                             </div>
                         </div>
                     </div>

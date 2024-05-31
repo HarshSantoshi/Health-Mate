@@ -5,7 +5,7 @@ import './LandingPage.css'
 import { Link } from 'react-router-dom'
 import Footer from '../Footer/Footer.js'
 import { jwtDecode } from 'jwt-decode'
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const LandingPage = () => {
   const [doctorId, setDoctorId] = useState("");
   const [patientId, setPatientId] = useState("");
@@ -17,21 +17,21 @@ const LandingPage = () => {
 
     if (token) {
       const decodedToken = jwtDecode(token);
-      
-      if(role === "doctor"){
+
+      if (role === "doctor") {
         const doctorIdFromToken = decodedToken.doctor.id;
 
         setDoctorId(doctorIdFromToken);
-        
+
       }
-      else{
+      else {
         const patientIdFromToken = decodedToken.patient.id;
         setPatientId(patientIdFromToken);
       }
     }
   }, []);
   return (
-    
+
     <>
       {/* <div className='bannerImg'>
         <img src="landingimage.jpg" alt='banner' />
@@ -52,11 +52,17 @@ const LandingPage = () => {
         <div className='hero-content'>
           <div className='hero-content-inner'>
             <h2>Get rid from your Diseases with a single touch</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, atque! Asperiores explicabo eligendi sunt, enim tenetur excepturi temporibus voluptatem cupiditate!</p>
-            <button type='button' onClick={()=>{
-              if(!localStorage.getItem('token')){
+            <p><strong>
+            Consult top doctors
+              effortlessly
+            </strong>
+              <p>Get 24/7 online consultations with the best doctors
+              without breaking a sweat and your bank.</p>
+            </p>
+            <button type='button' onClick={() => {
+              if (!localStorage.getItem('token')) {
                 navigate('/login');
-              }else{
+              } else {
                 navigate('/alldoctorspage');
               }
             }}>Book Appointment</button>
@@ -70,9 +76,9 @@ const LandingPage = () => {
         <Link className="text-decoration" to='/alldoctorspage'>
           <ServicesCard feature="Video Call" text="Connect within 60 seconds" img="videocall-img.png" />
         </Link>
-        <Link className="text-decoration" to={`/bookings`}><ServicesCard feature="My Booking" text="Confirmed appointments with doctors" img="finddoctor-img1.jpg"  /></Link>
-        <Link className="text-decoration" to='/allmedicinepage' state={{patientId : patientId}}>
-        <ServicesCard feature="Medicines" text="Essentials at your doorstep" img="medicines-img.jpg" />
+        <Link className="text-decoration" to={`/bookings`}><ServicesCard feature="My Booking" text="Confirmed appointments with doctors" img="finddoctor-img1.jpg" /></Link>
+        <Link className="text-decoration" to='/allmedicinepage' state={{ patientId: patientId }}>
+          <ServicesCard feature="Medicines" text="Essentials at your doorstep" img="medicines-img.jpg" />
         </Link>
         <ServicesCard feature="Lab Test" text="Sample pickup at your home" img="labtest-img.jpeg" />
         <ServicesCard feature="Surgeries" text="Safe and trusted surgery centers" img="surjeries-img.jpg" />
@@ -119,11 +125,11 @@ const LandingPage = () => {
           <div className="carousel-item" data-bs-interval="2000">
             <div className="testimony" >
               Very helpful. Far easier than doing same things on computer. Allows quick and easy search with speedy booking. Even maintains history of doctors visited.   </div>
-              <div className='author'>
+            <div className='author'>
               ~ Abhinav
             </div>
           </div>
-          
+
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" ></span>
@@ -134,7 +140,7 @@ const LandingPage = () => {
           <span>Next</span>
         </button>
       </div>
-      <Footer/>
+      <Footer />
 
     </>
 
