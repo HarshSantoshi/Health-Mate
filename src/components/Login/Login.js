@@ -3,11 +3,11 @@ import { useState,useContext } from 'react';
 import {TextField,MenuItem, Paper} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { jwtDecode } from 'jwt-decode';
+import './Login.css'
 import doctorcontext from '../../context/Doctor/doctorcontext.js';
 import cartcontext from '../../context/cart/cartcontext.js';
 import { fetchId } from '../Data/Id.js';
-// changessss
+// changes
 const Login = () => {
   const [credentials , setCredentials] = useState({userType:"" , email:"", password :""});
   const navigate = useNavigate();
@@ -22,7 +22,58 @@ const Login = () => {
         
       }
     })
-  
+  }
+  const loginDemoPatient = async(e)=>{
+    e.preventDefault();
+    const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/loginpatient", {
+      method :"POST",
+      headers : {
+        'Content-Type' : 'application/json'
+      },
+      body:JSON.stringify({
+          email:"demo@gmail.com",
+          password: "demo123"
+      })
+    })
+    const json = await response.json();
+    if(json.success){
+      localStorage.setItem('token', json.authToken); 
+      localStorage.setItem('role','patient');
+      // console.log(json.authToken);
+      fetchId();
+      getitems();
+      navigate("/");
+      toast.success("Patient Logged In successfully!");
+    }
+    else{
+      toast.error("Invalid Credentials");
+    }
+  }
+  const loginDemoDoctor = async(e)=>{
+    e.preventDefault();
+    const response = await fetch("https://health-mate-server.vercel.app/api/v1/auth/logindoctor", {
+      method :"POST",
+      headers : {
+        'Content-Type' : 'application/json'
+      },
+      body:JSON.stringify({
+          email:"demod@gmail.com",
+          password: "demo123",
+      })
+    })
+    const json = await response.json();
+    if(json.success){
+      localStorage.setItem('token', json.authToken); 
+      
+      localStorage.setItem('role','doctor');
+      const doctorid = fetchId();
+      fetchData(doctorid);
+      navigate("/dashboard");
+      toast.success("Logged In successfully!");
+    }
+    else{  
+      toast.error("Invalid Credentials");
+    }
   }
   const handleSubmit = async(e)=>{
     e.preventDefault();
@@ -97,6 +148,12 @@ const Login = () => {
               <button type='submit' className='btn'>Login</button>
             </form>
         </Paper>
+        
+        </div>
+        <b>OR</b>
+        <div className='demodiv'>
+        <button onClick={loginDemoPatient} className='btn'>Login as Demo Patient</button>
+        <button onClick={loginDemoDoctor} className='btn'>Login as Demo Doctor</button>
         </div>
     </div>
     </>
